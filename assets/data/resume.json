@@ -1,0 +1,559 @@
+{
+  "personalInfo": {
+    "name": "Harsh Sureja",
+    "title": "Senior Flutter Developer",
+    "email": "surejapatel@gmail.com",
+    "phone": "+91 9879776369",
+    "location": "Surat, Gujarat, India",
+    "bio": "Results-driven Senior Flutter Developer with 4+ years of expertise in developing high-performance cross-platform mobile applications and Flutter web solutions. Specialized in Dart programming, Clean Architecture, Bloc/Cubit state management, and responsive UI/UX design. Successfully delivered 15+ production applications serving 75,000+ active users with 99.9% uptime.",
+    "avatarUrl": null,
+    "socialLinks": {
+      "github": "https://github.com/harshsureja",
+      "linkedin": "https://linkedin.com/in/harshsureja",
+      "stackoverflow": "https://stackoverflow.com/users/harshsureja",
+      "website": null,
+      "medium": null,
+      "others": {
+        "stackoverflowPoints": "1.3k points"
+      }
+    }
+  },
+  "experience": [
+    {
+      "position": "Senior Flutter Developer",
+      "company": "FarmSetu Pvt. Limited",
+      "location": "Surat, Gujarat",
+      "startDate": "June 2024",
+      "endDate": "Present",
+      "employmentType": "Full-time",
+      "companyUrl": null,
+      "responsibilities": [
+        "Architected and developed mobile applications and Flutter web applications for farmer-facing solutions and B2B transactional systems, serving 10,000+ users across the Agri-Food Supply Chain ecosystem",
+        "Implemented Flutter Clean Architecture with Bloc state management, reducing code complexity by 35% and improving application performance by 45%",
+        "Led end-to-end product development for 5 major releases, collaborating with 8+ cross-functional team members including designers, backend engineers, and customer success teams",
+        "Mentored 3 junior Flutter developers through code reviews, pair programming, and technical documentation, increasing team productivity by 25%",
+        "Engineered responsive Flutter web applications with mobile-first design principles, achieving 99.9% cross-platform compatibility across devices",
+        "Applied product thinking methodologies to agricultural ecosystem challenges, driving 40% increase in farmer engagement and user retention rates",
+        "Optimized CI/CD pipelines for mobile app deployment, reducing release time from 4 hours to 30 minutes (87.5% improvement)",
+        "Developed advanced Flutter widgets including SliverPersistentHeader, CustomScrollView, and complex animations for enhanced UX"
+      ],
+      "technologies": [
+        "Flutter",
+        "Dart",
+        "Flutter Web",
+        "Clean Architecture",
+        "Bloc",
+        "CI/CD",
+        "Agile",
+        "Firebase"
+      ]
+    },
+    {
+      "position": "Senior Flutter Developer",
+      "company": "Elision Infotech",
+      "location": "Surat, Gujarat",
+      "startDate": "January 2023",
+      "endDate": "June 2024",
+      "employmentType": "Full-time",
+      "companyUrl": null,
+      "responsibilities": [
+        "Developed and maintained 8+ enterprise-grade Flutter applications with complex UI components serving 50,000+ active users",
+        "Led Agile development team of 3 Flutter developers, conducting daily code reviews and enforcing Flutter best practices and coding standards",
+        "Implemented Bloc and Provider state management patterns, improving application performance and scalability by 40%",
+        "Integrated 15+ RESTful APIs and third-party services including payment gateways (Razorpay, Stripe), Firebase Cloud Messaging, and Google Analytics",
+        "Collaborated with UX/UI design teams to create pixel-perfect mobile interfaces following Material Design and Cupertino guidelines",
+        "Reduced application crash rates by 60% through implementation of comprehensive unit testing, widget testing, and error handling",
+        "Optimized Flutter build processes and app size, decreasing compilation time by 50% and reducing APK/IPA size by 30%"
+      ],
+      "technologies": [
+        "Flutter",
+        "Dart",
+        "Bloc",
+        "Provider",
+        "RESTful APIs",
+        "Razorpay",
+        "Stripe",
+        "Firebase",
+        "Material Design",
+        "Testing"
+      ]
+    },
+    {
+      "position": "Flutter Developer",
+      "company": "Tagline Infotech",
+      "location": "Surat, Gujarat",
+      "startDate": "August 2021",
+      "endDate": "December 2022",
+      "employmentType": "Full-time",
+      "companyUrl": null,
+      "responsibilities": [
+        "Designed and implemented responsive and adaptive UI components for 10+ mobile applications across Android and iOS platforms",
+        "Utilized Redux state management to streamline data flow, improving code maintainability by 30% and reducing state-related bugs",
+        "Developed custom implicit and explicit animations using Flutter's animation framework, enhancing user engagement by 25%",
+        "Participated in peer code reviews and contributed to establishing Flutter development standards and best practices",
+        "Implemented offline data persistence using SQLite and Hive databases, improving app performance for users with poor connectivity",
+        "Integrated Firebase services including Authentication, Cloud Firestore, Storage, and Cloud Functions for scalable backend solutions"
+      ],
+      "technologies": [
+        "Flutter",
+        "Dart",
+        "Redux",
+        "SQLite",
+        "Hive",
+        "Firebase",
+        "Animations",
+        "Android",
+        "iOS"
+      ]
+    },
+    {
+      "position": "Flutter Developer Intern",
+      "company": "Across the Glob",
+      "location": "Bangalore, Karnataka",
+      "startDate": "January 2021",
+      "endDate": "August 2021",
+      "employmentType": "Internship",
+      "companyUrl": null,
+      "responsibilities": [
+        "Assisted in Flutter application development while learning industry best practices and mobile app development standards",
+        "Gained hands-on experience with Dart programming, Flutter framework, and complete mobile app development lifecycle",
+        "Participated in daily standups, sprint planning, and retrospective meetings following Scrum methodology"
+      ],
+      "technologies": [
+        "Flutter",
+        "Dart",
+        "Scrum",
+        "Agile"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Agri-Food Supply Chain Platform",
+      "description": "Mobile and web applications for farmer-facing solutions and B2B transactional systems serving 10,000+ users across the agricultural ecosystem",
+      "technologies": [
+        "Flutter",
+        "Flutter Web",
+        "Clean Architecture",
+        "Bloc",
+        "Firebase"
+      ],
+      "githubUrl": null,
+      "liveUrl": null,
+      "imageUrl": null,
+      "features": [
+        "Farmer engagement solutions",
+        "B2B transaction management",
+        "Real-time supply chain tracking",
+        "Cross-platform compatibility (99.9%)"
+      ],
+      "startDate": "June 2024",
+      "endDate": "Present",
+      "isFeatured": true
+    },
+    {
+      "name": "Enterprise Flutter Applications",
+      "description": "Developed 8+ enterprise-grade Flutter applications with complex UI components serving 50,000+ active users",
+      "technologies": [
+        "Flutter",
+        "Bloc",
+        "Provider",
+        "Payment Gateways",
+        "Firebase"
+      ],
+      "githubUrl": null,
+      "liveUrl": null,
+      "imageUrl": null,
+      "features": [
+        "Payment gateway integration (Razorpay, Stripe)",
+        "Firebase Cloud Messaging",
+        "Google Analytics integration",
+        "Comprehensive testing suite"
+      ],
+      "startDate": "January 2023",
+      "endDate": "June 2024",
+      "isFeatured": true
+    }
+  ],
+  "skills": [
+    {
+      "name": "Mobile Development",
+      "icon": null,
+      "skills": [
+        {
+          "name": "Flutter",
+          "category": "Mobile Development",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Flutter Web",
+          "category": "Mobile Development",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Flutter Desktop",
+          "category": "Mobile Development",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Dart",
+          "category": "Mobile Development",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Android (Kotlin)",
+          "category": "Mobile Development",
+          "proficiency": 80,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "iOS (Swift)",
+          "category": "Mobile Development",
+          "proficiency": 75,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "React Native",
+          "category": "Mobile Development",
+          "proficiency": 70,
+          "icon": null,
+          "subSkills": null
+        }
+      ]
+    },
+    {
+      "name": "State Management & Architecture",
+      "icon": null,
+      "skills": [
+        {
+          "name": "Bloc",
+          "category": "State Management & Architecture",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Cubit",
+          "category": "State Management & Architecture",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Provider",
+          "category": "State Management & Architecture",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "GetX",
+          "category": "State Management & Architecture",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Redux",
+          "category": "State Management & Architecture",
+          "proficiency": 80,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Riverpod",
+          "category": "State Management & Architecture",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Clean Architecture",
+          "category": "State Management & Architecture",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "MVVM",
+          "category": "State Management & Architecture",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "MVC",
+          "category": "State Management & Architecture",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        }
+      ]
+    },
+    {
+      "name": "Backend & APIs",
+      "icon": null,
+      "skills": [
+        {
+          "name": "RESTful APIs",
+          "category": "Backend & APIs",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "GraphQL",
+          "category": "Backend & APIs",
+          "proficiency": 75,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Firebase",
+          "category": "Backend & APIs",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": [
+            "Authentication",
+            "Firestore",
+            "Cloud Functions",
+            "Cloud Messaging"
+          ]
+        },
+        {
+          "name": "Node.js",
+          "category": "Backend & APIs",
+          "proficiency": 70,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "AWS Amplify",
+          "category": "Backend & APIs",
+          "proficiency": 75,
+          "icon": null,
+          "subSkills": null
+        }
+      ]
+    },
+    {
+      "name": "Database Management",
+      "icon": null,
+      "skills": [
+        {
+          "name": "SQLite",
+          "category": "Database Management",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Hive",
+          "category": "Database Management",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "MySQL",
+          "category": "Database Management",
+          "proficiency": 80,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Firebase Firestore",
+          "category": "Database Management",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "PostgreSQL",
+          "category": "Database Management",
+          "proficiency": 75,
+          "icon": null,
+          "subSkills": null
+        }
+      ]
+    },
+    {
+      "name": "Testing & Quality Assurance",
+      "icon": null,
+      "skills": [
+        {
+          "name": "Unit Testing",
+          "category": "Testing & Quality Assurance",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Widget Testing",
+          "category": "Testing & Quality Assurance",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Integration Testing",
+          "category": "Testing & Quality Assurance",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "TDD",
+          "category": "Testing & Quality Assurance",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Mockito",
+          "category": "Testing & Quality Assurance",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        }
+      ]
+    },
+    {
+      "name": "UI/UX & Design",
+      "icon": null,
+      "skills": [
+        {
+          "name": "Material Design",
+          "category": "UI/UX & Design",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Cupertino Design",
+          "category": "UI/UX & Design",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Custom Animations",
+          "category": "UI/UX & Design",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Responsive Design",
+          "category": "UI/UX & Design",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Adaptive Layouts",
+          "category": "UI/UX & Design",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        }
+      ]
+    },
+    {
+      "name": "Cloud & DevOps",
+      "icon": null,
+      "skills": [
+        {
+          "name": "Google Cloud Platform",
+          "category": "Cloud & DevOps",
+          "proficiency": 80,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "AWS",
+          "category": "Cloud & DevOps",
+          "proficiency": 75,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Microsoft Azure",
+          "category": "Cloud & DevOps",
+          "proficiency": 70,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "CI/CD Pipelines",
+          "category": "Cloud & DevOps",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": [
+            "GitHub Actions",
+            "GitLab CI/CD"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Development Tools",
+      "icon": null,
+      "skills": [
+        {
+          "name": "Android Studio",
+          "category": "Development Tools",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Xcode",
+          "category": "Development Tools",
+          "proficiency": 85,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Visual Studio Code",
+          "category": "Development Tools",
+          "proficiency": 95,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "Git",
+          "category": "Development Tools",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Engineering in Computer Engineering",
+      "institution": "Gujarat Technological University",
+      "location": "Gujarat, India",
+      "startDate": "2017",
+      "endDate": "2021",
+      "gpa": null,
+      "achievements": [
+        "Specialized in Mobile Application Development",
+        "Completed projects in Flutter and Cross-Platform Development"
+      ],
+      "description": "Focused on software engineering principles, mobile application development, and modern development practices."
+    }
+  ]
+}
