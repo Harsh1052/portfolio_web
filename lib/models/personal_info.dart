@@ -90,4 +90,17 @@ class SocialLinks {
       if (others != null) 'others': others,
     };
   }
+
+  /// Convert to Map for easier iteration in UI
+  Map<String, String> toMap() {
+    final map = <String, String>{};
+    if (github != null) map['GitHub'] = github!;
+    if (linkedin != null) map['LinkedIn'] = linkedin!;
+    if (twitter != null) map['Twitter'] = twitter!;
+    if (website != null) map['Website'] = website!;
+    if (medium != null) map['Medium'] = medium!;
+    if (stackoverflow != null) map['StackOverflow'] = stackoverflow!;
+    if (others != null) map.addAll(others!);
+    return map;
+  }
 }

@@ -42,3 +42,22 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Deployment related
+.firebase/
+.netlify/
+.vercel/
+firebase-debug.log
+firebase-debug.*.log
+*.cache
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+build/
+dist/
+
+# Deployment secrets (DO NOT COMMIT)
+firebase-service-account*.json
+.firebaserc.local

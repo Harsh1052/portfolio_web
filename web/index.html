@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -58,6 +58,107 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://harshsureja.dev/">
 
+  <style>
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      left: 16px;
+      top: 16px;
+      width: auto;
+      height: auto;
+      padding: 12px 16px;
+      background: #0ea5e9;
+      color: #fff;
+      border-radius: 8px;
+      outline: 2px solid #0ea5e9;
+      z-index: 10000;
+    }
+  </style>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Harsh Sureja",
+    "jobTitle": "Senior Flutter Developer",
+    "description": "Senior Flutter Developer with 4+ years of expertise in cross-platform mobile and web applications",
+    "url": "https://harshsureja.dev",
+    "image": "https://harshsureja.dev/avatar.jpg",
+    "email": "mailto:contact@harshsureja.dev",
+    "sameAs": [
+      "https://www.linkedin.com/in/harshsureja",
+      "https://github.com/harshsureja",
+      "https://twitter.com/harshsureja"
+    ],
+    "knowsAbout": [
+      "Flutter",
+      "Dart",
+      "Mobile App Development",
+      "Web Development",
+      "Cross-Platform Development",
+      "Clean Architecture",
+      "Bloc Pattern",
+      "State Management",
+      "UI/UX Design",
+      "Firebase",
+      "REST APIs"
+    ],
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Your University Name"
+    },
+    "hasOccupation": {
+      "@type": "Occupation",
+      "name": "Software Developer",
+      "occupationalCategory": "15-1252.00",
+      "estimatedSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": "80000",
+          "maxValue": "150000",
+          "unitText": "YEAR"
+        }
+      }
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Harsh Sureja Portfolio",
+    "url": "https://harshsureja.dev",
+    "description": "Portfolio of Harsh Sureja, Senior Flutter Developer",
+    "inLanguage": "en-US",
+    "author": {
+      "@type": "Person",
+      "name": "Harsh Sureja"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Harsh Sureja",
+      "description": "Senior Flutter Developer specializing in cross-platform applications"
+    }
+  }
+  </script>
+
   <title>Harsh Sureja - Senior Flutter Developer Portfolio</title>
   <link rel="manifest" href="manifest.json">
 
@@ -68,7 +169,9 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>
-<body>
+<body aria-label="Harsh Sureja portfolio application" role="main">
+  <a href="#app-root" class="skip-link" aria-label="Skip to main content">Skip to content</a>
+  <div id="app-root"></div>
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js

@@ -1,7 +1,7 @@
 class Education {
   final String degree;
   final String institution;
-  final String location;
+  final String? location;
   final String startDate;
   final String endDate;
   final String? gpa;
@@ -11,7 +11,7 @@ class Education {
   Education({
     required this.degree,
     required this.institution,
-    required this.location,
+    this.location,
     required this.startDate,
     required this.endDate,
     this.gpa,
@@ -23,7 +23,7 @@ class Education {
     return Education(
       degree: json['degree'] as String,
       institution: json['institution'] as String,
-      location: json['location'] as String,
+      location: json['location'] as String?,
       startDate: json['startDate'] as String,
       endDate: json['endDate'] as String,
       gpa: json['gpa'] as String?,
@@ -38,7 +38,7 @@ class Education {
     return {
       'degree': degree,
       'institution': institution,
-      'location': location,
+      if (location != null) 'location': location,
       'startDate': startDate,
       'endDate': endDate,
       if (gpa != null) 'gpa': gpa,
@@ -46,4 +46,7 @@ class Education {
       if (description != null) 'description': description,
     };
   }
+
+  /// Get duration string
+  String get duration => '$startDate - $endDate';
 }

@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "harsh-portfolio-web"
+  },
+  "targets": {
+    "harsh-portfolio-web": {
+      "hosting": {
+        "portfolio": [
+          "harsh-portfolio-web"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

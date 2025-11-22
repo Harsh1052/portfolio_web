@@ -50,4 +50,16 @@ class Experience {
       if (companyUrl != null) 'companyUrl': companyUrl,
     };
   }
+
+  /// Get first responsibility as description
+  String get description {
+    return responsibilities.isNotEmpty ? responsibilities.first : '';
+  }
+
+  /// Get remaining responsibilities as highlights
+  List<String> get highlights {
+    return responsibilities.length > 1
+        ? responsibilities.sublist(1)
+        : [];
+  }
 }

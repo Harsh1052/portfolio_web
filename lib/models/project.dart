@@ -9,6 +9,7 @@ class Project {
   final String? startDate;
   final String? endDate;
   final bool isFeatured;
+  final String? category;
 
   Project({
     required this.name,
@@ -21,6 +22,7 @@ class Project {
     this.startDate,
     this.endDate,
     this.isFeatured = false,
+    this.category,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
@@ -37,6 +39,7 @@ class Project {
       startDate: json['startDate'] as String?,
       endDate: json['endDate'] as String?,
       isFeatured: json['isFeatured'] as bool? ?? false,
+      category: json['category'] as String?,
     );
   }
 
@@ -52,6 +55,7 @@ class Project {
       if (startDate != null) 'startDate': startDate,
       if (endDate != null) 'endDate': endDate,
       'isFeatured': isFeatured,
+      if (category != null) 'category': category,
     };
   }
 }

@@ -1,51 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import '../controllers/resume_controller.dart';
-import '../utils/constants.dart';
 
+import '../controllers/navigation_controller.dart';
+import '../controllers/resume_controller.dart';
+import '../utils/design_constants.dart';
+import '../widgets/floating_nav_bar.dart';
+import '../widgets/sections/about_section.dart';
+import '../widgets/sections/enhanced_contact_section.dart';
+import '../widgets/sections/enhanced_experience_section.dart';
+import '../widgets/sections/enhanced_hero_section.dart';
+import '../widgets/sections/enhanced_projects_section.dart';
+import '../widgets/sections/enhanced_skills_section.dart';
+
+/// Home Screen - Main container for the portfolio with smooth scrolling
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ResumeController resumeController = Get.put(ResumeController());
+    final NavigationController navController = Get.put(NavigationController());
 
     return Scaffold(
       body: Obx(() {
         if (resumeController.isLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const _AnimatedSplashScreen();
         }
 
         if (resumeController.errorMessage.value.isNotEmpty) {
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.error_outline,
-                  size: 64,
-                  color: AppColors.error,
-                ),
-                const SizedBox(height: AppConstants.spacingM),
-                Text(
-                  'Error Loading Portfolio',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: AppConstants.spacingS),
-                Text(
-                  resumeController.errorMessage.value,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppConstants.spacingL),
-                ElevatedButton.icon(
-                  onPressed: () => resumeController.loadResume(),
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
-                ),
-              ],
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 500),
+              padding: const EdgeInsets.all(DesignConstants.spacingLarge),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(DesignConstants.spacingLarge),
+                    decoration: BoxDecoration(
+                      color: AppColors.errorRed.withAlpha(10),
+                      borderRadius: BorderRadius.circular(
+                        DesignConstants.borderRadiusLarge,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.error_outline,
+                      size: 64,
+                      color: AppColors.errorRed,
+                    ),
+                  ),
+                  const SizedBox(height: DesignConstants.spacingLarge),
+                  Text(
+                    'Error Loading Portfolio',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: DesignConstants.spacingSmall),
+                  Text(
+                    resumeController.errorMessage.value,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: DesignConstants.spacingLarge),
+                  ElevatedButton.icon(
+                    onPressed: () => resumeController.loadResume(),
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Retry'),
+                  ),
+                ],
+              ),
             ),
           );
         }
@@ -57,164 +82,70 @@ class HomeScreen extends StatelessWidget {
           );
         }
 
-        return CustomScrollView(
-          slivers: [
-            // App Bar
-            SliverAppBar(
-              floating: true,
-              snap: true,
-              elevation: 0,
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              title: Text(
-                resume.personalInfo.name,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('About'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Experience'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Projects'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Skills'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Contact'),
-                ),
-                const SizedBox(width: AppConstants.spacingM),
-              ],
-            ),
-
-            // Hero Section
-            SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppConstants.spacingXxl,
-                  vertical: AppConstants.spacingXxl * 2,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Hi, I\'m ${resume.personalInfo.name}',
-                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AppConstants.spacingM),
-                    Text(
-                      resume.personalInfo.title,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: AppColors.primary,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AppConstants.spacingL),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 800),
-                      child: Text(
-                        resume.personalInfo.bio,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              height: 1.6,
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(height: AppConstants.spacingXl),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.download),
-                          label: const Text('Download CV'),
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppConstants.spacingXl,
-                              vertical: AppConstants.spacingL,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: AppConstants.spacingM),
-                        OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.email),
-                          label: const Text('Contact Me'),
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppConstants.spacingXl,
-                              vertical: AppConstants.spacingL,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Quick Stats
-            SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.all(AppConstants.spacingXxl),
-                color: AppColors.surfaceVariant,
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: AppConstants.spacingXl,
-                  runSpacing: AppConstants.spacingL,
-                  children: [
-                    _buildStatCard(
-                      context,
-                      '4+',
-                      'Years Experience',
-                      Icons.work,
-                    ),
-                    _buildStatCard(
-                      context,
-                      '15+',
-                      'Projects Delivered',
-                      Icons.code,
-                    ),
-                    _buildStatCard(
-                      context,
-                      '75k+',
-                      'Active Users',
-                      Icons.people,
-                    ),
-                    _buildStatCard(
-                      context,
-                      '99.9%',
-                      'Uptime',
-                      Icons.trending_up,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Footer Placeholder
-            SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.all(AppConstants.spacingXxl),
-                child: Center(
-                  child: Text(
-                    '© ${DateTime.now().year} ${resume.personalInfo.name}. All rights reserved.',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+        return Stack(
+          children: [
+            // Main scrollable content
+            SingleChildScrollView(
+              controller: navController.scrollController,
+              child: Column(
+                children: [
+                  Semantics(
+                    label: 'Hero section with introduction',
+                    child:
+                        EnhancedHeroSection(personalInfo: resume.personalInfo),
                   ),
-                ),
+                  Semantics(
+                    label: 'About section',
+                    child: AboutSection(personalInfo: resume.personalInfo),
+                  ),
+                  Semantics(
+                    label: 'Skills section',
+                    child: EnhancedSkillsSection(skills: resume.skills),
+                  ),
+                  Semantics(
+                    label: 'Experience section',
+                    child:
+                        EnhancedExperienceSection(experiences: resume.experience),
+                  ),
+                  Semantics(
+                    label: 'Projects section',
+                    child: EnhancedProjectsSection(projects: resume.projects),
+                  ),
+                  Semantics(
+                    label: 'Contact section',
+                    child: EnhancedContactSection(
+                      personalInfo: resume.personalInfo,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Floating Navigation Bar
+            const Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: FloatingNavBar(),
+            ),
+
+            // Scroll progress indicator
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: _ScrollProgressBar(navController: navController),
+            ),
+
+            // Scroll to top button
+            Obx(
+              () => AnimatedPositioned(
+                duration: DesignConstants.animationNormal,
+                right: DesignConstants.spacingMedium,
+                bottom: navController.showFloatingNav.value
+                    ? DesignConstants.spacingMedium
+                    : -100,
+                child: _buildScrollToTopButton(context, navController),
               ),
             ),
           ],
@@ -223,39 +154,123 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(
+  Widget _buildScrollToTopButton(
     BuildContext context,
-    String value,
-    String label,
-    IconData icon,
+    NavigationController navController,
   ) {
-    return Card(
-      elevation: 2,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: AppColors.primaryGradient,
+        borderRadius: BorderRadius.circular(DesignConstants.borderRadiusFull),
+        boxShadow: AppShadows.large,
+      ),
+      child: Semantics(
+        label: 'Back to top',
+        hint: 'Scrolls to the beginning of the page',
+        button: true,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () => navController.scrollToTop(),
+            borderRadius:
+                BorderRadius.circular(DesignConstants.borderRadiusFull),
+            child: Container(
+              width: 56,
+              height: 56,
+              alignment: Alignment.center,
+              child: const Icon(
+                Icons.keyboard_arrow_up,
+                color: Colors.white,
+                size: 32,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Animated splash screen shown during data load
+class _AnimatedSplashScreen extends StatelessWidget {
+  const _AnimatedSplashScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: 'Loading portfolio content',
       child: Container(
-        width: 200,
-        padding: const EdgeInsets.all(AppConstants.spacingL),
-        child: Column(
-          children: [
-            Icon(
-              icon,
-              size: 48,
-              color: AppColors.primary,
-            ),
-            const SizedBox(height: AppConstants.spacingM),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+        decoration: const BoxDecoration(
+          gradient: AppColors.heroGradient,
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(DesignConstants.borderRadiusLarge),
+                  boxShadow: AppShadows.primary,
+                  gradient: AppColors.primaryGradient,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(DesignConstants.spacingLarge),
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
                   ),
-            ),
-            const SizedBox(height: AppConstants.spacingS),
-            Text(
-              label,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
+                ),
+              )
+                  .animate(onPlay: (c) => c.repeat())
+                  .shimmer(duration: 1200.ms, color: Colors.white.withAlpha(60)),
+              const SizedBox(height: DesignConstants.spacingLarge),
+              Text(
+                'Preparing your experience...',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+              )
+                  .animate(onPlay: (c) => c.repeat())
+                  .fadeIn(duration: 800.ms)
+                  .then()
+                  .fadeOut(duration: 800.ms),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Thin progress indicator showing scroll position
+class _ScrollProgressBar extends StatelessWidget {
+  final NavigationController navController;
+
+  const _ScrollProgressBar({required this.navController});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => AnimatedOpacity(
+        duration: DesignConstants.animationFast,
+        opacity: navController.scrollProgress.value > 0 ? 1.0 : 0.0,
+        child: LinearProgressIndicator(
+          value: navController.scrollProgress.value == 0
+              ? null
+              : navController.scrollProgress.value,
+          minHeight: 4,
+          backgroundColor: Theme.of(context)
+              .colorScheme
+              .surface
+              .withAlpha(((0.6) * 255).toInt()),
+          valueColor: AlwaysStoppedAnimation<Color>(
+            Theme.of(context).colorScheme.primary,
+          ),
+          semanticsLabel: 'Scroll progress indicator',
         ),
       ),
     );

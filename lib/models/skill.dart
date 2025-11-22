@@ -34,6 +34,15 @@ class Skill {
       if (subSkills != null) 'subSkills': subSkills,
     };
   }
+
+  /// Get proficiency level as a string
+  String get level {
+    if (proficiency == null) return 'Intermediate';
+    if (proficiency! >= 90) return 'Expert';
+    if (proficiency! >= 70) return 'Advanced';
+    if (proficiency! >= 50) return 'Intermediate';
+    return 'Beginner';
+  }
 }
 
 class SkillCategory {

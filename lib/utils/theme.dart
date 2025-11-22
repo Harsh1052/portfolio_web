@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'constants.dart';
 
 class AppTheme {
   // Light Theme
-  static ThemeData lightTheme = ThemeData(
+  static final ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
       primaryContainer: AppColors.primaryLight,
       secondary: AppColors.accent,
       secondaryContainer: AppColors.accentLight,
       surface: AppColors.surface,
-      background: AppColors.background,
       error: AppColors.error,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: AppColors.textPrimary,
-      onBackground: AppColors.textPrimary,
       onError: Colors.white,
     ),
     textTheme: GoogleFonts.poppinsTextTheme().copyWith(
       displayLarge: GoogleFonts.poppins(textStyle: AppTextStyles.displayLarge),
-      displayMedium: GoogleFonts.poppins(textStyle: AppTextStyles.displayMedium),
+      displayMedium:
+          GoogleFonts.poppins(textStyle: AppTextStyles.displayMedium),
       displaySmall: GoogleFonts.poppins(textStyle: AppTextStyles.displaySmall),
-      headlineLarge: GoogleFonts.poppins(textStyle: AppTextStyles.headlineLarge),
-      headlineMedium: GoogleFonts.poppins(textStyle: AppTextStyles.headlineMedium),
-      headlineSmall: GoogleFonts.poppins(textStyle: AppTextStyles.headlineSmall),
+      headlineLarge:
+          GoogleFonts.poppins(textStyle: AppTextStyles.headlineLarge),
+      headlineMedium:
+          GoogleFonts.poppins(textStyle: AppTextStyles.headlineMedium),
+      headlineSmall:
+          GoogleFonts.poppins(textStyle: AppTextStyles.headlineSmall),
       titleLarge: GoogleFonts.poppins(textStyle: AppTextStyles.titleLarge),
       titleMedium: GoogleFonts.poppins(textStyle: AppTextStyles.titleMedium),
       titleSmall: GoogleFonts.poppins(textStyle: AppTextStyles.titleSmall),
@@ -49,7 +52,7 @@ class AppTheme {
         color: AppColors.textPrimary,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppConstants.radiusL),
@@ -138,68 +141,82 @@ class AppTheme {
   );
 
   // Dark Theme
-  static ThemeData darkTheme = ThemeData(
+  static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryLight,
       primaryContainer: AppColors.primaryDark,
       secondary: AppColors.accentLight,
       secondaryContainer: AppColors.accentDark,
       surface: AppColors.surfaceDark,
-      background: AppColors.backgroundDark,
       error: AppColors.error,
       onPrimary: AppColors.backgroundDark,
       onSecondary: AppColors.backgroundDark,
       onSurface: AppColors.textPrimaryDark,
-      onBackground: AppColors.textPrimaryDark,
       onError: AppColors.backgroundDark,
     ),
-    textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme).copyWith(
+    textTheme:
+        GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme).copyWith(
       displayLarge: GoogleFonts.poppins(
-        textStyle: AppTextStyles.displayLarge.copyWith(color: AppColors.textPrimaryDark),
+        textStyle: AppTextStyles.displayLarge
+            .copyWith(color: AppColors.textPrimaryDark),
       ),
       displayMedium: GoogleFonts.poppins(
-        textStyle: AppTextStyles.displayMedium.copyWith(color: AppColors.textPrimaryDark),
+        textStyle: AppTextStyles.displayMedium
+            .copyWith(color: AppColors.textPrimaryDark),
       ),
       displaySmall: GoogleFonts.poppins(
-        textStyle: AppTextStyles.displaySmall.copyWith(color: AppColors.textPrimaryDark),
+        textStyle: AppTextStyles.displaySmall
+            .copyWith(color: AppColors.textPrimaryDark),
       ),
       headlineLarge: GoogleFonts.poppins(
-        textStyle: AppTextStyles.headlineLarge.copyWith(color: AppColors.textPrimaryDark),
+        textStyle: AppTextStyles.headlineLarge
+            .copyWith(color: AppColors.textPrimaryDark),
       ),
       headlineMedium: GoogleFonts.poppins(
-        textStyle: AppTextStyles.headlineMedium.copyWith(color: AppColors.textPrimaryDark),
+        textStyle: AppTextStyles.headlineMedium
+            .copyWith(color: AppColors.textPrimaryDark),
       ),
       headlineSmall: GoogleFonts.poppins(
-        textStyle: AppTextStyles.headlineSmall.copyWith(color: AppColors.textPrimaryDark),
+        textStyle: AppTextStyles.headlineSmall
+            .copyWith(color: AppColors.textPrimaryDark),
       ),
       titleLarge: GoogleFonts.poppins(
-        textStyle: AppTextStyles.titleLarge.copyWith(color: AppColors.textPrimaryDark),
+        textStyle:
+            AppTextStyles.titleLarge.copyWith(color: AppColors.textPrimaryDark),
       ),
       titleMedium: GoogleFonts.poppins(
-        textStyle: AppTextStyles.titleMedium.copyWith(color: AppColors.textPrimaryDark),
+        textStyle: AppTextStyles.titleMedium
+            .copyWith(color: AppColors.textPrimaryDark),
       ),
       titleSmall: GoogleFonts.poppins(
-        textStyle: AppTextStyles.titleSmall.copyWith(color: AppColors.textPrimaryDark),
+        textStyle:
+            AppTextStyles.titleSmall.copyWith(color: AppColors.textPrimaryDark),
       ),
       bodyLarge: GoogleFonts.roboto(
-        textStyle: AppTextStyles.bodyLarge.copyWith(color: AppColors.textPrimaryDark),
+        textStyle:
+            AppTextStyles.bodyLarge.copyWith(color: AppColors.textPrimaryDark),
       ),
       bodyMedium: GoogleFonts.roboto(
-        textStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondaryDark),
+        textStyle: AppTextStyles.bodyMedium
+            .copyWith(color: AppColors.textSecondaryDark),
       ),
       bodySmall: GoogleFonts.roboto(
-        textStyle: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondaryDark),
+        textStyle: AppTextStyles.bodySmall
+            .copyWith(color: AppColors.textSecondaryDark),
       ),
       labelLarge: GoogleFonts.roboto(
-        textStyle: AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimaryDark),
+        textStyle:
+            AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimaryDark),
       ),
       labelMedium: GoogleFonts.roboto(
-        textStyle: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondaryDark),
+        textStyle: AppTextStyles.labelMedium
+            .copyWith(color: AppColors.textSecondaryDark),
       ),
       labelSmall: GoogleFonts.roboto(
-        textStyle: AppTextStyles.labelSmall.copyWith(color: AppColors.textSecondaryDark),
+        textStyle: AppTextStyles.labelSmall
+            .copyWith(color: AppColors.textSecondaryDark),
       ),
     ),
     appBarTheme: AppBarTheme(
@@ -213,7 +230,7 @@ class AppTheme {
         color: AppColors.textPrimaryDark,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppConstants.radiusL),

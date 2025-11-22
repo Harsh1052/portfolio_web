@@ -1,23 +1,29 @@
 {
-    "name": "portfolio_web",
-    "short_name": "portfolio_web",
+    "name": "Harsh Sureja - Flutter Developer Portfolio",
+    "short_name": "Harsh Sureja",
     "start_url": ".",
+    "scope": "/",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#0F172A",
+    "theme_color": "#0EA5E9",
+    "description": "Senior Flutter Developer with 4+ years of expertise in cross-platform mobile and web applications. Specialized in Dart, Clean Architecture, Bloc state management, and responsive UI/UX design.",
+    "orientation": "any",
     "prefer_related_applications": false,
+    "categories": ["portfolio", "developer", "flutter"],
+    "dir": "ltr",
+    "lang": "en-US",
     "icons": [
         {
             "src": "icons/Icon-192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "icons/Icon-512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "icons/Icon-maskable-192.png",
@@ -30,6 +36,22 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "icons/screenshot-desktop.png",
+            "sizes": "1920x1080",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Desktop view of portfolio"
+        },
+        {
+            "src": "icons/screenshot-mobile.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Mobile view of portfolio"
         }
     ]
 }
