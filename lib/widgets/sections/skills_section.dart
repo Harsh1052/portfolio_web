@@ -37,7 +37,10 @@ class _SkillsSectionState extends State<SkillsSection> {
       child: Container(
         key: navController.sectionKeys['skills'],
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceContainerHighest.withAlpha(((0.3) * 255).toInt()),
+          color: Theme.of(context)
+              .colorScheme
+              .surfaceContainerHighest
+              .withAlpha(((0.3) * 255).toInt()),
         ),
         padding: EdgeInsets.symmetric(
           horizontal: ResponsiveHelper.getContainerPadding(context),
@@ -127,7 +130,7 @@ class _SkillsSectionState extends State<SkillsSection> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
-                childAspectRatio: 1.5,
+                childAspectRatio: 0.85,
                 crossAxisSpacing: DesignConstants.spacingMedium,
                 mainAxisSpacing: DesignConstants.spacingMedium,
               ),
@@ -144,13 +147,20 @@ class _SkillsSectionState extends State<SkillsSection> {
   }
 
   Widget _buildSkillCard(BuildContext context, Skill skill, int categoryIndex) {
+    final proficiency =
+        skill.proficiency ?? (_getLevelValue(skill.level) * 100).toInt();
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(DesignConstants.borderRadiusMedium),
-        boxShadow: AppShadows.small,
+        borderRadius: BorderRadius.circular(DesignConstants.borderRadiusLarge),
+        boxShadow: AppShadows.medium,
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withAlpha(((0.1) * 255).toInt()),
+          color: Theme.of(context)
+              .colorScheme
+              .outline
+              .withAlpha(((0.1) * 255).toInt()),
+          width: 1,
         ),
       ),
       child: Material(
@@ -158,55 +168,131 @@ class _SkillsSectionState extends State<SkillsSection> {
         child: InkWell(
           onTap: () {},
           borderRadius:
-              BorderRadius.circular(DesignConstants.borderRadiusMedium),
+              BorderRadius.circular(DesignConstants.borderRadiusLarge),
           child: Padding(
-            padding: const EdgeInsets.all(DesignConstants.spacingMedium),
+            padding: const EdgeInsets.all(DesignConstants.spacingLarge),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Skill name
-                Text(
-                  skill.name,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                // Icon container at top
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        _getColorForLevel(skill.level)
+                            .withAlpha(((0.2) * 255).toInt()),
+                        _getColorForLevel(skill.level)
+                            .withAlpha(((0.1) * 255).toInt()),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(
+                        DesignConstants.borderRadiusMedium),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.code,
+                      color: _getColorForLevel(skill.level),
+                      size: 24,
+                    ),
+                  ),
                 ),
 
-                const SizedBox(height: DesignConstants.spacingSmall),
+                const SizedBox(height: DesignConstants.spacingMedium),
 
-                // Level indicator
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      skill.level,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withAlpha(((0.6) * 255).toInt()),
+                // Skill name - larger and more prominent
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        skill.name,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              height: 1.2,
+                            ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: DesignConstants.spacingXSmall),
+                      // Level badge
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: DesignConstants.spacingSmall,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _getColorForLevel(skill.level)
+                              .withAlpha(((0.15) * 255).toInt()),
+                          borderRadius: BorderRadius.circular(
+                            DesignConstants.borderRadiusSmall,
                           ),
+                        ),
+                        child: Text(
+                          skill.level,
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: _getColorForLevel(skill.level),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 11,
+                                  ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: DesignConstants.spacingMedium),
+
+                // Horizontal progress bar at bottom
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Proficiency',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withAlpha(((0.6) * 255).toInt()),
+                                    fontSize: 11,
+                                  ),
+                        ),
+                        Text(
+                          '$proficiency%',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: _getColorForLevel(skill.level),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 11,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          DesignConstants.borderRadiusFull),
+                      child: LinearProgressIndicator(
+                        value: proficiency / 100,
+                        minHeight: 6,
+                        backgroundColor: Theme.of(context)
+                            .colorScheme
+                            .outline
+                            .withAlpha(((0.2) * 255).toInt()),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          _getColorForLevel(skill.level),
+                        ),
+                      ),
                     ),
                   ],
-                ),
-
-                const SizedBox(height: DesignConstants.spacingSmall),
-
-                // Progress bar
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: LinearProgressIndicator(
-                    value: _getLevelValue(skill.level),
-                    backgroundColor:
-                        Theme.of(context).colorScheme.outline.withAlpha(((0.2) * 255).toInt()),
-                    valueColor: AlwaysStoppedAnimation(
-                      _getColorForLevel(skill.level),
-                    ),
-                    minHeight: 4,
-                  ),
                 ),
               ],
             ),

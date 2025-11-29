@@ -177,123 +177,67 @@
   ],
   "skills": [
     {
-      "name": "Mobile Development",
+      "name": "Core Technologies",
       "icon": null,
       "skills": [
         {
           "name": "Flutter",
-          "category": "Mobile Development",
+          "category": "Core Technologies",
           "proficiency": 95,
           "icon": null,
           "subSkills": null
         },
         {
-          "name": "Flutter Web",
-          "category": "Mobile Development",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Flutter Desktop",
-          "category": "Mobile Development",
-          "proficiency": 85,
-          "icon": null,
-          "subSkills": null
-        },
-        {
           "name": "Dart",
-          "category": "Mobile Development",
+          "category": "Core Technologies",
           "proficiency": 95,
           "icon": null,
           "subSkills": null
         },
         {
           "name": "Android (Kotlin)",
-          "category": "Mobile Development",
+          "category": "Core Technologies",
           "proficiency": 80,
           "icon": null,
           "subSkills": null
         },
         {
           "name": "iOS (Swift)",
-          "category": "Mobile Development",
+          "category": "Core Technologies",
           "proficiency": 75,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "React Native",
-          "category": "Mobile Development",
-          "proficiency": 70,
           "icon": null,
           "subSkills": null
         }
       ]
     },
     {
-      "name": "State Management & Architecture",
+      "name": "Architecture & State",
       "icon": null,
       "skills": [
         {
-          "name": "Bloc",
-          "category": "State Management & Architecture",
-          "proficiency": 95,
+          "name": "Clean Architecture",
+          "category": "Architecture & State",
+          "proficiency": 90,
           "icon": null,
           "subSkills": null
         },
         {
-          "name": "Cubit",
-          "category": "State Management & Architecture",
+          "name": "Bloc / Cubit",
+          "category": "Architecture & State",
           "proficiency": 95,
           "icon": null,
           "subSkills": null
         },
         {
           "name": "Provider",
-          "category": "State Management & Architecture",
+          "category": "Architecture & State",
           "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "GetX",
-          "category": "State Management & Architecture",
-          "proficiency": 85,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Redux",
-          "category": "State Management & Architecture",
-          "proficiency": 80,
           "icon": null,
           "subSkills": null
         },
         {
           "name": "Riverpod",
-          "category": "State Management & Architecture",
-          "proficiency": 85,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Clean Architecture",
-          "category": "State Management & Architecture",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "MVVM",
-          "category": "State Management & Architecture",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "MVC",
-          "category": "State Management & Architecture",
+          "category": "Architecture & State",
           "proficiency": 85,
           "icon": null,
           "subSkills": null
@@ -301,239 +245,60 @@
       ]
     },
     {
-      "name": "Backend & APIs",
+      "name": "Backend & Cloud",
       "icon": null,
       "skills": [
         {
+          "name": "Firebase",
+          "category": "Backend & Cloud",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
           "name": "RESTful APIs",
-          "category": "Backend & APIs",
+          "category": "Backend & Cloud",
           "proficiency": 90,
           "icon": null,
           "subSkills": null
         },
         {
           "name": "GraphQL",
-          "category": "Backend & APIs",
+          "category": "Backend & Cloud",
           "proficiency": 75,
           "icon": null,
           "subSkills": null
         },
         {
-          "name": "Firebase",
-          "category": "Backend & APIs",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": [
-            "Authentication",
-            "Firestore",
-            "Cloud Functions",
-            "Cloud Messaging"
-          ]
-        },
-        {
-          "name": "Node.js",
-          "category": "Backend & APIs",
-          "proficiency": 70,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "AWS Amplify",
-          "category": "Backend & APIs",
-          "proficiency": 75,
+          "name": "CI/CD (GitHub Actions)",
+          "category": "Backend & Cloud",
+          "proficiency": 85,
           "icon": null,
           "subSkills": null
         }
       ]
     },
     {
-      "name": "Database Management",
+      "name": "Testing & Tools",
       "icon": null,
       "skills": [
         {
-          "name": "SQLite",
-          "category": "Database Management",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Hive",
-          "category": "Database Management",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "MySQL",
-          "category": "Database Management",
-          "proficiency": 80,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Firebase Firestore",
-          "category": "Database Management",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "PostgreSQL",
-          "category": "Database Management",
-          "proficiency": 75,
-          "icon": null,
-          "subSkills": null
-        }
-      ]
-    },
-    {
-      "name": "Testing & Quality Assurance",
-      "icon": null,
-      "skills": [
-        {
-          "name": "Unit Testing",
-          "category": "Testing & Quality Assurance",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Widget Testing",
-          "category": "Testing & Quality Assurance",
+          "name": "Unit & Widget Testing",
+          "category": "Testing & Tools",
           "proficiency": 90,
           "icon": null,
           "subSkills": null
         },
         {
           "name": "Integration Testing",
-          "category": "Testing & Quality Assurance",
+          "category": "Testing & Tools",
           "proficiency": 85,
           "icon": null,
           "subSkills": null
         },
         {
-          "name": "TDD",
-          "category": "Testing & Quality Assurance",
-          "proficiency": 85,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Mockito",
-          "category": "Testing & Quality Assurance",
-          "proficiency": 85,
-          "icon": null,
-          "subSkills": null
-        }
-      ]
-    },
-    {
-      "name": "UI/UX & Design",
-      "icon": null,
-      "skills": [
-        {
-          "name": "Material Design",
-          "category": "UI/UX & Design",
-          "proficiency": 95,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Cupertino Design",
-          "category": "UI/UX & Design",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Custom Animations",
-          "category": "UI/UX & Design",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Responsive Design",
-          "category": "UI/UX & Design",
-          "proficiency": 95,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Adaptive Layouts",
-          "category": "UI/UX & Design",
-          "proficiency": 90,
-          "icon": null,
-          "subSkills": null
-        }
-      ]
-    },
-    {
-      "name": "Cloud & DevOps",
-      "icon": null,
-      "skills": [
-        {
-          "name": "Google Cloud Platform",
-          "category": "Cloud & DevOps",
-          "proficiency": 80,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "AWS",
-          "category": "Cloud & DevOps",
-          "proficiency": 75,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Microsoft Azure",
-          "category": "Cloud & DevOps",
-          "proficiency": 70,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "CI/CD Pipelines",
-          "category": "Cloud & DevOps",
-          "proficiency": 85,
-          "icon": null,
-          "subSkills": [
-            "GitHub Actions",
-            "GitLab CI/CD"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Development Tools",
-      "icon": null,
-      "skills": [
-        {
-          "name": "Android Studio",
-          "category": "Development Tools",
-          "proficiency": 95,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Xcode",
-          "category": "Development Tools",
-          "proficiency": 85,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Visual Studio Code",
-          "category": "Development Tools",
-          "proficiency": 95,
-          "icon": null,
-          "subSkills": null
-        },
-        {
-          "name": "Git",
-          "category": "Development Tools",
+          "name": "DevTools & Profiling",
+          "category": "Testing & Tools",
           "proficiency": 90,
           "icon": null,
           "subSkills": null

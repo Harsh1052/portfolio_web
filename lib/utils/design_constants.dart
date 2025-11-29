@@ -314,6 +314,38 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
+
+  /// Card gradient for dark theme - subtle glassmorphic background
+  static const LinearGradient cardGradientDark = LinearGradient(
+    colors: [
+      Color(0x1AFFFFFF), // 10% white
+      Color(0x0DFFFFFF), // 5% white
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// Card gradient for light theme - subtle glassmorphic background
+  static const LinearGradient cardGradientLight = LinearGradient(
+    colors: [
+      Color(0x33FFFFFF), // 20% white
+      Color(0x1AFFFFFF), // 10% white
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// Shimmer gradient - for loading states
+  static const LinearGradient shimmerGradient = LinearGradient(
+    colors: [
+      Color(0x00FFFFFF),
+      Color(0x33FFFFFF),
+      Color(0x00FFFFFF),
+    ],
+    stops: [0.0, 0.5, 1.0],
+    begin: Alignment(-1.0, -0.3),
+    end: Alignment(1.0, 0.3),
+  );
 }
 
 /// Shadow Definitions for Depth
@@ -457,7 +489,8 @@ class ResponsiveHelper {
 
   /// Check if screen is desktop
   static bool isDesktop(BuildContext context) {
-    return MediaQuery.of(context).size.width >= DesignConstants.breakpointDesktop;
+    return MediaQuery.of(context).size.width >=
+        DesignConstants.breakpointDesktop;
   }
 
   /// Check if screen is large desktop
@@ -491,4 +524,169 @@ class ResponsiveHelper {
     if (isTablet(context)) return DesignConstants.sectionSpacingTablet;
     return DesignConstants.sectionSpacingMobile;
   }
+}
+
+/// Glassmorphic Design Tokens
+/// Contains constants for creating consistent glassmorphic effects
+class GlassmorphicTokens {
+  // Prevent instantiation
+  GlassmorphicTokens._();
+
+  // ==================== BLUR AMOUNTS ====================
+
+  /// Small blur: 5px
+  static const double blurSmall = 5.0;
+
+  /// Medium blur: 10px - default for most glass effects
+  static const double blurMedium = 10.0;
+
+  /// Large blur: 20px - for prominent glass effects
+  static const double blurLarge = 20.0;
+
+  // ==================== OPACITY VALUES ====================
+
+  /// Glass opacity for dark theme
+  static const double opacityDark = 0.1;
+
+  /// Glass opacity for light theme
+  static const double opacityLight = 0.2;
+
+  // ==================== BORDER WIDTHS ====================
+
+  /// Thin border: 0.5px
+  static const double borderThin = 0.5;
+
+  /// Medium border: 1px - default for glass cards
+  static const double borderMedium = 1.0;
+
+  /// Thick border: 2px
+  static const double borderThick = 2.0;
+
+  // ==================== BORDER COLORS ====================
+
+  /// Glass border color for dark theme
+  static const Color glassBorderDark = Color(0x33FFFFFF); // 20% white
+
+  /// Glass border color for light theme
+  static const Color glassBorderLight = Color(0x4DFFFFFF); // 30% white
+}
+
+/// Premium Shadow Definitions for Glassmorphic Effects
+class PremiumShadows {
+  // Prevent instantiation
+  PremiumShadows._();
+
+  // ==================== GLASS SHADOWS ====================
+
+  /// Glass shadow for light theme
+  static const List<BoxShadow> glassLight = [
+    BoxShadow(
+      color: Color(0x0A000000), // 4% black
+      blurRadius: 10,
+      offset: Offset(0, 4),
+    ),
+    BoxShadow(
+      color: Color(0x05000000), // 2% black
+      blurRadius: 20,
+      offset: Offset(0, 8),
+    ),
+  ];
+
+  /// Glass shadow for dark theme
+  static const List<BoxShadow> glassDark = [
+    BoxShadow(
+      color: Color(0x1A000000), // 10% black
+      blurRadius: 10,
+      offset: Offset(0, 4),
+    ),
+    BoxShadow(
+      color: Color(0x0F000000), // 6% black
+      blurRadius: 20,
+      offset: Offset(0, 8),
+    ),
+  ];
+
+  /// Elevated glass shadow for light theme - for hover states
+  static const List<BoxShadow> glassElevatedLight = [
+    BoxShadow(
+      color: Color(0x14000000), // 8% black
+      blurRadius: 16,
+      offset: Offset(0, 8),
+    ),
+    BoxShadow(
+      color: Color(0x0A000000), // 4% black
+      blurRadius: 32,
+      offset: Offset(0, 12),
+    ),
+  ];
+
+  /// Elevated glass shadow for dark theme - for hover states
+  static const List<BoxShadow> glassElevatedDark = [
+    BoxShadow(
+      color: Color(0x26000000), // 15% black
+      blurRadius: 16,
+      offset: Offset(0, 8),
+    ),
+    BoxShadow(
+      color: Color(0x14000000), // 8% black
+      blurRadius: 32,
+      offset: Offset(0, 12),
+    ),
+  ];
+}
+
+/// Particle Animation Configuration
+class ParticleConfig {
+  // Prevent instantiation
+  ParticleConfig._();
+
+  // ==================== PARTICLE COUNTS ====================
+
+  /// Particle count for mobile devices - reduced for performance
+  static const int particleCountMobile = 20;
+
+  /// Particle count for tablet devices
+  static const int particleCountTablet = 40;
+
+  /// Particle count for desktop devices
+  static const int particleCountDesktop = 60;
+
+  // ==================== PARTICLE COLORS ====================
+
+  /// Particle colors for dark theme
+  static const List<Color> colorsDark = [
+    Color(0x330EA5E9), // 20% primary blue
+    Color(0x338B5CF6), // 20% accent purple
+    Color(0x3314B8A6), // 20% accent teal
+    Color(0x1AFFFFFF), // 10% white
+  ];
+
+  /// Particle colors for light theme
+  static const List<Color> colorsLight = [
+    Color(0x1A0EA5E9), // 10% primary blue
+    Color(0x1A8B5CF6), // 10% accent purple
+    Color(0x1A14B8A6), // 10% accent teal
+    Color(0x0D000000), // 5% black
+  ];
+
+  // ==================== PARTICLE SIZES ====================
+
+  /// Minimum particle size
+  static const double minSize = 2.0;
+
+  /// Maximum particle size
+  static const double maxSize = 6.0;
+
+  // ==================== PARTICLE SPEEDS ====================
+
+  /// Minimum particle speed (pixels per second)
+  static const double minSpeed = 10.0;
+
+  /// Maximum particle speed (pixels per second)
+  static const double maxSpeed = 30.0;
+
+  // ==================== PARTICLE OPACITY ====================
+
+  /// Particle opacity
+  static const double opacity = 0.6;
 }

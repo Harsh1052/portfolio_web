@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -9,7 +7,7 @@ import '../../controllers/navigation_controller.dart';
 import '../../models/skill.dart';
 import '../../utils/design_constants.dart';
 
-/// Enhanced Skills Section with filters and impressive animations
+/// Enhanced Skills Section with a professional, clean UI
 class EnhancedSkillsSection extends StatefulWidget {
   final List<SkillCategory> skills;
 
@@ -22,26 +20,9 @@ class EnhancedSkillsSection extends StatefulWidget {
   State<EnhancedSkillsSection> createState() => _EnhancedSkillsSectionState();
 }
 
-class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection>
-    with SingleTickerProviderStateMixin {
+class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection> {
   bool _isVisible = false;
   String _selectedCategory = 'All';
-  late AnimationController _glowController;
-
-  @override
-  void initState() {
-    super.initState();
-    _glowController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _glowController.dispose();
-    super.dispose();
-  }
 
   List<String> get _categories {
     return [
@@ -72,15 +53,7 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection>
       child: Container(
         key: navController.sectionKeys['skills'],
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Theme.of(context).colorScheme.surface,
-              AppColors.primaryBlue.withAlpha(((0.02) * 255).toInt()),
-              AppColors.accentPurple.withAlpha(((0.03) * 255).toInt()),
-            ],
-          ),
+          color: Theme.of(context).colorScheme.surface,
         ),
         padding: EdgeInsets.symmetric(
           horizontal: ResponsiveHelper.getContainerPadding(context),
@@ -137,32 +110,22 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection>
   Widget _buildSectionTitle(BuildContext context) {
     return Column(
       children: [
-        ShaderMask(
-          shaderCallback: (bounds) =>
-              AppColors.primaryGradient.createShader(bounds),
-          child: Text(
-            'Skills & Expertise',
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-            textAlign: TextAlign.center,
-          ),
+        Text(
+          'Technical Expertise',
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.5,
+              ),
+          textAlign: TextAlign.center,
         ),
         const SizedBox(height: DesignConstants.spacingSmall),
-        Container(
-          width: 80,
-          height: 4,
-          decoration: BoxDecoration(
-            gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(height: DesignConstants.spacingMedium),
         Text(
-          'Technologies and tools I work with',
+          'A curated list of technologies I use to build scalable solutions.',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withAlpha(((0.7) * 255).toInt()),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withAlpha(((0.6) * 255).toInt()),
               ),
           textAlign: TextAlign.center,
         ),
@@ -177,41 +140,32 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection>
       alignment: WrapAlignment.center,
       children: _categories.map((category) {
         final isSelected = category == _selectedCategory;
-        return AnimatedContainer(
-          duration: DesignConstants.animationFast,
-          curve: DesignConstants.curveEmphasized,
-          decoration: BoxDecoration(
-            gradient: isSelected ? AppColors.primaryGradient : null,
-            color: isSelected
-                ? null
-                : Theme.of(context).colorScheme.surfaceContainerHighest,
-            borderRadius:
-                BorderRadius.circular(DesignConstants.borderRadiusFull),
-            boxShadow: isSelected ? AppShadows.primary : null,
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                setState(() => _selectedCategory = category);
-              },
+        return InkWell(
+          onTap: () {
+            setState(() => _selectedCategory = category);
+          },
+          borderRadius: BorderRadius.circular(DesignConstants.borderRadiusFull),
+          child: AnimatedContainer(
+            duration: DesignConstants.animationFast,
+            padding: const EdgeInsets.symmetric(
+              horizontal: DesignConstants.spacingMedium,
+              vertical: DesignConstants.spacingSmall,
+            ),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius:
                   BorderRadius.circular(DesignConstants.borderRadiusFull),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DesignConstants.spacingLarge,
-                  vertical: DesignConstants.spacingSmall,
-                ),
-                child: Text(
-                  category,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: isSelected
-                            ? Colors.white
-                            : Theme.of(context).colorScheme.onSurface,
-                      ),
-                ),
-              ),
+            ),
+            child: Text(
+              category,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.onPrimary
+                        : Theme.of(context).colorScheme.onSurface,
+                  ),
             ),
           ),
         );
@@ -228,54 +182,31 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Category header with icon
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(DesignConstants.spacingMedium),
-              decoration: BoxDecoration(
-                gradient: _getGradientForCategory(categoryIndex),
-                borderRadius:
-                    BorderRadius.circular(DesignConstants.borderRadiusMedium),
-                boxShadow: AppShadows.primary,
-              ),
-              child: Icon(
+        // Category Header
+        Padding(
+          padding: const EdgeInsets.only(bottom: DesignConstants.spacingMedium),
+          child: Row(
+            children: [
+              Icon(
                 _getIconForCategory(category.name),
-                color: Colors.white,
-                size: 28,
+                size: 20,
+                color: Theme.of(context).colorScheme.primary,
               ),
-            ),
-            const SizedBox(width: DesignConstants.spacingMedium),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    category.name,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Text(
-                    '${category.skills.length} skills',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withAlpha(((0.6) * 255).toInt()),
-                        ),
-                  ),
-                ],
+              const SizedBox(width: DesignConstants.spacingSmall),
+              Text(
+                category.name,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
 
-        const SizedBox(height: DesignConstants.spacingLarge),
-
-        // Skills grid
+        // Skills Grid
         LayoutBuilder(
           builder: (context, constraints) {
+            // Adaptive column count
             final crossAxisCount =
                 isMobile ? 2 : (constraints.maxWidth > 900 ? 4 : 3);
 
@@ -284,19 +215,14 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection>
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
-                childAspectRatio: 1.0,
+                childAspectRatio: 2.5, // Wider cards for a cleaner list look
                 crossAxisSpacing: DesignConstants.spacingMedium,
                 mainAxisSpacing: DesignConstants.spacingMedium,
               ),
               itemCount: category.skills.length,
               itemBuilder: (context, index) {
                 final skill = category.skills[index];
-                return _buildSkillCard(
-                  context,
-                  skill,
-                  categoryIndex,
-                  index,
-                );
+                return _buildSkillCard(context, skill);
               },
             );
           },
@@ -305,248 +231,132 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection>
     );
   }
 
-  Widget _buildSkillCard(
-    BuildContext context,
-    Skill skill,
-    int categoryIndex,
-    int skillIndex,
-  ) {
+  Widget _buildSkillCard(BuildContext context, Skill skill) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: AnimatedBuilder(
-        animation: _glowController,
-        builder: (context, child) {
-          return Container(
+      child: HoverBuilder(
+        builder: (context, isHovered) {
+          return AnimatedContainer(
+            duration: DesignConstants.animationFast,
+            transform: Matrix4.identity()..scale(isHovered ? 1.02 : 1.0),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
               borderRadius:
-                  BorderRadius.circular(DesignConstants.borderRadiusLarge),
-              boxShadow: [
-                ...AppShadows.medium,
-                BoxShadow(
-                  color: _getColorForCategory(categoryIndex)
-                      .withAlpha(((0.1 * _glowController.value) * 255).toInt()),
-                  blurRadius: 20,
-                  spreadRadius: 2,
-                ),
-              ],
+                  BorderRadius.circular(DesignConstants.borderRadiusMedium),
               border: Border.all(
-                color: Theme.of(context).colorScheme.outline.withAlpha(((0.1) * 255).toInt()),
+                color: isHovered
+                    ? Theme.of(context).colorScheme.primary.withAlpha(100)
+                    : Colors.transparent,
+                width: 1,
               ),
+              boxShadow: isHovered ? AppShadows.small : [],
             ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {},
-                borderRadius:
-                    BorderRadius.circular(DesignConstants.borderRadiusLarge),
-                child: Padding(
-                  padding: const EdgeInsets.all(DesignConstants.spacingMedium),
+            padding: const EdgeInsets.symmetric(
+              horizontal: DesignConstants.spacingMedium,
+              vertical: DesignConstants.spacingSmall,
+            ),
+            child: Row(
+              children: [
+                // Optional: You could add specific icons for each skill if available
+                // For now, using a simple dot indicator
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color:
+                        _getProficiencyColor(context, skill.proficiency ?? 0),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: DesignConstants.spacingMedium),
+                Expanded(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Circular progress indicator
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: CustomPaint(
-                              painter: CircularProgressPainter(
-                                progress: (skill.proficiency ?? 50) / 100,
-                                color: _getColorForCategory(categoryIndex),
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .outline
-                                    .withAlpha(((0.2) * 255).toInt()),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                colors: [
-                                  _getColorForCategory(categoryIndex)
-                                      .withAlpha(((0.2) * 255).toInt()),
-                                  _getColorForCategory(categoryIndex)
-                                      .withAlpha(((0.1) * 255).toInt()),
-                                ],
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '${skill.proficiency ?? 50}%',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          _getColorForCategory(categoryIndex),
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: DesignConstants.spacingMedium),
-
-                      // Skill name
                       Text(
                         skill.name,
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-
-                      const SizedBox(height: DesignConstants.spacingXSmall),
-
-                      // Level badge
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: DesignConstants.spacingSmall,
-                          vertical: DesignConstants.spacingXSmall,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getColorForCategory(categoryIndex)
-                              .withAlpha(((0.1) * 255).toInt()),
-                          borderRadius: BorderRadius.circular(
-                            DesignConstants.borderRadiusSmall,
+                      if (skill.proficiency != null) ...[
+                        const SizedBox(height: 4),
+                        // Simple linear progress bar
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(2),
+                          child: LinearProgressIndicator(
+                            value: skill.proficiency! / 100,
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              _getProficiencyColor(context, skill.proficiency!),
+                            ),
+                            minHeight: 4,
                           ),
                         ),
-                        child: Text(
-                          skill.level,
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: _getColorForCategory(categoryIndex),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                        ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
-              ),
+              ],
             ),
           );
         },
       ),
-    )
-        .animate(
-          onPlay: (controller) => controller.repeat(reverse: true),
-        )
-        .scale(
-          begin: const Offset(1, 1),
-          end: const Offset(1.02, 1.02),
-          duration: 2000.ms,
-          delay: Duration(milliseconds: 100 * skillIndex),
-        );
+    );
+  }
+
+  Color _getProficiencyColor(BuildContext context, int proficiency) {
+    if (proficiency >= 90) return AppColors.primaryBlue;
+    if (proficiency >= 80) return AppColors.accentTeal;
+    return AppColors.accentPurple;
   }
 
   IconData _getIconForCategory(String category) {
     final categoryLower = category.toLowerCase();
-    if (categoryLower.contains('frontend') ||
-        categoryLower.contains('web') ||
-        categoryLower.contains('ui')) {
-      return Icons.web;
+    if (categoryLower.contains('core') || categoryLower.contains('mobile')) {
+      return Icons.smartphone;
     }
-    if (categoryLower.contains('backend') || categoryLower.contains('server')) {
-      return Icons.dns;
+    if (categoryLower.contains('architecture') ||
+        categoryLower.contains('state')) {
+      return Icons.layers;
     }
-    if (categoryLower.contains('mobile') || categoryLower.contains('app')) {
-      return Icons.phone_android;
+    if (categoryLower.contains('backend') || categoryLower.contains('cloud')) {
+      return Icons.cloud;
     }
-    if (categoryLower.contains('database') || categoryLower.contains('data')) {
-      return Icons.storage;
-    }
-    if (categoryLower.contains('tool') || categoryLower.contains('devops')) {
-      return Icons.build_circle;
+    if (categoryLower.contains('testing') || categoryLower.contains('tools')) {
+      return Icons.build;
     }
     if (categoryLower.contains('design')) {
       return Icons.palette;
     }
-    if (categoryLower.contains('language')) {
-      return Icons.code;
-    }
-    return Icons.star;
-  }
-
-  Gradient _getGradientForCategory(int index) {
-    final gradients = [
-      AppColors.primaryGradient,
-      AppColors.secondaryGradient,
-      AppColors.accentGradient,
-      const LinearGradient(
-        colors: [AppColors.successGreen, AppColors.accentTeal],
-      ),
-    ];
-    return gradients[index % gradients.length];
-  }
-
-  Color _getColorForCategory(int index) {
-    final colors = [
-      AppColors.primaryBlue,
-      AppColors.accentPurple,
-      AppColors.accentTeal,
-      AppColors.successGreen,
-    ];
-    return colors[index % colors.length];
+    return Icons.code;
   }
 }
 
-/// Custom painter for circular progress indicator
-class CircularProgressPainter extends CustomPainter {
-  final double progress;
-  final Color color;
-  final Color backgroundColor;
+/// Helper widget to handle hover state
+class HoverBuilder extends StatefulWidget {
+  final Widget Function(BuildContext context, bool isHovered) builder;
 
-  CircularProgressPainter({
-    required this.progress,
-    required this.color,
-    required this.backgroundColor,
-  });
+  const HoverBuilder({super.key, required this.builder});
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
+  State<HoverBuilder> createState() => _HoverBuilderState();
+}
 
-    // Background circle
-    final bgPaint = Paint()
-      ..color = backgroundColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 8
-      ..strokeCap = StrokeCap.round;
+class _HoverBuilderState extends State<HoverBuilder> {
+  bool _isHovered = false;
 
-    canvas.drawCircle(center, radius, bgPaint);
-
-    // Progress arc
-    final progressPaint = Paint()
-      ..shader = LinearGradient(
-        colors: [color, color.withAlpha(((0.6) * 255).toInt())],
-      ).createShader(Rect.fromCircle(center: center, radius: radius))
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 8
-      ..strokeCap = StrokeCap.round;
-
-    canvas.drawArc(
-      Rect.fromCircle(center: center, radius: radius),
-      -pi / 2,
-      2 * pi * progress,
-      false,
-      progressPaint,
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: widget.builder(context, _isHovered),
     );
   }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
