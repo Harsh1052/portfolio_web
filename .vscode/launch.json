@@ -1,0 +1,85 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "setu_farmer_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "SetuFarm",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "prod"
+            ]
+        },
+        {
+            "name": "SetuFarm Dev",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "dev"
+            ]
+        },
+        {
+            "name": "SetuFarm Dev Profile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "args": [
+                "--flavor",
+                "dev"
+            ]
+        },
+        {
+            "name": "SetuFarm Dev Release",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--flavor",
+                "dev"
+            ]
+        },
+        {
+            "name": "SetuFarm QA",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "qa"
+            ]
+        },
+        {
+            "name": "SetuFarm PROD",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "prod"
+            ]
+        },
+        {
+            "name": "Test setu_farmer_app",
+            "request": "launch",
+            "type": "dart",
+            "program": "test",
+            "args": [
+                "--coverage",
+                "--dart-define=kTestMode=true"
+            ]
+        },
+        {
+            "name": "setu_farmer_app (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        }
+    ]
+}
