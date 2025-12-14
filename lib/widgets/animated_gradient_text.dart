@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../utils/design_constants.dart';
 
 /// Animated text widget with gradient effects and shimmer animations
-/// 
+///
 /// This widget creates text with a gradient fill and optional shimmer animation
 /// for a premium, modern look.
 class AnimatedGradientText extends StatelessWidget {
@@ -64,7 +64,7 @@ class AnimatedGradientText extends StatelessWidget {
           .animate(onPlay: (controller) => controller.repeat())
           .shimmer(
             duration: shimmerDuration,
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withValues(alpha: 0.3),
           );
     }
 
@@ -129,8 +129,7 @@ class TypewriterGradientText extends StatefulWidget {
   });
 
   @override
-  State<TypewriterGradientText> createState() =>
-      _TypewriterGradientTextState();
+  State<TypewriterGradientText> createState() => _TypewriterGradientTextState();
 }
 
 class _TypewriterGradientTextState extends State<TypewriterGradientText>

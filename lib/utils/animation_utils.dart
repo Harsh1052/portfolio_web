@@ -8,7 +8,7 @@ class AnimationUtils {
   AnimationUtils._();
 
   /// Creates a stagger animation for list items
-  /// 
+  ///
   /// [index] - Index of the item in the list
   /// [itemCount] - Total number of items
   /// [child] - Widget to animate
@@ -38,7 +38,7 @@ class AnimationUtils {
   }
 
   /// Creates a scroll-triggered animation
-  /// 
+  ///
   /// [child] - Widget to animate
   /// [delay] - Delay before animation starts
   static Widget createScrollAnimation({
@@ -69,24 +69,22 @@ class AnimationUtils {
   }
 
   /// Creates a shimmer animation effect
-  /// 
+  ///
   /// [child] - Widget to apply shimmer to
   /// [duration] - Duration of one shimmer cycle
   static Widget createShimmerAnimation({
     required Widget child,
     Duration duration = const Duration(milliseconds: 2000),
   }) {
-    return child
-        .animate(onPlay: (controller) => controller.repeat())
-        .shimmer(
+    return child.animate(onPlay: (controller) => controller.repeat()).shimmer(
           duration: duration,
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withValues(alpha: 0.3),
           angle: 0.5,
         );
   }
 
   /// Creates a pulse animation effect
-  /// 
+  ///
   /// [child] - Widget to pulse
   /// [duration] - Duration of one pulse cycle
   /// [scale] - Maximum scale factor
@@ -106,7 +104,7 @@ class AnimationUtils {
   }
 
   /// Creates a floating animation effect
-  /// 
+  ///
   /// [child] - Widget to float
   /// [duration] - Duration of one float cycle
   /// [offset] - Maximum vertical offset
@@ -126,23 +124,21 @@ class AnimationUtils {
   }
 
   /// Creates a gradient text shimmer animation
-  /// 
+  ///
   /// [child] - Text widget to animate
   /// [gradient] - Gradient to use for shimmer
   static Widget createGradientShimmer({
     required Widget child,
     Gradient gradient = AppColors.primaryGradient,
   }) {
-    return child
-        .animate(onPlay: (controller) => controller.repeat())
-        .shimmer(
+    return child.animate(onPlay: (controller) => controller.repeat()).shimmer(
           duration: 2000.ms,
-          color: Colors.white.withOpacity(0.5),
+          color: Colors.white.withValues(alpha: 0.5),
         );
   }
 
   /// Creates a reveal animation from left
-  /// 
+  ///
   /// [child] - Widget to reveal
   /// [delay] - Delay before animation starts
   static Widget createRevealFromLeft({
@@ -165,7 +161,7 @@ class AnimationUtils {
   }
 
   /// Creates a reveal animation from right
-  /// 
+  ///
   /// [child] - Widget to reveal
   /// [delay] - Delay before animation starts
   static Widget createRevealFromRight({
@@ -188,7 +184,7 @@ class AnimationUtils {
   }
 
   /// Creates a scale-in animation
-  /// 
+  ///
   /// [child] - Widget to scale in
   /// [delay] - Delay before animation starts
   static Widget createScaleIn({
@@ -211,7 +207,7 @@ class AnimationUtils {
   }
 
   /// Creates a bounce animation
-  /// 
+  ///
   /// [child] - Widget to bounce
   /// [delay] - Delay before animation starts
   static Widget createBounceAnimation({
@@ -228,16 +224,14 @@ class AnimationUtils {
   }
 
   /// Creates a rotation animation
-  /// 
+  ///
   /// [child] - Widget to rotate
   /// [duration] - Duration of one rotation
   static Widget createRotationAnimation({
     required Widget child,
     Duration duration = const Duration(milliseconds: 2000),
   }) {
-    return child
-        .animate(onPlay: (controller) => controller.repeat())
-        .rotate(
+    return child.animate(onPlay: (controller) => controller.repeat()).rotate(
           begin: 0,
           end: 1,
           duration: duration,

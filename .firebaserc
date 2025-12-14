@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "harsh-portfolio-web"
+    "default": "harsh-portfolio-web-1052"
   },
   "targets": {
-    "harsh-portfolio-web": {
+    "harsh-portfolio-web-1052": {
       "hosting": {
         "portfolio": [
-          "harsh-portfolio-web"
+          "harsh-portfolio-web-1052"
         ]
       }
     }

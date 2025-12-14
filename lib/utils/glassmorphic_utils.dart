@@ -22,11 +22,6 @@ class GlassmorphicUtils {
     Gradient? gradient,
     double? borderWidth,
   }) {
-    final effectiveBlur = blurRadius ?? GlassmorphicTokens.blurMedium;
-    final effectiveOpacity = opacity ??
-        (isDark
-            ? GlassmorphicTokens.opacityDark
-            : GlassmorphicTokens.opacityLight);
     final effectiveBorderWidth = borderWidth ?? GlassmorphicTokens.borderMedium;
 
     return BoxDecoration(
@@ -99,12 +94,12 @@ class GlassmorphicUtils {
   }) {
     return [
       BoxShadow(
-        color: color.withOpacity(0.4 * intensity),
+        color: color.withValues(alpha: 0.4 * intensity),
         blurRadius: 20,
         offset: const Offset(0, 4),
       ),
       BoxShadow(
-        color: color.withOpacity(0.2 * intensity),
+        color: color.withValues(alpha: 0.2 * intensity),
         blurRadius: 40,
         offset: const Offset(0, 8),
       ),

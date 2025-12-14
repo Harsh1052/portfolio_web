@@ -4,7 +4,7 @@ import '../utils/design_constants.dart';
 import '../utils/glassmorphic_utils.dart';
 
 /// Animated particle background for hero section with floating particles
-/// 
+///
 /// Creates an immersive background with animated particles that float and move.
 /// Optimized for performance with CustomPainter and responsive particle counts.
 class ParticleBackground extends StatefulWidget {
@@ -61,12 +61,11 @@ class _ParticleBackgroundState extends State<ParticleBackground>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final particleCount = widget.particleCount ??
-        GlassmorphicUtils.getParticleCount(context);
-    final colors = widget.colors ??
-        GlassmorphicUtils.getParticleColors(isDark);
+    final particleCount =
+        widget.particleCount ?? GlassmorphicUtils.getParticleCount(context);
+    final colors = widget.colors ?? GlassmorphicUtils.getParticleColors(isDark);
 
     if (_particles.isEmpty) {
       _particles = List.generate(
@@ -201,7 +200,7 @@ class ParticlePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     for (var particle in particles) {
       final paint = Paint()
-        ..color = particle.color.withOpacity(ParticleConfig.opacity)
+        ..color = particle.color.withValues(alpha: ParticleConfig.opacity)
         ..style = PaintingStyle.fill;
 
       final position = Offset(
@@ -214,7 +213,7 @@ class ParticlePainter extends CustomPainter {
 
       // Optional: Draw glow effect
       final glowPaint = Paint()
-        ..color = particle.color.withOpacity(ParticleConfig.opacity * 0.3)
+        ..color = particle.color.withValues(alpha: ParticleConfig.opacity * 0.3)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
 
       canvas.drawCircle(position, particle.size * 1.5, glowPaint);
@@ -243,10 +242,9 @@ class StaticParticleBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final count = particleCount ??
-        GlassmorphicUtils.getParticleCount(context);
-    final particleColors = colors ??
-        GlassmorphicUtils.getParticleColors(isDark);
+    final count = particleCount ?? GlassmorphicUtils.getParticleCount(context);
+    final particleColors =
+        colors ?? GlassmorphicUtils.getParticleColors(isDark);
 
     return CustomPaint(
       painter: StaticParticlePainter(
@@ -275,7 +273,7 @@ class StaticParticlePainter extends CustomPainter {
     for (var i = 0; i < particleCount; i++) {
       final paint = Paint()
         ..color = colors[random.nextInt(colors.length)]
-            .withOpacity(ParticleConfig.opacity)
+            .withValues(alpha: ParticleConfig.opacity)
         ..style = PaintingStyle.fill;
 
       final position = Offset(
