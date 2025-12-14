@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -54,6 +55,7 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection> {
         key: navController.sectionKeys['skills'],
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
+          // Add a subtle background pattern or gradient if desired here
         ),
         padding: EdgeInsets.symmetric(
           horizontal: ResponsiveHelper.getContainerPadding(context),
@@ -157,6 +159,7 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection> {
                   : Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius:
                   BorderRadius.circular(DesignConstants.borderRadiusFull),
+              boxShadow: isSelected ? AppShadows.small : null,
             ),
             child: Text(
               category,
@@ -189,13 +192,13 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection> {
             children: [
               Icon(
                 _getIconForCategory(category.name),
-                size: 20,
+                size: 24,
                 color: Theme.of(context).colorScheme.primary,
               ),
               const SizedBox(width: DesignConstants.spacingSmall),
               Text(
                 category.name,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -206,23 +209,23 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection> {
         // Skills Grid
         LayoutBuilder(
           builder: (context, constraints) {
-            // Adaptive column count
+            // Adaptive column count for glass cards
             final crossAxisCount =
-                isMobile ? 2 : (constraints.maxWidth > 900 ? 4 : 3);
+                isMobile ? 2 : (constraints.maxWidth > 900 ? 5 : 4);
 
             return GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
-                childAspectRatio: 2.5, // Wider cards for a cleaner list look
+                childAspectRatio: 1.2, // Square-ish cards
                 crossAxisSpacing: DesignConstants.spacingMedium,
                 mainAxisSpacing: DesignConstants.spacingMedium,
               ),
               itemCount: category.skills.length,
               itemBuilder: (context, index) {
                 final skill = category.skills[index];
-                return _buildSkillCard(context, skill);
+                return _buildGlassSkillCard(context, skill);
               },
             );
           },
@@ -231,89 +234,108 @@ class _EnhancedSkillsSectionState extends State<EnhancedSkillsSection> {
     );
   }
 
-  Widget _buildSkillCard(BuildContext context, Skill skill) {
+  Widget _buildGlassSkillCard(BuildContext context, Skill skill) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: HoverBuilder(
         builder: (context, isHovered) {
-          return AnimatedContainer(
-            duration: DesignConstants.animationFast,
-            transform: Matrix4.identity()..scale(isHovered ? 1.02 : 1.0),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerLow,
-              borderRadius:
-                  BorderRadius.circular(DesignConstants.borderRadiusMedium),
-              border: Border.all(
-                color: isHovered
-                    ? Theme.of(context).colorScheme.primary.withAlpha(100)
-                    : Colors.transparent,
-                width: 1,
-              ),
-              boxShadow: isHovered ? AppShadows.small : [],
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: DesignConstants.spacingMedium,
-              vertical: DesignConstants.spacingSmall,
-            ),
-            child: Row(
-              children: [
-                // Optional: You could add specific icons for each skill if available
-                // For now, using a simple dot indicator
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color:
-                        _getProficiencyColor(context, skill.proficiency ?? 0),
-                    shape: BoxShape.circle,
+          // Determine colors based on theme
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+          final glassColor =
+              isDark ? Colors.white.withAlpha(10) : Colors.black.withAlpha(5);
+          final borderColor = isHovered
+              ? Theme.of(context).colorScheme.primary.withAlpha(150)
+              : Theme.of(context).colorScheme.outline.withAlpha(50);
+
+          return ClipRRect(
+            borderRadius:
+                BorderRadius.circular(DesignConstants.borderRadiusMedium),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: AnimatedContainer(
+                duration: DesignConstants.animationFast,
+                transform: Matrix4.identity()
+                  ..translate(0, isHovered ? -4.0 : 0.0), // Use double literals
+                decoration: BoxDecoration(
+                  color: glassColor,
+                  borderRadius:
+                      BorderRadius.circular(DesignConstants.borderRadiusMedium),
+                  border: Border.all(
+                    color: borderColor,
+                    width: isHovered ? 1.5 : 1,
                   ),
+                  boxShadow: isHovered ? AppShadows.primary : [],
+                  gradient: isHovered
+                      ? LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            glassColor,
+                            Theme.of(context).colorScheme.primary.withAlpha(20),
+                          ],
+                        )
+                      : null,
                 ),
-                const SizedBox(width: DesignConstants.spacingMedium),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        skill.name,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                padding: const EdgeInsets.all(DesignConstants.spacingMedium),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Icon logic (if available) or just first letter styled nicely
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color:
+                            Theme.of(context).colorScheme.primary.withAlpha(20),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      if (skill.proficiency != null) ...[
-                        const SizedBox(height: 4),
-                        // Simple linear progress bar
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(2),
-                          child: LinearProgressIndicator(
-                            value: skill.proficiency! / 100,
-                            backgroundColor: Theme.of(context)
-                                .colorScheme
-                                .surfaceContainerHighest,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              _getProficiencyColor(context, skill.proficiency!),
-                            ),
-                            minHeight: 4,
+                      child: Icon(
+                        skill.icon != null
+                            ? Icons.code
+                            : _getIconForCategory(skill.category),
+                        // Fallback to category icon if skill icon missing
+                        size: 24,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      skill.name,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                      ],
-                    ],
-                  ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondaryContainer
+                            .withAlpha(100),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        skill.level,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },
       ),
     );
-  }
-
-  Color _getProficiencyColor(BuildContext context, int proficiency) {
-    if (proficiency >= 90) return AppColors.primaryBlue;
-    if (proficiency >= 80) return AppColors.accentTeal;
-    return AppColors.accentPurple;
   }
 
   IconData _getIconForCategory(String category) {
