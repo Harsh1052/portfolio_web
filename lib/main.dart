@@ -1,34 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-import 'utils/app_theme.dart';
-import 'utils/design_constants.dart';
-import 'utils/shader_warmup.dart';
-import 'controllers/theme_controller.dart';
-import 'services/resume_service.dart';
-import 'services/firebase_service.dart';
-import 'screens/home_screen.dart';
-import 'screens/not_found_screen.dart';
+import 'core/theme/app_theme.dart';
+import 'core/routing/app_pages.dart';
+import 'features/content/presentation/bindings/content_binding.dart';
 
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Firebase (non-blocking if config is missing)
-  final firebaseService = Get.put(FirebaseService(), permanent: true);
-  await firebaseService.init();
-
-  // Initialize GetX controllers
-  Get.put(ThemeController());
-
-  // Initialize Resume Service for auto-loading and hot reload
-  Get.put(ResumeService());
-
-  // Run app with shader warmup for smooth animations
-  runApp(
-    ShaderWarmup.builder(
-      child: const PortfolioApp(),
-    ),
-  );
+  // Firebase is NOT initialized here — ContentBinding defers it until needed.
+  runApp(const PortfolioApp());
 }
 
 class PortfolioApp extends StatelessWidget {
@@ -36,53 +15,32 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = Get.find<ThemeController>();
+    return GetMaterialApp(
+      title: 'Harsh Sureja',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      initialBinding: ContentBinding(),
+      initialRoute: AppRoutes.home,
+      getPages: AppPages.pages,
+      unknownRoute: GetPage(
+        name: '/404',
+        page: () => const _NotFoundPage(),
+      ),
+    );
+  }
+}
 
-    return Obx(
-      () => GetMaterialApp(
-        title: 'Harsh Sureja Portfolio',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: themeController.themeMode,
-        builder: (context, child) => ResponsiveBreakpoints.builder(
-          child: child!,
-          breakpoints: [
-            const Breakpoint(
-              start: 0,
-              end: DesignConstants.breakpointMobile,
-              name: MOBILE,
-            ),
-            const Breakpoint(
-              start: DesignConstants.breakpointMobile,
-              end: DesignConstants.breakpointTablet,
-              name: TABLET,
-            ),
-            const Breakpoint(
-              start: DesignConstants.breakpointTablet,
-              end: double.infinity,
-              name: DESKTOP,
-            ),
-          ],
-        ),
-        initialRoute: '/',
-        getPages: [
-          GetPage(
-            name: '/',
-            page: () => const HomeScreen(),
-            transition: Transition.fadeIn,
-            transitionDuration: DesignConstants.animationNormal,
-          ),
-          GetPage(
-            name: '/404',
-            page: () => const NotFoundScreen(),
-            transition: Transition.fade,
-            transitionDuration: DesignConstants.animationFast,
-          ),
-        ],
-        unknownRoute: GetPage(
-          name: '/404',
-          page: () => const NotFoundScreen(),
+class _NotFoundPage extends StatelessWidget {
+  const _NotFoundPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFFAFAFA),
+      body: Center(
+        child: Text(
+          '404',
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
     );

@@ -1,191 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-  <!-- Primary Meta Tags -->
-  <title>Harsh Sureja - Senior Flutter Developer | Mobile & Web App Development</title>
-  <meta name="title" content="Harsh Sureja - Senior Flutter Developer | Mobile & Web App Development">
-  <meta name="description" content="Senior Flutter Developer with 4+ years of expertise in cross-platform mobile and web applications. Specialized in Dart, Clean Architecture, Bloc state management, and responsive UI/UX design.">
-  <meta name="keywords" content="Flutter Developer, Dart, Mobile App Development, Web Development, Cross-Platform, Bloc, Clean Architecture, UI/UX, Harsh Sureja">
+  <!-- Primary meta -->
+  <title>Harsh Sureja — Flutter Developer</title>
+  <meta name="title" content="Harsh Sureja — Flutter Developer">
+  <meta name="description" content="I build mobile and web apps for people who don't have flagship phones. 15,000 farmers across rural India use what I ship daily.">
   <meta name="author" content="Harsh Sureja">
   <meta name="robots" content="index, follow">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://harshsureja.dev/">
-  <meta property="og:title" content="Harsh Sureja - Senior Flutter Developer">
-  <meta property="og:description" content="Senior Flutter Developer with 4+ years of expertise in developing high-performance cross-platform applications. 15+ production apps serving 75,000+ users.">
-  <meta property="og:image" content="https://harshsureja.dev/preview.png">
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://harshsureja.dev/">
-  <meta property="twitter:title" content="Harsh Sureja - Senior Flutter Developer">
-  <meta property="twitter:description" content="Senior Flutter Developer with 4+ years of expertise in developing high-performance cross-platform applications.">
-  <meta property="twitter:image" content="https://harshsureja.dev/preview.png">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Harsh Sureja Portfolio">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#2196F3">
-  <meta name="msapplication-TileColor" content="#2196F3">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <!-- Canonical URL -->
   <link rel="canonical" href="https://harshsureja.dev/">
 
-  <style>
-    .skip-link {
-      position: absolute;
-      left: -999px;
-      top: auto;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-    }
-    .skip-link:focus {
-      left: 16px;
-      top: 16px;
-      width: auto;
-      height: auto;
-      padding: 12px 16px;
-      background: #0ea5e9;
-      color: #fff;
-      border-radius: 8px;
-      outline: 2px solid #0ea5e9;
-      z-index: 10000;
-    }
-  </style>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://harshsureja.dev/">
+  <meta property="og:title" content="Harsh Sureja — Flutter Developer">
+  <meta property="og:description" content="I build mobile and web apps for people who don't have flagship phones. 15,000 farmers across rural India use what I ship daily.">
+  <meta property="og:image" content="https://harsh-portfolio-web.web.app/preview.png">
 
-  <!-- Structured Data (JSON-LD) -->
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://harshsureja.dev/">
+  <meta name="twitter:title" content="Harsh Sureja — Flutter Developer">
+  <meta name="twitter:description" content="I build mobile and web apps for people who don't have flagship phones. 15,000 farmers across rural India use what I ship daily.">
+  <meta name="twitter:image" content="https://harsh-portfolio-web.web.app/preview.png">
+
+  <!-- Theme / PWA -->
+  <meta name="theme-color" content="#FAFAFA">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Harsh Sureja">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Font loading: preconnect first, then load only the weights we use -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Firestore preconnect — deferred init, but pre-warm the connection -->
+  <link rel="preconnect" href="https://firestore.googleapis.com">
+
+  <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Harsh Sureja",
-    "jobTitle": "Senior Flutter Developer",
-    "description": "Senior Flutter Developer with 4+ years of expertise in cross-platform mobile and web applications",
+    "jobTitle": "Flutter Developer",
+    "description": "I build mobile and web apps for people who don't have flagship phones. 15,000 farmers across rural India use what I ship daily.",
     "url": "https://harshsureja.dev",
-    "image": "https://harshsureja.dev/avatar.jpg",
-    "email": "mailto:contact@harshsureja.dev",
+    "email": "mailto:surejapatel@gmail.com",
     "sameAs": [
-      "https://www.linkedin.com/in/harshsureja",
       "https://github.com/harshsureja",
-      "https://twitter.com/harshsureja"
-    ],
-    "knowsAbout": [
-      "Flutter",
-      "Dart",
-      "Mobile App Development",
-      "Web Development",
-      "Cross-Platform Development",
-      "Clean Architecture",
-      "Bloc Pattern",
-      "State Management",
-      "UI/UX Design",
-      "Firebase",
-      "REST APIs"
+      "https://linkedin.com/in/harshsureja",
+      "https://medium.com/@surejapatel"
     ],
     "alumniOf": {
       "@type": "CollegeOrUniversity",
-      "name": "Your University Name"
+      "name": "Gujarat Technological University"
     },
-    "hasOccupation": {
-      "@type": "Occupation",
-      "name": "Software Developer",
-      "occupationalCategory": "15-1252.00",
-      "estimatedSalary": {
-        "@type": "MonetaryAmount",
-        "currency": "USD",
-        "value": {
-          "@type": "QuantitativeValue",
-          "minValue": "80000",
-          "maxValue": "150000",
-          "unitText": "YEAR"
-        }
-      }
-    }
+    "knowsAbout": ["Flutter", "Dart", "Firebase", "Mobile App Development", "Flutter Web"]
   }
   </script>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Harsh Sureja Portfolio",
-    "url": "https://harshsureja.dev",
-    "description": "Portfolio of Harsh Sureja, Senior Flutter Developer",
-    "inLanguage": "en-US",
-    "author": {
-      "@type": "Person",
-      "name": "Harsh Sureja"
+  <!-- Skip-to-content for keyboard/screen reader users -->
+  <style>
+    body { margin: 0; background-color: #FAFAFA; }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 16px;
+      padding: 12px 16px;
+      background: #0EA5E9;
+      color: #fff;
+      border-radius: 8px;
+      font-family: Inter, sans-serif;
+      font-size: 15px;
+      z-index: 10000;
+      text-decoration: none;
     }
-  }
-  </script>
+    .skip-link:focus { left: 16px; }
+  </style>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    "mainEntity": {
-      "@type": "Person",
-      "name": "Harsh Sureja",
-      "description": "Senior Flutter Developer specializing in cross-platform applications"
-    }
-  }
-  </script>
-
-  <title>Harsh Sureja - Senior Flutter Developer Portfolio</title>
-  <link rel="manifest" href="manifest.json">
-
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
 </head>
-<body aria-label="Harsh Sureja portfolio application" role="main">
-  <a href="#app-root" class="skip-link" aria-label="Skip to main content">Skip to content</a>
+<body>
+  <a href="#app-root" class="skip-link">Skip to content</a>
   <div id="app-root"></div>
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-  </script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
