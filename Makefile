@@ -18,9 +18,15 @@ install: ## Install dependencies
 	@echo "$(BLUE)📦 Installing dependencies...$(NC)"
 	fvm flutter pub get
 
-dev: ## Run development server
+dev: ## Run development server (always runs pub get first to avoid stale .dart_tool)
 	@echo "$(BLUE)🚀 Starting development server...$(NC)"
+	fvm flutter pub get
 	fvm flutter run -d chrome
+
+preview: ## Run production release build locally (catches prod-only bugs before deploy)
+	@echo "$(BLUE)🔍 Starting release preview...$(NC)"
+	fvm flutter pub get
+	fvm flutter run -d chrome --release
 
 build: ## Build for production
 	@echo "$(BLUE)🏗️  Building for production...$(NC)"

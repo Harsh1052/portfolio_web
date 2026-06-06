@@ -1,17 +1,17 @@
 {
-    "name": "Harsh Sureja - Flutter Developer Portfolio",
+    "name": "Harsh Sureja — Flutter Developer",
     "short_name": "Harsh Sureja",
     "start_url": ".",
     "scope": "/",
     "display": "standalone",
-    "background_color": "#0F172A",
-    "theme_color": "#0EA5E9",
-    "description": "Senior Flutter Developer with 4+ years of expertise in cross-platform mobile and web applications. Specialized in Dart, Clean Architecture, Bloc state management, and responsive UI/UX design.",
+    "background_color": "#FAFAFA",
+    "theme_color": "#FAFAFA",
+    "description": "I build mobile and web apps for people who don't have flagship phones. 15,000 farmers across rural India use what I ship daily.",
     "orientation": "any",
     "prefer_related_applications": false,
-    "categories": ["portfolio", "developer", "flutter"],
+    "categories": ["portfolio", "developer"],
     "dir": "ltr",
-    "lang": "en-US",
+    "lang": "en",
     "icons": [
         {
             "src": "icons/Icon-192.png",
@@ -36,22 +36,6 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
-        }
-    ],
-    "screenshots": [
-        {
-            "src": "icons/screenshot-desktop.png",
-            "sizes": "1920x1080",
-            "type": "image/png",
-            "form_factor": "wide",
-            "label": "Desktop view of portfolio"
-        },
-        {
-            "src": "icons/screenshot-mobile.png",
-            "sizes": "750x1334",
-            "type": "image/png",
-            "form_factor": "narrow",
-            "label": "Mobile view of portfolio"
         }
     ]
 }

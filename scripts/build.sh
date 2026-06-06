@@ -38,7 +38,8 @@ fvm flutter build web \
   --pwa-strategy offline-first \
   --no-tree-shake-icons \
   --dart-define=FLUTTER_WEB_USE_SKIA=true \
-  --source-maps
+  --source-maps \
+  --no-wasm-dry-run
 
 # Optimize build (optional post-processing)
 echo -e "${BLUE}⚡ Optimizing build...${NC}"
