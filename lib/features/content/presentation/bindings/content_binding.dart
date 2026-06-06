@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../../../../core/services/firebase_service.dart';
+import '../../../../features/visitor/presentation/bindings/visitor_binding.dart';
 import '../../data/repositories/content_repository_impl.dart';
 import '../../data/sources/content_mock_source.dart';
 import '../../data/sources/content_remote_source.dart';
@@ -33,5 +34,12 @@ class ContentBinding extends Bindings {
       ContentController(Get.find<GetContentUsecase>()),
       permanent: true,
     );
+
+    // Visitor tracking — wired after Firebase is available.
+    // ensureInitialized is called lazily inside ContentRemoteSource;
+    // we call it explicitly here so VisitorBinding can check isInitialized.
+    Get.find<FirebaseService>().ensureInitialized().then((_) {
+      VisitorBinding().dependencies();
+    });
   }
 }

@@ -37,7 +37,9 @@ class HeroSection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 36),
-                _HeroActions(contact: content.contact),
+                _HeroActions(
+                  contact: content.contact,
+                ),
               ],
             ),
           ),
@@ -75,7 +77,9 @@ class _GradientName extends StatelessWidget {
 }
 
 class _HeroActions extends StatelessWidget {
-  const _HeroActions({required this.contact});
+  const _HeroActions({
+    required this.contact,
+  });
 
   final ContactInfo contact;
 
@@ -109,7 +113,7 @@ class _HeroActions extends StatelessWidget {
           ),
           child: const Text('Download Resume'),
         ),
-      ],
+        ],
     );
   }
 }
