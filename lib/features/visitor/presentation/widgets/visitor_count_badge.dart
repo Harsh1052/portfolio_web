@@ -15,15 +15,17 @@ class VisitorCountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.isRegistered<VisitorController>()
-        ? Get.find<VisitorController>()
-        : null;
-
-    if (controller == null) return const SizedBox.shrink();
-
+    // Observe the static isReady flag — this rebuilds reactively once
+    // VisitorController finishes its async init (Firebase may not be ready
+    // when this widget first builds, causing the first-load blank bug).
     return Obx(() {
-      if (!controller.isLoaded) return const SizedBox.shrink();
-      return _Badge(stats: controller.stats.value);
+      if (!VisitorController.isReady.value) return const SizedBox.shrink();
+
+      final controller = Get.find<VisitorController>();
+      return Obx(() {
+        if (!controller.isLoaded) return const SizedBox.shrink();
+        return _Badge(stats: controller.stats.value);
+      });
     });
   }
 }
