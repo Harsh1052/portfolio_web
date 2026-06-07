@@ -1,0 +1,57 @@
+name: preview
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  build_and_preview:
+    # only run on PRs from the same repo (not forks)
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.9'
+          channel: stable
+          cache: true
+
+      - name: cache pub
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-
+
+      - name: install dependencies
+        run: flutter pub get
+
+      - name: analyze
+        run: flutter analyze
+
+      - name: build web
+        run: |
+          flutter build web \
+            --release \
+            --pwa-strategy offline-first \
+            --no-tree-shake-icons \
+            --source-maps
+
+      # deploys to a temporary preview channel and posts the URL as a PR comment
+      - name: deploy preview to firebase hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_HARSH_PORTFOLIO_WEB }}
+          projectId: harsh-portfolio-web
