@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/responsive_layout.dart';
 import '../../../content/data/models/portfolio_content.dart';
+import 'typewriter_tagline.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key, required this.content});
@@ -27,15 +28,7 @@ class HeroSection extends StatelessWidget {
               children: [
                 _GradientName(isMobile: isMobile),
                 const SizedBox(height: 20),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 580),
-                  child: Text(
-                    content.tagline,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ),
+                const TypewriterTagline(),
                 const SizedBox(height: 36),
                 _HeroActions(
                   contact: content.contact,
