@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/fade_slide_in.dart';
 import '../../../../core/widgets/responsive_layout.dart';
 import '../../../content/data/models/portfolio_content.dart';
 
@@ -28,12 +29,15 @@ class AboutSection extends StatelessWidget {
             const SizedBox(height: 40),
             for (int i = 0; i < paragraphs.length; i++) ...[
               if (i > 0) const SizedBox(height: 20),
-              ConstrainedBox(
-                // 65ch ≈ 65 × ~9px average char width ≈ 585px
-                constraints: const BoxConstraints(maxWidth: 585),
-                child: Text(
-                  paragraphs[i],
-                  style: AppTextStyles.body,
+              FadeSlideIn(
+                delay: Duration(milliseconds: 80 + i * 60),
+                child: ConstrainedBox(
+                  // 65ch ≈ 65 × ~9px average char width ≈ 585px
+                  constraints: const BoxConstraints(maxWidth: 585),
+                  child: Text(
+                    paragraphs[i],
+                    style: AppTextStyles.body,
+                  ),
                 ),
               ),
             ],

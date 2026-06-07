@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/fade_slide_in.dart';
 import '../../../../core/widgets/responsive_layout.dart';
 import '../../../content/data/models/portfolio_content.dart';
 
@@ -29,7 +30,10 @@ class WritingSection extends StatelessWidget {
             const SizedBox(height: 40),
             for (int i = 0; i < articles.length; i++) ...[
               if (i > 0) const SizedBox(height: 40),
-              _ArticleRow(article: articles[i]),
+              FadeSlideIn(
+                delay: Duration(milliseconds: i * 100),
+                child: _ArticleRow(article: articles[i]),
+              ),
             ],
           ],
         ),
