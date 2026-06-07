@@ -7,6 +7,7 @@ import '../widgets/hero_section.dart';
 import '../widgets/work_section.dart';
 import '../widgets/about_section.dart';
 import '../widgets/writing_section.dart';
+import '../../../github/presentation/widgets/contribution_graph_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
 
@@ -57,6 +58,7 @@ class _HomeContent extends StatelessWidget {
           WorkSection(projects: content.projects),
           AboutSection(about: content.about),
           WritingSection(articles: content.articles),
+          const ContributionGraphSection(),
           ContactSection(contact: content.contact),
           const FooterSection(),
         ],

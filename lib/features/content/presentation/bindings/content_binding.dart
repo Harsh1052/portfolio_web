@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import '../../../../core/services/firebase_service.dart';
+import '../../../../features/github/data/repositories/github_repository_impl.dart';
+import '../../../../features/github/data/sources/github_remote_source.dart';
+import '../../../../features/github/domain/usecases/get_github_stats_usecase.dart';
+import '../../../../features/github/presentation/controllers/github_stats_controller.dart';
 import '../../../../features/visitor/presentation/bindings/visitor_binding.dart';
 import '../../data/repositories/content_repository_impl.dart';
 import '../../data/sources/content_mock_source.dart';
@@ -35,6 +39,19 @@ class ContentBinding extends Bindings {
       permanent: true,
     );
 
+    // GitHub stats — pure HTTP, no Firebase dependency needed.
+    Get.lazyPut<GitHubRemoteSource>(() => const GitHubRemoteSource());
+    Get.lazyPut<GitHubRepositoryImpl>(
+      () => GitHubRepositoryImpl(remoteSource: Get.find<GitHubRemoteSource>()),
+    );
+    Get.lazyPut<GetGitHubStatsUsecase>(
+      () => GetGitHubStatsUsecase(Get.find<GitHubRepositoryImpl>()),
+    );
+    Get.put<GitHubStatsController>(
+      GitHubStatsController(usecase: Get.find<GetGitHubStatsUsecase>()),
+      permanent: true,
+    );
+
     // Visitor tracking — wired after Firebase is available.
     // ensureInitialized is called lazily inside ContentRemoteSource;
     // we call it explicitly here so VisitorBinding can check isInitialized.
@@ -43,3 +60,4 @@ class ContentBinding extends Bindings {
     });
   }
 }
+
