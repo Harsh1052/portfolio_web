@@ -1,49 +1,65 @@
-name: Deploy to Firebase Hosting
+name: deploy
 
 on:
   push:
     branches:
-      - main
       - master
+
+  # allow triggering manually from the Actions tab
   workflow_dispatch:
+
+concurrency:
+  # cancel any in-progress deploy if a newer push lands on master
+  group: firebase-deploy
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
-      - name: Checkout code
+      - name: checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      # ── Flutter ─────────────────────────────────────────────────────────────
+      - name: set up flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
-          channel: 'stable'
+          flutter-version: '3.38.9'
+          channel: stable
           cache: true
 
-      - name: Get dependencies
+      # cache pub packages across runs — shaves ~30s off warm builds
+      - name: cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+          key: pub-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-
+
+      - name: install dependencies
         run: flutter pub get
 
-      - name: Analyze code
+      # ── Quality gates ────────────────────────────────────────────────────────
+      - name: analyze
         run: flutter analyze
 
-      - name: Run tests
-        run: flutter test || echo "No tests found, skipping..."
-        continue-on-error: true
-
-      - name: Build web
+      # ── Build ────────────────────────────────────────────────────────────────
+      - name: build web
         run: |
           flutter build web \
             --release \
-            --web-renderer canvaskit \
             --pwa-strategy offline-first \
-            --dart-define=FLUTTER_WEB_USE_SKIA=true
+            --no-tree-shake-icons \
+            --source-maps
 
-      - name: Deploy to Firebase
+      # ── Deploy ───────────────────────────────────────────────────────────────
+      - name: deploy to firebase hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
           projectId: harsh-portfolio-web

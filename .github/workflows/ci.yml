@@ -1,55 +1,63 @@
-name: CI - Build and Test
+name: ci
 
 on:
   pull_request:
     branches:
-      - main
       - master
+
+  # also run on pushes to feature branches so you catch issues early
   push:
     branches:
-      - main
-      - master
       - develop
+      - 'feature/**'
+      - 'fix/**'
 
 jobs:
   analyze-and-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-      - name: Checkout code
+      - name: checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      - name: set up flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
-          channel: 'stable'
+          flutter-version: '3.38.9'
+          channel: stable
           cache: true
 
-      - name: Get dependencies
+      - name: cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-
+
+      - name: install dependencies
         run: flutter pub get
 
-      - name: Verify formatting
+      - name: check formatting
         run: dart format --set-exit-if-changed .
         continue-on-error: true
 
-      - name: Analyze code
+      - name: analyze
         run: flutter analyze
 
-      - name: Run tests
-        run: flutter test || echo "No tests found, continuing..."
+      - name: run tests
+        run: flutter test || echo "no tests yet"
         continue-on-error: true
 
-      - name: Test build web
+      - name: build web (sanity check)
         run: |
           flutter build web \
             --release \
-            --web-renderer canvaskit
+            --no-tree-shake-icons
 
-      - name: Check build size
+      - name: build size report
         run: |
-          echo "Build size:"
+          echo "build/web size:"
           du -sh build/web
           echo ""
-          echo "Detailed breakdown:"
-          du -h build/web/* | sort -rh | head -20
+          du -h build/web/* | sort -rh | head -15
