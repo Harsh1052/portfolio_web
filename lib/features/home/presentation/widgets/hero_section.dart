@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/responsive_layout.dart';
+import '../../../../core/widgets/particle_backdrop.dart';
 import '../../../content/data/models/portfolio_content.dart';
 import 'typewriter_tagline.dart';
 
@@ -17,25 +18,32 @@ class HeroSection extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < Breakpoints.mobile;
-        return ContentWrapper(
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: isMobile ? 64 : 96,
-              bottom: isMobile ? 64 : 96,
+        return Stack(
+          children: [
+            const Positioned.fill(
+              child: ParticleBackdrop(),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _GradientName(isMobile: isMobile),
-                const SizedBox(height: 20),
-                const TypewriterTagline(),
-                const SizedBox(height: 36),
-                _HeroActions(
-                  contact: content.contact,
+            ContentWrapper(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: isMobile ? 64 : 96,
+                  bottom: isMobile ? 64 : 96,
                 ),
-              ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _GradientName(isMobile: isMobile),
+                    const SizedBox(height: 20),
+                    const TypewriterTagline(),
+                    const SizedBox(height: 36),
+                    _HeroActions(
+                      contact: content.contact,
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
         );
       },
     );
