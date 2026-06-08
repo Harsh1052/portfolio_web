@@ -10,6 +10,12 @@ import '../../data/sources/content_mock_source.dart';
 import '../../data/sources/content_remote_source.dart';
 import '../../domain/usecases/get_content_usecase.dart';
 import '../controllers/content_controller.dart';
+import 'package:portfolio_web/features/now/data/repositories/now_repository_impl.dart';
+import 'package:portfolio_web/features/now/data/sources/now_mock_source.dart';
+import 'package:portfolio_web/features/now/domain/repositories/now_repository.dart';
+import 'package:portfolio_web/features/skills/data/repositories/skills_repository_impl.dart';
+import 'package:portfolio_web/features/skills/data/sources/skills_mock_source.dart';
+import 'package:portfolio_web/features/skills/domain/repositories/skills_repository.dart';
 
 /// Registered as [initialBinding] in GetMaterialApp — runs once at app start.
 class ContentBinding extends Bindings {
@@ -50,6 +56,17 @@ class ContentBinding extends Bindings {
     Get.put<GitHubStatsController>(
       GitHubStatsController(usecase: Get.find<GetGitHubStatsUsecase>()),
       permanent: true,
+    );
+
+    // Now & Skills repositories (synchronous/mock sources)
+    Get.lazyPut<NowMockSource>(() => const NowMockSource());
+    Get.lazyPut<NowRepository>(
+      () => NowRepositoryImpl(source: Get.find<NowMockSource>()),
+    );
+
+    Get.lazyPut<SkillsMockSource>(() => const SkillsMockSource());
+    Get.lazyPut<SkillsRepository>(
+      () => SkillsRepositoryImpl(source: Get.find<SkillsMockSource>()),
     );
 
     // Visitor tracking — wired after Firebase is available.

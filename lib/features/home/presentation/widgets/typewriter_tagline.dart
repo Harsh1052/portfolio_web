@@ -119,7 +119,7 @@ class _TypewriterTaglineState extends State<TypewriterTagline> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: _displayText,
+              text: _displayText.isEmpty ? '\u200B' : _displayText,
               style: AppTextStyles.body.copyWith(
                 color: AppColors.textSecondary,
               ),
