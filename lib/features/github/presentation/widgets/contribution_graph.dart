@@ -155,7 +155,7 @@ class _DayCellState extends State<_DayCell> {
       ),
       waitDuration: const Duration(milliseconds: 200),
       child: MouseRegion(
-        cursor: SystemMouseCursors.help,
+        cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _hovered = true),
         onExit: (_) => setState(() => _hovered = false),
         child: AnimatedContainer(

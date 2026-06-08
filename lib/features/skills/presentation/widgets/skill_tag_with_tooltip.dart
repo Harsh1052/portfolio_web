@@ -38,7 +38,7 @@ class _SkillTagWithTooltipState extends State<SkillTagWithTooltip> {
         fontWeight: FontWeight.w400,
       ),
       child: MouseRegion(
-        cursor: SystemMouseCursors.help,
+        cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _hovered = true),
         onExit: (_) => setState(() => _hovered = false),
         child: AnimatedContainer(
