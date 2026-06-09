@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import '../../../../core/services/firebase_service.dart';
 import '../../data/repositories/visitor_repository_impl.dart';
 import '../../data/sources/visitor_remote_source.dart';
+import '../../domain/usecases/get_visitor_locations_usecase.dart';
 import '../../domain/usecases/get_visitor_stats_usecase.dart';
 import '../../domain/usecases/track_visit_usecase.dart';
 import '../controllers/visitor_controller.dart';
@@ -31,10 +32,15 @@ class VisitorBinding {
       () => GetVisitorStatsUsecase(Get.find<VisitorRepositoryImpl>()),
     );
 
+    Get.lazyPut<GetVisitorLocationsUsecase>(
+      () => GetVisitorLocationsUsecase(Get.find<VisitorRepositoryImpl>()),
+    );
+
     Get.put<VisitorController>(
       VisitorController(
         trackVisit: Get.find<TrackVisitUsecase>(),
         getStats: Get.find<GetVisitorStatsUsecase>(),
+        getLocations: Get.find<GetVisitorLocationsUsecase>(),
       ),
       permanent: true,
     );

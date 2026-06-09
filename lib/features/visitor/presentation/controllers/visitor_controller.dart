@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import '../../domain/entities/visitor_location.dart';
 import '../../domain/entities/visitor_stats.dart';
+import '../../domain/usecases/get_visitor_locations_usecase.dart';
 import '../../domain/usecases/get_visitor_stats_usecase.dart';
 import '../../domain/usecases/track_visit_usecase.dart';
 
@@ -16,14 +18,18 @@ class VisitorController extends GetxController {
   VisitorController({
     required TrackVisitUsecase trackVisit,
     required GetVisitorStatsUsecase getStats,
+    required GetVisitorLocationsUsecase getLocations,
   })  : _trackVisit = trackVisit,
-        _getStats = getStats;
+        _getStats = getStats,
+        _getLocations = getLocations;
 
   final TrackVisitUsecase _trackVisit;
   final GetVisitorStatsUsecase _getStats;
+  final GetVisitorLocationsUsecase _getLocations;
 
   final status = VisitorStatus.initial.obs;
   final stats = VisitorStats.empty.obs;
+  final locations = <VisitorLocation>[].obs;
 
   bool get isLoaded => status.value == VisitorStatus.loaded;
 
@@ -41,7 +47,20 @@ class VisitorController extends GetxController {
         if (kDebugMode) debugPrint('[VisitorController] trackVisit error: $e');
         return;
       });
-      stats.value = await _getStats();
+      
+      // Fetch stats and locations in parallel
+      final results = await Future.wait([
+        _getStats(),
+        _getLocations(),
+      ]);
+
+      stats.value = results[0] as VisitorStats;
+      locations.assignAll(results[1] as List<VisitorLocation>);
+      
+      if (kDebugMode) {
+        debugPrint('[VisitorController] stats loaded: ${stats.value}');
+      }
+      
       status.value = VisitorStatus.loaded;
       VisitorController.isReady.value = true;
     } catch (e) {
@@ -49,6 +68,7 @@ class VisitorController extends GetxController {
       status.value = VisitorStatus.error;
     }
   }
+
   @override
   void onClose() {
     isReady.value = false;

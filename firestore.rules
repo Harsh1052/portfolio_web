@@ -10,6 +10,11 @@ service cloud.firestore {
       allow write: if true;
     }
 
+    // Visitor locations — public read + public create. No update or delete allowed for security.
+    match /visitor_locations/{locationId} {
+      allow read, create: if true;
+    }
+
     // All other documents — deny by default.
     match /{document=**} {
       allow read, write: if false;

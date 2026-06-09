@@ -10,6 +10,7 @@ import '../widgets/writing_section.dart';
 import '../../../github/presentation/widgets/contribution_graph_section.dart';
 import '../../../now/presentation/widgets/now_section.dart';
 import '../../../skills/presentation/widgets/skills_timeline_section.dart';
+import '../../../visitor/presentation/widgets/visitor_map_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
 
@@ -64,6 +65,7 @@ class _HomeContent extends StatelessWidget {
           const SkillsTimelineSection(),
           const ContributionGraphSection(),
           ContactSection(contact: content.contact),
+          const VisitorMapSection(),
           const FooterSection(),
         ],
       ),
