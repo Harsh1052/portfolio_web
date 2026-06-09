@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -76,31 +77,58 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Glassmorphic Map Container
-                    Container(
-                      height: 320,
-                      decoration: BoxDecoration(
-                        color: AppColors.surface,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.border),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.02),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
+                    // Glassmorphic Map Container with locked aspect ratio
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 400),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.surface,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: AppColors.border),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.02),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: AnimatedBuilder(
-                          animation: _pulseController,
-                          builder: (context, child) {
-                            return VisitorMapPainterWidget(
-                              locations: recentLocations,
-                              pulseValue: _pulseController.value,
-                            );
-                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: AspectRatio(
+                              aspectRatio: 784.077 / 458.627,
+                              child: Stack(
+                                children: [
+                                  // Sleek Vector World Map Background
+                                  Positioned.fill(
+                                    child: SvgPicture.asset(
+                                      'assets/icons/world-map.svg',
+                                      fit: BoxFit.fill,
+                                      colorFilter: ColorFilter.mode(
+                                        AppColors.textSecondary.withValues(alpha: 0.15),
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ),
+                                  // High-tech pulsing coordinates overlay
+                                  Positioned.fill(
+                                    child: AnimatedBuilder(
+                                      animation: _pulseController,
+                                      builder: (context, child) {
+                                        return CustomPaint(
+                                          painter: VisitorMapPainter(
+                                            locations: recentLocations,
+                                            pulseValue: _pulseController.value,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -115,28 +143,6 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
             }),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class VisitorMapPainterWidget extends StatelessWidget {
-  const VisitorMapPainterWidget({
-    super.key,
-    required this.locations,
-    required this.pulseValue,
-  });
-
-  final List<dynamic> locations;
-  final double pulseValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size.infinite,
-      painter: VisitorMapPainter(
-        locations: locations.cast(),
-        pulseValue: pulseValue,
       ),
     );
   }
