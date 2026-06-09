@@ -70,7 +70,9 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                 return _MapPlaceholder();
               }
 
-              final recentLocations = controller.locations;
+              final recentLocations = controller.locations
+                  .where((loc) => loc.country.toLowerCase() == 'india')
+                  .toList();
 
               return FadeSlideIn(
                 delay: const Duration(milliseconds: 160),
@@ -97,13 +99,13 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: AspectRatio(
-                              aspectRatio: 784.077 / 458.627,
+                              aspectRatio: 611.85999 / 695.70178,
                               child: Stack(
                                 children: [
-                                  // Sleek Vector World Map Background
+                                  // Sleek Vector India Map Background
                                   Positioned.fill(
                                     child: SvgPicture.asset(
-                                      'assets/icons/world-map.svg',
+                                      'assets/icons/india.svg',
                                       fit: BoxFit.fill,
                                       colorFilter: ColorFilter.mode(
                                         AppColors.textSecondary.withValues(alpha: 0.15),

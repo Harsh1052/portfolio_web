@@ -26,9 +26,9 @@ class VisitorMapPainter extends CustomPainter {
     for (int i = 0; i < locations.length; i++) {
       final loc = locations[i];
 
-      // Normalized coordinates derived from least-squares regression on the SVG viewBox
-      final normX = 0.002776 * loc.longitude + 0.483070;
-      final normY = -0.005786 * loc.latitude + 0.612684;
+      // Normalized coordinates mapped to India's geographical bounding box
+      final normX = (loc.longitude - 68.184010) / 29.234136;
+      final normY = (37.084109 - loc.latitude) / 30.33045;
 
       // Project onto the current canvas size (which is aspect-ratio locked by its parent)
       final x = normX * size.width;
