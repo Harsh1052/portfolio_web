@@ -141,8 +141,12 @@ class VisitorRemoteSource {
     if (!await _ensureReady()) return VisitorStats.empty;
     try {
       final snap = await _statsDoc.get();
-      if (!snap.exists) return VisitorStats.empty;
+      if (!snap.exists) {
+        if (kDebugMode) debugPrint('[VisitorSource] stats document does not exist.');
+        return VisitorStats.empty;
+      }
       final data = snap.data()!;
+      if (kDebugMode) debugPrint('[VisitorSource] stats document data: $data');
       return VisitorStats(
         totalViews: (data['totalViews'] as num?)?.toInt() ?? 0,
         uniqueSessions: (data['uniqueSessions'] as num?)?.toInt() ?? 0,

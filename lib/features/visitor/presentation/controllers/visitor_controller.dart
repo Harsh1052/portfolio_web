@@ -57,6 +57,10 @@ class VisitorController extends GetxController {
       stats.value = results[0] as VisitorStats;
       locations.assignAll(results[1] as List<VisitorLocation>);
       
+      if (kDebugMode) {
+        debugPrint('[VisitorController] stats loaded: ${stats.value}');
+      }
+      
       status.value = VisitorStatus.loaded;
       VisitorController.isReady.value = true;
     } catch (e) {
