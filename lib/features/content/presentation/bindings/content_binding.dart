@@ -69,12 +69,9 @@ class ContentBinding extends Bindings {
       () => SkillsRepositoryImpl(source: Get.find<SkillsMockSource>()),
     );
 
-    // Visitor tracking — wired after Firebase is available.
-    // ensureInitialized is called lazily inside ContentRemoteSource;
-    // we call it explicitly here so VisitorBinding can check isInitialized.
-    Get.find<FirebaseService>().ensureInitialized().then((_) {
-      VisitorBinding().dependencies();
-    });
+    // Visitor tracking — registered immediately on startup.
+    // The remote source internally awaits Firebase initialization.
+    VisitorBinding().dependencies();
   }
 }
 

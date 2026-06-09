@@ -82,7 +82,7 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                     // Glassmorphic Map Container with locked aspect ratio
                     Center(
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxHeight: 400),
+                        constraints: const BoxConstraints(maxHeight: 520),
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.surface,
