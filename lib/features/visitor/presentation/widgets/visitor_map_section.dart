@@ -69,10 +69,6 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                 return _MapPlaceholder();
               }
 
-              if (controller.locations.isEmpty) {
-                return const SizedBox.shrink();
-              }
-
               final recentLocations = controller.locations;
 
               return FadeSlideIn(
@@ -108,9 +104,11 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    // Recent visitors telemetry footer log
-                    _RecentVisitorsTicker(locations: recentLocations),
+                    if (recentLocations.isNotEmpty) ...[
+                      const SizedBox(height: 24),
+                      // Recent visitors telemetry footer log
+                      _RecentVisitorsTicker(locations: recentLocations),
+                    ],
                   ],
                 ),
               );
