@@ -7,12 +7,11 @@ abstract class VisitorRepository {
   /// first call per browser session (sessionStorage-gated).
   Future<void> trackVisit();
 
-  /// Returns the latest [VisitorStats] snapshot from the backend.
-  Future<VisitorStats> getStats();
+  /// Emits [VisitorStats] snapshots in real-time as the backend document
+  /// changes (e.g. new visitor increments the counter).
+  Stream<VisitorStats> watchStats();
 
-  /// Returns a list of recent visitor locations from the backend.
-  Future<List<VisitorLocation>> getVisitorLocations();
-
-  /// Saves the given visitor location details to the database.
-  Future<void> saveVisitorLocation(VisitorLocation location);
+  /// Emits the latest list of visitor locations in real-time as new
+  /// entries are added to the backend collection.
+  Stream<List<VisitorLocation>> watchVisitorLocations();
 }

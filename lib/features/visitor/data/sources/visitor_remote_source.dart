@@ -137,99 +137,57 @@ class VisitorRemoteSource {
     }
   }
 
-  Future<VisitorStats> getStats() async {
-    if (!await _ensureReady()) return VisitorStats.empty;
-    try {
-      final snap = await _statsDoc.get();
-      if (!snap.exists) {
-        if (kDebugMode) debugPrint('[VisitorSource] stats document does not exist.');
-        return VisitorStats.empty;
-      }
+  // ---------------------------------------------------------------------------
+  // Real-time stream watchers
+  // ---------------------------------------------------------------------------
+
+  /// Emits [VisitorStats] every time the `visitors/stats` document changes.
+  ///
+  /// Uses `async*` to ensure Firebase is initialized before subscribing.
+  /// Falls back to [VisitorStats.empty] on errors or if Firebase isn't ready.
+  Stream<VisitorStats> watchStats() async* {
+    if (!await _ensureReady()) {
+      yield VisitorStats.empty;
+      return;
+    }
+
+    yield* _statsDoc.snapshots().map((snap) {
+      if (!snap.exists) return VisitorStats.empty;
       final data = snap.data()!;
-      if (kDebugMode) debugPrint('[VisitorSource] stats document data: $data');
+      if (kDebugMode) debugPrint('[VisitorSource] stats snapshot: $data');
       return VisitorStats(
         totalViews: (data['totalViews'] as num?)?.toInt() ?? 0,
         uniqueSessions: (data['uniqueSessions'] as num?)?.toInt() ?? 0,
       );
-    } catch (e) {
-      if (kDebugMode) debugPrint('[VisitorSource] getStats failed: $e');
-      return VisitorStats.empty;
-    }
+    }).handleError((e) {
+      if (kDebugMode) debugPrint('[VisitorSource] watchStats error: $e');
+      // Stream continues with empty stats on transient errors.
+    });
   }
 
-  Future<List<VisitorLocation>> getLocations() async {
-    if (!await _ensureReady()) return [];
-    try {
-      final query = await _db!
-          .collection('visitor_locations')
-          .orderBy('timestamp', descending: true)
-          .limit(100)
-          .get();
+  /// Emits a fresh list of [VisitorLocation] every time the
+  /// `visitor_locations` collection changes (new visitor arrives, etc.).
+  ///
+  /// Falls back to a hardcoded set of Indian cities when Firebase is
+  /// unavailable or the collection is empty (for local dev / first deploy).
+  Stream<List<VisitorLocation>> watchLocations() async* {
+    if (!await _ensureReady()) {
+      yield _fallbackLocations();
+      return;
+    }
 
-      if (query.docs.isEmpty) {
-        return [
-          VisitorLocation(
-            city: 'Mumbai',
-            region: 'Maharashtra',
-            country: 'India',
-            latitude: 19.0760,
-            longitude: 72.8777,
-            timestamp: DateTime.now(),
-          ),
-          VisitorLocation(
-            city: 'Bengaluru',
-            region: 'Karnataka',
-            country: 'India',
-            latitude: 12.9716,
-            longitude: 77.5946,
-            timestamp: DateTime.now().subtract(const Duration(hours: 1)),
-          ),
-          VisitorLocation(
-            city: 'New Delhi',
-            region: 'Delhi',
-            country: 'India',
-            latitude: 28.6139,
-            longitude: 77.2090,
-            timestamp: DateTime.now().subtract(const Duration(hours: 2)),
-          ),
-          VisitorLocation(
-            city: 'Kolkata',
-            region: 'West Bengal',
-            country: 'India',
-            latitude: 22.5726,
-            longitude: 88.3639,
-            timestamp: DateTime.now().subtract(const Duration(hours: 3)),
-          ),
-          VisitorLocation(
-            city: 'Chennai',
-            region: 'Tamil Nadu',
-            country: 'India',
-            latitude: 13.0827,
-            longitude: 80.2707,
-            timestamp: DateTime.now().subtract(const Duration(hours: 4)),
-          ),
-          VisitorLocation(
-            city: 'Hyderabad',
-            region: 'Telangana',
-            country: 'India',
-            latitude: 17.3850,
-            longitude: 78.4867,
-            timestamp: DateTime.now().subtract(const Duration(hours: 5)),
-          ),
-          VisitorLocation(
-            city: 'Pune',
-            region: 'Maharashtra',
-            country: 'India',
-            latitude: 18.5204,
-            longitude: 73.8567,
-            timestamp: DateTime.now().subtract(const Duration(hours: 6)),
-          ),
-        ];
-      }
+    yield* _db!
+        .collection('visitor_locations')
+        .orderBy('timestamp', descending: true)
+        .limit(100)
+        .snapshots()
+        .map((query) {
+      if (query.docs.isEmpty) return _fallbackLocations();
 
       return query.docs.map((doc) {
         final data = doc.data();
-        final timestamp = (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now();
+        final timestamp =
+            (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now();
         return VisitorLocation(
           city: data['city'] as String? ?? 'Unknown',
           region: data['region'] as String? ?? 'Unknown',
@@ -239,9 +197,16 @@ class VisitorRemoteSource {
           timestamp: timestamp,
         );
       }).toList();
-    } catch (e) {
-      if (kDebugMode) debugPrint('[VisitorSource] getLocations failed: $e');
-      return [
+    }).handleError((e) {
+      if (kDebugMode) debugPrint('[VisitorSource] watchLocations error: $e');
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Fallback seed data (major Indian cities for local dev / empty collection)
+  // ---------------------------------------------------------------------------
+
+  List<VisitorLocation> _fallbackLocations() => [
         VisitorLocation(
           city: 'Mumbai',
           region: 'Maharashtra',
@@ -258,23 +223,45 @@ class VisitorRemoteSource {
           longitude: 77.5946,
           timestamp: DateTime.now().subtract(const Duration(hours: 1)),
         ),
+        VisitorLocation(
+          city: 'New Delhi',
+          region: 'Delhi',
+          country: 'India',
+          latitude: 28.6139,
+          longitude: 77.2090,
+          timestamp: DateTime.now().subtract(const Duration(hours: 2)),
+        ),
+        VisitorLocation(
+          city: 'Kolkata',
+          region: 'West Bengal',
+          country: 'India',
+          latitude: 22.5726,
+          longitude: 88.3639,
+          timestamp: DateTime.now().subtract(const Duration(hours: 3)),
+        ),
+        VisitorLocation(
+          city: 'Chennai',
+          region: 'Tamil Nadu',
+          country: 'India',
+          latitude: 13.0827,
+          longitude: 80.2707,
+          timestamp: DateTime.now().subtract(const Duration(hours: 4)),
+        ),
+        VisitorLocation(
+          city: 'Hyderabad',
+          region: 'Telangana',
+          country: 'India',
+          latitude: 17.3850,
+          longitude: 78.4867,
+          timestamp: DateTime.now().subtract(const Duration(hours: 5)),
+        ),
+        VisitorLocation(
+          city: 'Pune',
+          region: 'Maharashtra',
+          country: 'India',
+          latitude: 18.5204,
+          longitude: 73.8567,
+          timestamp: DateTime.now().subtract(const Duration(hours: 6)),
+        ),
       ];
-    }
-  }
-
-  Future<void> saveLocation(VisitorLocation location) async {
-    if (!await _ensureReady()) return;
-    try {
-      await _db!.collection('visitor_locations').add({
-        'city': location.city,
-        'region': location.region,
-        'country': location.country,
-        'latitude': location.latitude,
-        'longitude': location.longitude,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      if (kDebugMode) debugPrint('[VisitorSource] saveLocation failed: $e');
-    }
-  }
 }

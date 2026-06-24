@@ -12,13 +12,9 @@ class VisitorRepositoryImpl implements VisitorRepository {
   Future<void> trackVisit() => remoteSource.trackVisit();
 
   @override
-  Future<VisitorStats> getStats() => remoteSource.getStats();
+  Stream<VisitorStats> watchStats() => remoteSource.watchStats();
 
   @override
-  Future<List<VisitorLocation>> getVisitorLocations() =>
-      remoteSource.getLocations();
-
-  @override
-  Future<void> saveVisitorLocation(VisitorLocation location) =>
-      remoteSource.saveLocation(location);
+  Stream<List<VisitorLocation>> watchVisitorLocations() =>
+      remoteSource.watchLocations();
 }

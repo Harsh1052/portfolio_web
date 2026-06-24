@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../../domain/entities/visitor_location.dart';
 import '../../domain/entities/visitor_stats.dart';
-import '../../domain/usecases/get_visitor_locations_usecase.dart';
-import '../../domain/usecases/get_visitor_stats_usecase.dart';
 import '../../domain/usecases/track_visit_usecase.dart';
+import '../../domain/usecases/watch_visitor_locations_usecase.dart';
+import '../../domain/usecases/watch_visitor_stats_usecase.dart';
 
 enum VisitorStatus { initial, loading, loaded, error }
 
@@ -17,15 +17,15 @@ class VisitorController extends GetxController {
 
   VisitorController({
     required TrackVisitUsecase trackVisit,
-    required GetVisitorStatsUsecase getStats,
-    required GetVisitorLocationsUsecase getLocations,
+    required WatchVisitorStatsUsecase watchStats,
+    required WatchVisitorLocationsUsecase watchLocations,
   })  : _trackVisit = trackVisit,
-        _getStats = getStats,
-        _getLocations = getLocations;
+        _watchStats = watchStats,
+        _watchLocations = watchLocations;
 
   final TrackVisitUsecase _trackVisit;
-  final GetVisitorStatsUsecase _getStats;
-  final GetVisitorLocationsUsecase _getLocations;
+  final WatchVisitorStatsUsecase _watchStats;
+  final WatchVisitorLocationsUsecase _watchLocations;
 
   final status = VisitorStatus.initial.obs;
   final stats = VisitorStats.empty.obs;
@@ -47,20 +47,32 @@ class VisitorController extends GetxController {
         if (kDebugMode) debugPrint('[VisitorController] trackVisit error: $e');
         return;
       });
-      
-      // Fetch stats and locations in parallel
-      final results = await Future.wait([
-        _getStats(),
-        _getLocations(),
+
+      // Bind reactive streams from Firestore snapshots.
+      // GetX's bindStream() automatically subscribes and disposes.
+      stats.bindStream(
+        _watchStats().handleError((e) {
+          if (kDebugMode) debugPrint('[VisitorController] stats stream error: $e');
+        }),
+      );
+
+      locations.bindStream(
+        _watchLocations().handleError((e) {
+          if (kDebugMode) debugPrint('[VisitorController] locations stream error: $e');
+        }),
+      );
+
+      // Wait for the first emission from both streams so the UI has
+      // initial data before we mark the controller as ready.
+      await Future.wait([
+        _watchStats().first,
+        _watchLocations().first,
       ]);
 
-      stats.value = results[0] as VisitorStats;
-      locations.assignAll(results[1] as List<VisitorLocation>);
-      
       if (kDebugMode) {
-        debugPrint('[VisitorController] stats loaded: ${stats.value}');
+        debugPrint('[VisitorController] streams bound, stats: ${stats.value}');
       }
-      
+
       status.value = VisitorStatus.loaded;
       VisitorController.isReady.value = true;
     } catch (e) {
