@@ -1,8 +1,10 @@
-// ignore_for_file: avoid_web_libraries_in_flutter, deprecated_member_use
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html' as html;
+import 'dart:js_interop';
+
 import 'package:flutter/foundation.dart';
+import 'package:web/web.dart' as web;
+
 import '../../domain/entities/github_stats.dart';
 
 /// Fetches GitHub contribution data from the public jogruber API.
@@ -10,7 +12,7 @@ import '../../domain/entities/github_stats.dart';
 /// Endpoint: https://github-contributions-api.jogruber.de/v4/{username}?y=last
 ///
 /// This API is CORS-enabled and does not require a GitHub auth token.
-/// Uses dart:html's HttpRequest for Flutter Web — safe for JS builds.
+/// Uses `package:web` (Fetch API) — Wasm-compatible and dart:html-free.
 ///
 /// Response shape (simplified):
 /// ```json
@@ -40,10 +42,18 @@ class GitHubRemoteSource {
     }
   }
 
-  /// GET request using dart:html HttpRequest.getString — the most idiomatic
-  /// approach for Flutter Web without adding the http package.
-  Future<String> _get(String url) {
-    return html.HttpRequest.getString(url);
+  /// GET request using the Fetch API via `package:web`.
+  /// This is the Wasm-compatible replacement for `dart:html`'s
+  /// `HttpRequest.getString()`.
+  Future<String> _get(String url) async {
+    final response = await web.window.fetch(url.toJS).toDart;
+    if (!response.ok) {
+      throw NetworkException(
+        'HTTP ${response.status}: ${response.statusText}',
+      );
+    }
+    final jsBody = await response.text().toDart;
+    return jsBody.toDart;
   }
 
   GitHubStats _parse(String username, Map<String, dynamic> data) {
