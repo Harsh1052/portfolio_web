@@ -125,6 +125,8 @@ class VisitorRemoteSource {
         // Skip coordinate lookup if invalid
         if (lat == 0.0 && lon == 0.0) return;
 
+        final deviceData = _collectDeviceInfo();
+
         await _db!.collection('visitor_locations').add({
           'city': city,
           'region': region,
@@ -132,10 +134,43 @@ class VisitorRemoteSource {
           'latitude': lat,
           'longitude': lon,
           'timestamp': FieldValue.serverTimestamp(),
+          ...deviceData,
         });
       }
     } catch (e) {
       if (kDebugMode) debugPrint('[VisitorSource] GeoIP fetch failed: $e');
+    }
+  }
+
+  /// Silently collects rich client/browser telemetry data on the web.
+  Map<String, dynamic> _collectDeviceInfo() {
+    if (!kIsWeb) return {};
+    try {
+      final nav = web.window.navigator;
+      final screen = web.window.screen;
+      
+      // Safe access to referrer via window.document
+      String referrer = 'Direct';
+      try {
+        referrer = web.window.document.referrer;
+        if (referrer.isEmpty) referrer = 'Direct';
+      } catch (_) {}
+
+      return {
+        'userAgent': nav.userAgent,
+        'language': nav.language,
+        'platform': nav.platform,
+        'screenWidth': screen.width,
+        'screenHeight': screen.height,
+        'viewportWidth': web.window.innerWidth,
+        'viewportHeight': web.window.innerHeight,
+        'referrer': referrer,
+        'timezone': DateTime.now().timeZoneName,
+        'timezoneOffset': DateTime.now().timeZoneOffset.inHours,
+        'cores': nav.hardwareConcurrency,
+      };
+    } catch (e) {
+      return {'device_telemetry_error': e.toString()};
     }
   }
 
