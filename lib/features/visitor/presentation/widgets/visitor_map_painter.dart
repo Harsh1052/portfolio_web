@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/visitor_location.dart';
@@ -19,11 +20,6 @@ class VisitorMapPainter extends CustomPainter {
       ..style = PaintingStyle.fill
       ..color = AppColors.accent;
 
-    // Primary pulse wave - fades out as it expands
-    final pulsePaint1 = Paint()
-      ..style = PaintingStyle.fill
-      ..color = AppColors.accent.withValues(alpha: 0.45 * (1.0 - pulseValue));
-
     for (int i = 0; i < locations.length; i++) {
       final loc = locations[i];
 
@@ -35,39 +31,19 @@ class VisitorMapPainter extends CustomPainter {
       final x = normX * size.width;
       final y = normY * size.height;
 
-      double markerRadius = 4.5;
+      const double markerRadius = 4.5;
 
       // Pulse animation for the latest (most recent) visitor
       if (i == 0) {
-        // Outer expanding ripple 1
-        canvas.drawCircle(Offset(x, y), 4.5 + 24.0 * pulseValue, pulsePaint1);
-
-        // Delayed secondary ripple 2 (starts when ripple 1 is halfway)
-        if (pulseValue > 0.5) {
-          final double secondPulseVal = (pulseValue - 0.5) * 2.0;
-          final pulsePaint2 = Paint()
-            ..style = PaintingStyle.fill
-            ..color = AppColors.accent.withValues(alpha: 0.3 * (1.0 - secondPulseVal));
-          canvas.drawCircle(Offset(x, y), 4.5 + 16.0 * secondPulseVal, pulsePaint2);
-        }
-
-        // Slightly larger pulsating base dot
-        markerRadius = 6.0 + 1.5 * (1.0 - pulseValue);
-        baseLocationPaint.color = AppColors.accent;
+        // Smooth breathing blink: opacity oscillates between 0.15 and 1.0
+        final double blinkOpacity = 0.15 + 0.85 * (0.5 + 0.5 * math.sin(pulseValue * 2 * math.pi));
+        baseLocationPaint.color = AppColors.accent.withValues(alpha: blinkOpacity);
       } else {
         baseLocationPaint.color = AppColors.accent.withValues(alpha: 0.75);
       }
 
       // Plot actual marker dot
       canvas.drawCircle(Offset(x, y), markerRadius, baseLocationPaint);
-
-      // Draw a glowing white core in the center of the active visitor dot
-      if (i == 0) {
-        final whiteCorePaint = Paint()
-          ..style = PaintingStyle.fill
-          ..color = Colors.white;
-        canvas.drawCircle(Offset(x, y), 2.0, whiteCorePaint);
-      }
     }
   }
 
