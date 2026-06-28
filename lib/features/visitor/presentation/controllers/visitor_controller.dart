@@ -52,13 +52,17 @@ class VisitorController extends GetxController {
       // GetX's bindStream() automatically subscribes and disposes.
       stats.bindStream(
         _watchStats().handleError((e) {
-          if (kDebugMode) debugPrint('[VisitorController] stats stream error: $e');
+          if (kDebugMode) {
+            debugPrint('[VisitorController] stats stream error: $e');
+          }
         }),
       );
 
       locations.bindStream(
         _watchLocations().handleError((e) {
-          if (kDebugMode) debugPrint('[VisitorController] locations stream error: $e');
+          if (kDebugMode) {
+            debugPrint('[VisitorController] locations stream error: $e');
+          }
         }),
       );
 
