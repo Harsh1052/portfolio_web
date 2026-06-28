@@ -22,7 +22,6 @@ class HomePage extends StatelessWidget {
     final controller = Get.find<ContentController>();
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
       body: Obx(() {
         if (controller.isLoading) {
           return const Center(

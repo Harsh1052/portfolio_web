@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/responsive_layout.dart';
 import '../../../../core/widgets/particle_backdrop.dart';
+import '../../../../core/widgets/theme_toggle_button.dart';
 import '../../../content/data/models/portfolio_content.dart';
 import 'typewriter_tagline.dart';
 
@@ -114,7 +115,9 @@ class _HeroActions extends StatelessWidget {
           ),
           child: const Text('Download Resume'),
         ),
-        ],
+        const SizedBox(width: 4),
+        const ThemeToggleButton(),
+      ],
     );
   }
 }
@@ -156,7 +159,9 @@ class _IconLinkState extends State<_IconLink> {
             width: 20,
             height: 20,
             colorFilter: ColorFilter.mode(
-              _hovered ? AppColors.textPrimary : AppColors.textSecondary,
+              _hovered
+                  ? Theme.of(context).colorScheme.onSurface
+                  : AppColors.accent.withValues(alpha: 0.6),
               BlendMode.srcIn,
             ),
           ),
