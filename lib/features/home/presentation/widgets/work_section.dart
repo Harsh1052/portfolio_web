@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/fade_slide_in.dart';
 import '../../../../core/widgets/responsive_layout.dart';
@@ -23,8 +22,11 @@ class WorkSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Divider(
-                    color: AppColors.border, thickness: 1, height: 1),
+                Divider(
+                  color: Theme.of(context).dividerColor,
+                  thickness: 1,
+                  height: 1,
+                ),
                 const SizedBox(height: 64),
                 Semantics(
                   header: true,

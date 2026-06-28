@@ -46,7 +46,11 @@ class _SectionDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(color: AppColors.border, thickness: 1, height: 1);
+    return Divider(
+      color: Theme.of(context).dividerColor,
+      thickness: 1,
+      height: 1,
+    );
   }
 }
 
@@ -74,6 +78,7 @@ class _CopyEmailState extends State<_CopyEmail> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Semantics(
       label: 'Email address ${widget.email}. Activate to copy.',
       button: true,
@@ -97,7 +102,9 @@ class _CopyEmailState extends State<_CopyEmail> {
                   width: 16,
                   height: 16,
                   colorFilter: ColorFilter.mode(
-                    _copied ? AppColors.accent : AppColors.textSecondary,
+                    _copied
+                        ? AppColors.accent
+                        : cs.onSurface.withValues(alpha: 0.5),
                     BlendMode.srcIn,
                   ),
                 ),
@@ -124,6 +131,7 @@ class _ContactLinkState extends State<_ContactLink> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Semantics(
       link: true,
       label: '${widget.label} — opens in new tab',
@@ -139,7 +147,7 @@ class _ContactLinkState extends State<_ContactLink> {
         child: Text(
           '${widget.label} →',
           style: AppTextStyles.body.copyWith(
-            color: _hovered ? AppColors.accent : AppColors.textPrimary,
+            color: _hovered ? AppColors.accent : cs.onSurface,
           ),
         ),
       ),

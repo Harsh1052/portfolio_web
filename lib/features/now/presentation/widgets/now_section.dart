@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/fade_slide_in.dart';
 import '../../../../core/widgets/responsive_layout.dart';
 import '../../domain/entities/now_entry.dart';
@@ -32,8 +31,8 @@ class NowSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Divider(
-                  color: AppColors.border,
+                Divider(
+                  color: Theme.of(context).dividerColor,
                   thickness: 1,
                   height: 1,
                 ),

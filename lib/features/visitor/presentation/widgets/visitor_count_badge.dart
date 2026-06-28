@@ -87,7 +87,7 @@ class _BadgeState extends State<_Badge> with SingleTickerProviderStateMixin {
           Text(
             '$label views',
             style: AppTextStyles.caption.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55),
               fontWeight: FontWeight.w400,
             ),
           ),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'app_colors.dart';
 
 // All sizes in logical px from the spec's rem values (1rem = 16px).
 // Letter-spacing computed as: -0.02em * fontSize.
+//
+// IMPORTANT: Colors are intentionally NOT set here. Styles inherit the color
+// from the active ThemeData.textTheme so that dark/light mode works correctly.
+// Use .copyWith(color: ...) at call-site only when a specific override is needed.
 abstract final class AppTextStyles {
   // h1 — name: Space Grotesk 600, 4.5rem, lh 1.05, tracking -0.02em
   static final TextStyle h1 = GoogleFonts.spaceGrotesk(
@@ -11,7 +14,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w600,
     height: 1.05,
     letterSpacing: -1.44,
-    color: AppColors.textPrimary,
   );
 
   // h1 mobile — same weight/tracking, scaled down for 375px viewport
@@ -20,7 +22,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w600,
     height: 1.1,
     letterSpacing: -0.8,
-    color: AppColors.textPrimary,
   );
 
   // h2 — section heading: Space Grotesk 600, 2.5rem, lh 1.15, tracking -0.02em
@@ -29,7 +30,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w600,
     height: 1.15,
     letterSpacing: -0.8,
-    color: AppColors.textPrimary,
   );
 
   static final TextStyle h2Mobile = GoogleFonts.spaceGrotesk(
@@ -37,7 +37,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w600,
     height: 1.2,
     letterSpacing: -0.56,
-    color: AppColors.textPrimary,
   );
 
   // h3 — project title: Space Grotesk 500, 1.5rem, lh 1.3
@@ -45,7 +44,6 @@ abstract final class AppTextStyles {
     fontSize: 24,
     fontWeight: FontWeight.w500,
     height: 1.3,
-    color: AppColors.textPrimary,
   );
 
   // body: Inter 400, 1.0625rem, lh 1.65 — max 65ch
@@ -53,15 +51,13 @@ abstract final class AppTextStyles {
     fontSize: 17,
     fontWeight: FontWeight.w400,
     height: 1.65,
-    color: AppColors.textPrimary,
   );
 
-  // caption: Inter 500, 0.875rem, lh 1.5
+  // caption: Inter 500, 0.875rem, lh 1.5 — secondary tone applied via theme
   static final TextStyle caption = GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     height: 1.5,
-    color: AppColors.textSecondary,
   );
 
   // link — medium-weight body; accent applied on hover via copyWith
@@ -69,7 +65,6 @@ abstract final class AppTextStyles {
     fontSize: 17,
     fontWeight: FontWeight.w500,
     height: 1.65,
-    color: AppColors.textPrimary,
   );
 
   // tag — tech tag label
@@ -77,15 +72,13 @@ abstract final class AppTextStyles {
     fontSize: 13,
     fontWeight: FontWeight.w500,
     height: 1.4,
-    color: AppColors.textSecondary,
   );
 
-  // metric — e.g. "15K+ farmers"; textPrimary keeps WCAG AA contrast
+  // metric — e.g. "15K+ farmers"
   static final TextStyle metric = GoogleFonts.spaceGrotesk(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     height: 1.4,
-    color: AppColors.textPrimary,
   );
 
   // caseSectionHeading — "The problem", "The approach", etc. within case studies
@@ -93,6 +86,5 @@ abstract final class AppTextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w600,
     height: 1.4,
-    color: AppColors.textPrimary,
   );
 }

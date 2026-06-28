@@ -17,7 +17,6 @@ class CaseStudyPage extends StatelessWidget {
     final controller = Get.find<ContentController>();
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
       body: Obx(() {
         final content = controller.content.value;
         if (content == null) {
@@ -118,7 +117,8 @@ class _CaseStudyHeader extends StatelessWidget {
               Text(
                 cs.summary,
                 style: AppTextStyles.body
-                    .copyWith(color: AppColors.textSecondary),
+                    .copyWith(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55)),
               ),
               const SizedBox(height: 24),
               _MetadataBar(cs: cs),
@@ -127,11 +127,16 @@ class _CaseStudyHeader extends StatelessWidget {
               Text(
                 project.description,
                 style: AppTextStyles.body
-                    .copyWith(color: AppColors.textSecondary),
+                    .copyWith(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55)),
               ),
             ],
             const SizedBox(height: 48),
-            const Divider(color: AppColors.border, thickness: 1, height: 1),
+            Divider(
+              color: Theme.of(context).dividerColor,
+              thickness: 1,
+              height: 1,
+            ),
           ],
         ),
       ),
@@ -282,7 +287,11 @@ class _NoContent extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 64),
         child: Text(
           'Full case study coming soon.',
-          style: AppTextStyles.body.copyWith(color: AppColors.textSecondary),
+          style: AppTextStyles.body.copyWith(
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.55)),
         ),
       ),
     );
@@ -303,7 +312,11 @@ class _CaseStudyFooter extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(color: AppColors.border, thickness: 1, height: 1),
+            Divider(
+              color: Theme.of(context).dividerColor,
+              thickness: 1,
+              height: 1,
+            ),
             const SizedBox(height: 32),
             _BackLink(),
           ],
@@ -343,7 +356,9 @@ class _BackLinkState extends State<_BackLink> {
         child: Text(
           '← Back to work',
           style: AppTextStyles.body.copyWith(
-            color: _hovered ? AppColors.accent : AppColors.textPrimary,
+            color: _hovered
+                ? AppColors.accent
+                : Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../domain/entities/now_entry.dart';
 
@@ -14,12 +13,13 @@ class NowStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: cs.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: cs.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,9 @@ class NowStatusCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 entry.label,
-                style: AppTextStyles.caption,
+                style: AppTextStyles.caption.copyWith(
+                  color: cs.onSurface.withValues(alpha: 0.55),
+                ),
               ),
             ],
           ),
@@ -51,6 +53,7 @@ class NowStatusCard extends StatelessWidget {
               entry.subValue!,
               style: AppTextStyles.caption.copyWith(
                 fontWeight: FontWeight.w400,
+                color: cs.onSurface.withValues(alpha: 0.55),
               ),
             ),
           ],
