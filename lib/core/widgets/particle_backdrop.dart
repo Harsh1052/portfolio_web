@@ -106,14 +106,16 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
     final isMobile = size.width < Breakpoints.mobile;
     final particleCount = isMobile ? 18 : 45;
 
+    // Use a fixed 450x100 px grid for HELLO on desktop so it is perfectly dense and readable.
+    // 1 unit = 25px (450 / 18 = 25, 100 / 4 = 25).
+    const displayW = 450.0;
+    const displayH = 100.0;
+
     // If particles are already initialized, just scale their positions and update targets.
-    // This prevents them from snapping or disappearing during layout passes.
     if (_particles.isNotEmpty && _lastSize.width > 0 && _lastSize.height > 0) {
       final scaleX = size.width / _lastSize.width;
       final scaleY = size.height / _lastSize.height;
 
-      final displayW = size.width * 0.58;
-      final displayH = size.height * 0.22;
       final originX = (size.width - displayW) / 2;
       final originY = (size.height - displayH) / 2;
 
@@ -124,8 +126,8 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
 
         if (i < _helloPoints.length && !isMobile) {
           final pt = _helloPoints[i];
-          p.targetX = originX + (pt[0] / 18.0) * displayW;
-          p.targetY = originY + (pt[1] / 4.0) * displayH;
+          p.targetX = originX + pt[0] * 25.0;
+          p.targetY = originY + pt[1] * 25.0;
         } else {
           p.targetX = null;
           p.targetY = null;
@@ -143,9 +145,6 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
       _phaseTimer?.cancel();
     }
 
-    // Calculate HELLO target positions centered on the canvas
-    final displayW = size.width * 0.58;
-    final displayH = size.height * 0.22;
     final originX = (size.width - displayW) / 2;
     final originY = (size.height - displayH) / 2;
 
@@ -155,8 +154,8 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
 
       if (!isMobile && i < _helloPoints.length) {
         final pt = _helloPoints[i];
-        tx = originX + (pt[0] / 18.0) * displayW;
-        ty = originY + (pt[1] / 4.0) * displayH;
+        tx = originX + pt[0] * 25.0;
+        ty = originY + pt[1] * 25.0;
       }
 
       _particles.add(
@@ -348,7 +347,7 @@ class _ParticlePainter extends CustomPainter {
 
     final paint = Paint()..style = PaintingStyle.fill;
     final linePaint = Paint()
-      ..strokeWidth = isConverging ? 1.2 : 1.0
+      ..strokeWidth = isConverging ? 1.5 : 1.0
       ..style = PaintingStyle.stroke;
 
     // ── 1. Connecting lines between close particles ──
@@ -361,12 +360,12 @@ class _ParticlePainter extends CustomPainter {
         final dy = p1.y - p2.y;
         final dist = math.sqrt(dx * dx + dy * dy);
 
-        // During convergence: tighter connections so letters look solid
-        final limit = isConverging ? 38.0 : 110.0;
+        // During convergence: 36.0 limit connects adjacent 25px grid points perfectly.
+        final limit = isConverging ? 36.0 : 110.0;
         if (dist < limit) {
           final avgZ = (p1.z + p2.z) / 2.0;
           final alpha = isConverging
-              ? (1.0 - (dist / limit)) * 0.35   // More visible during HELLO
+              ? (1.0 - (dist / limit)) * 0.70   // Highly visible connecting lines
               : (1.0 - (dist / limit)) * 0.12 * avgZ;
           linePaint.color = AppColors.accent.withValues(alpha: alpha);
           canvas.drawLine(Offset(p1.x, p1.y), Offset(p2.x, p2.y), linePaint);
@@ -392,11 +391,11 @@ class _ParticlePainter extends CustomPainter {
       if (isConverging) {
         // During HELLO convergence: bright, solid dots at fixed size
         final glowPaint = Paint()
-          ..color = AppColors.accent.withValues(alpha: 0.18)
+          ..color = AppColors.accent.withValues(alpha: 0.30)
           ..style = PaintingStyle.fill;
-        canvas.drawCircle(Offset(p.x, p.y), 7.0, glowPaint);
-        paint.color = AppColors.accent.withValues(alpha: 0.90);
-        canvas.drawCircle(Offset(p.x, p.y), 3.5, paint);
+        canvas.drawCircle(Offset(p.x, p.y), 8.0, glowPaint);
+        paint.color = AppColors.accent.withValues(alpha: 0.95);
+        canvas.drawCircle(Offset(p.x, p.y), 4.0, paint);
       } else {
         // Free phase: depth-scaled size and opacity
         final radius = 2.0 + (3.0 * p.z);
