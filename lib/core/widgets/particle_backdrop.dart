@@ -101,9 +101,41 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
   }
 
   void _initializeParticles(Size size) {
-    _particles.clear();
+    if (size.width <= 0 || size.height <= 0) return;
+
     final isMobile = size.width < Breakpoints.mobile;
     final particleCount = isMobile ? 18 : 45;
+
+    // If particles are already initialized, just scale their positions and update targets.
+    // This prevents them from snapping or disappearing during layout passes.
+    if (_particles.isNotEmpty && _lastSize.width > 0 && _lastSize.height > 0) {
+      final scaleX = size.width / _lastSize.width;
+      final scaleY = size.height / _lastSize.height;
+
+      final displayW = size.width * 0.58;
+      final displayH = size.height * 0.22;
+      final originX = (size.width - displayW) / 2;
+      final originY = (size.height - displayH) / 2;
+
+      for (int i = 0; i < _particles.length; i++) {
+        final p = _particles[i];
+        p.x *= scaleX;
+        p.y *= scaleY;
+
+        if (i < _helloPoints.length && !isMobile) {
+          final pt = _helloPoints[i];
+          p.targetX = originX + (pt[0] / 18.0) * displayW;
+          p.targetY = originY + (pt[1] / 4.0) * displayH;
+        } else {
+          p.targetX = null;
+          p.targetY = null;
+        }
+      }
+      _lastSize = size;
+      return;
+    }
+
+    _particles.clear();
 
     // Mobile: skip convergence entirely, go straight to free
     if (isMobile) {
@@ -112,7 +144,6 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
     }
 
     // Calculate HELLO target positions centered on the canvas
-    // Grid spans cols 0-18 (width=18), rows 0-4 (height=4)
     final displayW = size.width * 0.58;
     final displayH = size.height * 0.22;
     final originX = (size.width - displayW) / 2;
@@ -124,7 +155,6 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
 
       if (!isMobile && i < _helloPoints.length) {
         final pt = _helloPoints[i];
-        // Normalize col (0-18) → displayW, row (0-4) → displayH
         tx = originX + (pt[0] / 18.0) * displayW;
         ty = originY + (pt[1] / 4.0) * displayH;
       }
@@ -223,8 +253,8 @@ class _Particle {
   double vz;
 
   // Convergence target — null for surplus particles or mobile
-  final double? targetX;
-  final double? targetY;
+  double? targetX;
+  double? targetY;
 
   void update({
     required Size size,
