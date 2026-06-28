@@ -62,9 +62,6 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
       vsync: this,
       duration: const Duration(seconds: 10),
     )..repeat();
-
-    // Transition to free state after 5 seconds to give visitors enough time to recognize it
-    _phaseTimer = Timer(const Duration(milliseconds: 5000), _triggerExplosion);
   }
 
   @override
@@ -139,10 +136,15 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
 
     _particles.clear();
 
-    // Mobile: skip convergence entirely, go straight to free
     if (isMobile) {
       _phase = _ParticlePhase.free;
       _phaseTimer?.cancel();
+    } else {
+      // Start the 5-second welcome timer ONLY when we successfully initialize on desktop.
+      // This prevents transient layout passes from cancelling the timer.
+      _phase = _ParticlePhase.converging;
+      _phaseTimer?.cancel();
+      _phaseTimer = Timer(const Duration(milliseconds: 5000), _triggerExplosion);
     }
 
     final originX = (size.width - displayW) / 2;
@@ -262,9 +264,9 @@ class _Particle {
     required _ParticlePhase phase,
   }) {
     if (phase == _ParticlePhase.converging && targetX != null) {
-      // Spring physics: pull toward target, dampen velocity
-      final fx = (targetX! - x) * 5.0 - vx * 6.0;
-      final fy = (targetY! - y) * 5.0 - vy * 6.0;
+      // Snappy spring physics: snaps particles to 'HELLO' targets in ~0.4s
+      final fx = (targetX! - x) * 18.0 - vx * 5.0;
+      final fy = (targetY! - y) * 18.0 - vy * 5.0;
       vx += fx * dt;
       vy += fy * dt;
       x += vx * dt;
