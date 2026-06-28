@@ -30,14 +30,19 @@ class VisitorMapPainter extends CustomPainter {
       final x = normX * size.width;
       final y = normY * size.height;
 
-      const double markerRadius = 4.5;
+      double markerRadius = 4.5;
 
       // Pulse animation for the latest (most recent) visitor
       if (i == 0) {
-        // Sharp digital blink at 2Hz (4 full blinks per 2-second cycle)
-        // 250ms ON, 250ms OFF. Perfect for attracting attention.
-        final bool isOn = (pulseValue * 8).toInt() % 2 == 0;
-        baseLocationPaint.color = AppColors.accent.withValues(alpha: isOn ? 1.0 : 0.15);
+        // True ON/OFF blink (3 blinks per 2-second cycle)
+        // Completely disappears when OFF to be highly noticeable.
+        final bool isOn = (pulseValue * 6).toInt() % 2 == 0;
+        if (isOn) {
+          baseLocationPaint.color = AppColors.accent;
+          markerRadius = 6.0; // Slightly larger when ON to attract attention
+        } else {
+          baseLocationPaint.color = Colors.transparent;
+        }
       } else {
         baseLocationPaint.color = AppColors.accent.withValues(alpha: 0.75);
       }
