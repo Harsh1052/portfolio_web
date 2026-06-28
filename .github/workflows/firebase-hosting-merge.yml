@@ -51,5 +51,6 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_HARSH_PORTFOLIO_WEB }}
+          # 'live' deploys to the production channel (not a preview channel)
           channelId: live
           projectId: harsh-portfolio-web
