@@ -48,7 +48,11 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(color: AppColors.border, thickness: 1, height: 1),
+            Divider(
+              color: Theme.of(context).dividerColor,
+              thickness: 1,
+              height: 1,
+            ),
             const SizedBox(height: 64),
             FadeSlideIn(
               child: Semantics(
@@ -85,12 +89,14 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                         constraints: const BoxConstraints(maxHeight: 520),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: AppColors.surface,
+                            color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: AppColors.border),
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.02),
+                                color: Colors.black.withValues(alpha: 0.04),
                                 blurRadius: 20,
                                 offset: const Offset(0, 10),
                               ),
@@ -108,7 +114,7 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                                       'assets/icons/india.svg',
                                       fit: BoxFit.fill,
                                       colorFilter: ColorFilter.mode(
-                                        AppColors.textSecondary.withValues(alpha: 0.15),
+                                        Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.12),
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -169,9 +175,9 @@ class _RecentVisitorsTicker extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.border),
+              border: Border.all(color: Theme.of(context).colorScheme.outline),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -180,7 +186,9 @@ class _RecentVisitorsTicker extends StatelessWidget {
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: i == 0 ? AppColors.accent : AppColors.textSecondary.withValues(alpha: 0.5),
+                    color: i == 0
+                        ? AppColors.accent
+                        : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -188,7 +196,9 @@ class _RecentVisitorsTicker extends StatelessWidget {
                 Text(
                   '${displayed[i].city}, ${displayed[i].country}',
                   style: AppTextStyles.tag.copyWith(
-                    color: i == 0 ? AppColors.textPrimary : AppColors.textSecondary,
+                    color: i == 0
+                        ? Theme.of(context).colorScheme.onSurface
+                        : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55),
                     fontWeight: i == 0 ? FontWeight.w600 : FontWeight.w500,
                   ),
                 ),
@@ -207,9 +217,9 @@ class _MapPlaceholder extends StatelessWidget {
     return Container(
       height: 320,
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: Theme.of(context).colorScheme.outline),
       ),
       child: const Center(
         child: SizedBox(

@@ -113,6 +113,7 @@ class _TypewriterTaglineState extends State<TypewriterTagline> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 580),
       child: RichText(
@@ -121,7 +122,7 @@ class _TypewriterTaglineState extends State<TypewriterTagline> {
             TextSpan(
               text: _displayText.isEmpty ? '\u200B' : _displayText,
               style: AppTextStyles.body.copyWith(
-                color: AppColors.textSecondary,
+                color: cs.onSurface.withValues(alpha: 0.55),
               ),
             ),
             WidgetSpan(

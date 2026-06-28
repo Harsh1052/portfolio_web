@@ -21,7 +21,11 @@ class WritingSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(color: AppColors.border, thickness: 1, height: 1),
+            Divider(
+              color: Theme.of(context).dividerColor,
+              thickness: 1,
+              height: 1,
+            ),
             const SizedBox(height: 64),
             Semantics(
               header: true,
@@ -56,6 +60,7 @@ class _ArticleRowState extends State<_ArticleRow> {
   @override
   Widget build(BuildContext context) {
     final a = widget.article;
+    final cs = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,7 +80,9 @@ class _ArticleRowState extends State<_ArticleRow> {
           constraints: const BoxConstraints(maxWidth: 585),
           child: Text(
             a.summary,
-            style: AppTextStyles.body.copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.body.copyWith(
+              color: cs.onSurface.withValues(alpha: 0.6),
+            ),
           ),
         ),
         const SizedBox(height: 12),
@@ -95,7 +102,7 @@ class _ArticleRowState extends State<_ArticleRow> {
               'Read on Medium →',
               style: AppTextStyles.body.copyWith(
                 fontWeight: FontWeight.w500,
-                color: _hovered ? AppColors.accent : AppColors.textPrimary,
+                color: _hovered ? AppColors.accent : cs.onSurface,
               ),
             ),
           ),

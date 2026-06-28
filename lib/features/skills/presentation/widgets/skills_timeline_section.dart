@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/responsive_layout.dart';
 import '../../domain/repositories/skills_repository.dart';
@@ -34,8 +33,8 @@ class SkillsTimelineSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Divider(
-                  color: AppColors.border,
+                Divider(
+                  color: Theme.of(context).dividerColor,
                   thickness: 1,
                   height: 1,
                 ),

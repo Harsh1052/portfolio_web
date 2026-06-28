@@ -26,7 +26,11 @@ class ContributionGraphSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(color: AppColors.border, thickness: 1, height: 1),
+            Divider(
+              color: Theme.of(context).dividerColor,
+              thickness: 1,
+              height: 1,
+            ),
             const SizedBox(height: 64),
             FadeSlideIn(
               child: Semantics(
@@ -189,7 +193,7 @@ class _SkeletonBlock extends StatelessWidget {
       width: width == double.infinity ? null : width,
       height: height,
       decoration: BoxDecoration(
-        color: AppColors.border,
+        color: Theme.of(context).dividerColor,
         borderRadius: BorderRadius.circular(4),
       ),
     );
@@ -210,7 +214,9 @@ class _ErrorView extends StatelessWidget {
       children: [
         Text(
           'Could not load GitHub activity.',
-          style: AppTextStyles.body.copyWith(color: AppColors.textSecondary),
+          style: AppTextStyles.body.copyWith(
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55),
+          ),
         ),
         const SizedBox(height: 12),
         TextButton(

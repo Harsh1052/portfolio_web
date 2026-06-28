@@ -24,17 +24,23 @@ class _SkillTagWithTooltipState extends State<SkillTagWithTooltip> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Tooltip(
       message: widget.skill.tooltip,
       preferBelow: false,
       verticalOffset: 12,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.textPrimary,
+        // In dark mode use the surface card; in light use the dark textPrimary
+        color: isDark ? cs.surface : AppColors.textPrimary,
         borderRadius: BorderRadius.circular(8),
+        border: isDark ? Border.all(color: cs.outline) : null,
       ),
       textStyle: AppTextStyles.caption.copyWith(
-        color: AppColors.surface,
+        // Flip tooltip text color per theme
+        color: isDark ? cs.onSurface : AppColors.surface,
         fontWeight: FontWeight.w400,
       ),
       child: MouseRegion(
@@ -50,14 +56,16 @@ class _SkillTagWithTooltipState extends State<SkillTagWithTooltip> {
                 ? AppColors.accent.withValues(alpha: 0.08)
                 : Colors.transparent,
             border: Border.all(
-              color: _hovered ? AppColors.accent : AppColors.border,
+              color: _hovered ? AppColors.accent : cs.outline,
             ),
             borderRadius: BorderRadius.circular(6),
           ),
           child: Text(
             widget.skill.label,
             style: AppTextStyles.tag.copyWith(
-              color: _hovered ? AppColors.accent : AppColors.textSecondary,
+              color: _hovered
+                  ? AppColors.accent
+                  : cs.onSurface.withValues(alpha: 0.6),
             ),
           ),
         ),

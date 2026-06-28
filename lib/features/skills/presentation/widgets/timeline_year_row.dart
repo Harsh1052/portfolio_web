@@ -63,7 +63,7 @@ class _DesktopRow extends StatelessWidget {
               padding: const EdgeInsets.only(top: 4),
               child: Text(
                 yearData.year.toString(),
-                style: _yearStyle,
+                style: _yearStyle(context),
               ),
             ),
           ),
@@ -101,7 +101,7 @@ class _MobileRow extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(yearData.year.toString(), style: _yearStyle),
+          Text(yearData.year.toString(), style: _yearStyle(context)),
           const SizedBox(height: 12),
           _SkillsWrap(skills: yearData.skills),
         ],
@@ -139,7 +139,7 @@ class _TimelineSpine extends StatelessWidget {
           Expanded(
             child: Container(
               width: 1,
-              color: AppColors.border,
+              color: Theme.of(context).dividerColor,
             ),
           ),
       ],
@@ -166,12 +166,12 @@ class _SkillsWrap extends StatelessWidget {
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Shared text style
+// Shared text style — derived from context so it picks up theme color
 // ──────────────────────────────────────────────────────────────────────────────
 
-final TextStyle _yearStyle = GoogleFonts.spaceGrotesk(
-  fontSize: 15,
-  fontWeight: FontWeight.w600,
-  color: AppColors.textSecondary,
-  letterSpacing: 0.2,
-);
+TextStyle _yearStyle(BuildContext context) => GoogleFonts.spaceGrotesk(
+      fontSize: 15,
+      fontWeight: FontWeight.w600,
+      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55),
+      letterSpacing: 0.2,
+    );
