@@ -63,8 +63,8 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
       duration: const Duration(seconds: 10),
     )..repeat();
 
-    // Transition to free state after 3.5 seconds
-    _phaseTimer = Timer(const Duration(milliseconds: 3500), _triggerExplosion);
+    // Transition to free state after 5 seconds to give visitors enough time to recognize it
+    _phaseTimer = Timer(const Duration(milliseconds: 5000), _triggerExplosion);
   }
 
   @override
