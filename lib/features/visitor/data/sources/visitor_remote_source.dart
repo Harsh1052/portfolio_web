@@ -96,7 +96,9 @@ class VisitorRemoteSource {
       // If it is a new session, run GeoIP lookup to fetch coordinates
       if (isNew) {
         _captureAndSaveGeoLocation().catchError((e) {
-          if (kDebugMode) debugPrint('[VisitorSource] Geolocation capture failed: $e');
+          if (kDebugMode) {
+            debugPrint('[VisitorSource] Geolocation capture failed: $e');
+          }
         });
       }
     } catch (e) {

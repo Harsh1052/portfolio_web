@@ -8,6 +8,8 @@ on:
   # also run on pushes to feature branches so you catch issues early
   push:
     branches:
+      - master
+      - updated-portfolio
       - develop
       - 'feature/**'
       - 'fix/**'
