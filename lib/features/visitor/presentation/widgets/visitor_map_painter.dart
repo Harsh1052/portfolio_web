@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/visitor_location.dart';
@@ -35,9 +34,10 @@ class VisitorMapPainter extends CustomPainter {
 
       // Pulse animation for the latest (most recent) visitor
       if (i == 0) {
-        // Smooth breathing blink: opacity oscillates between 0.15 and 1.0
-        final double blinkOpacity = 0.15 + 0.85 * (0.5 + 0.5 * math.sin(pulseValue * 2 * math.pi));
-        baseLocationPaint.color = AppColors.accent.withValues(alpha: blinkOpacity);
+        // Sharp digital blink at 2Hz (4 full blinks per 2-second cycle)
+        // 250ms ON, 250ms OFF. Perfect for attracting attention.
+        final bool isOn = (pulseValue * 8).toInt() % 2 == 0;
+        baseLocationPaint.color = AppColors.accent.withValues(alpha: isOn ? 1.0 : 0.15);
       } else {
         baseLocationPaint.color = AppColors.accent.withValues(alpha: 0.75);
       }
