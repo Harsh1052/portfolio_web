@@ -108,8 +108,12 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
     const displayW = 450.0;
     const displayH = 100.0;
 
-    // If particles are already initialized, just scale their positions and update targets.
-    if (_particles.isNotEmpty && _lastSize.width > 0 && _lastSize.height > 0) {
+    // If the layout type (mobile vs desktop) changed, we must re-initialize
+    // to get the correct particle count and reset the welcome phase.
+    final bool typeChanged = _particles.length != particleCount;
+
+    // If particles are already initialized and layout type hasn't changed, just scale them.
+    if (_particles.isNotEmpty && _lastSize.width > 0 && _lastSize.height > 0 && !typeChanged) {
       final scaleX = size.width / _lastSize.width;
       final scaleY = size.height / _lastSize.height;
 
@@ -192,11 +196,6 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
               _isHovered = true;
               _mousePosition = event.localPosition;
             });
-            // First mouse interaction bursts particles immediately
-            if (_phase == _ParticlePhase.converging) {
-              _phaseTimer?.cancel();
-              _triggerExplosion();
-            }
           },
           onHover: (event) {
             setState(() => _mousePosition = event.localPosition);
