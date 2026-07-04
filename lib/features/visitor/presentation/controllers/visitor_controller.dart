@@ -43,10 +43,14 @@ class VisitorController extends GetxController {
     status.value = VisitorStatus.loading;
     try {
       // Fire-and-forget track — doesn't block stats display.
-      _trackVisit().catchError((e) {
-        if (kDebugMode) debugPrint('[VisitorController] trackVisit error: $e');
-        return;
-      });
+      // Do not track visits or increase view count while debugging.
+      if (!kDebugMode) {
+        _trackVisit().catchError((e) {
+          return;
+        });
+      } else {
+        debugPrint('[VisitorController] Debug mode detected: Skipping trackVisit.');
+      }
 
       // Bind reactive streams from Firestore snapshots.
       // GetX's bindStream() automatically subscribes and disposes.

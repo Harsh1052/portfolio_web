@@ -6,6 +6,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/fade_slide_in.dart';
 import '../../../../core/widgets/responsive_layout.dart';
 import '../controllers/visitor_controller.dart';
+import '../../domain/entities/visitor_location.dart';
 import 'visitor_map_painter.dart';
 
 class VisitorMapSection extends StatefulWidget {
@@ -83,6 +84,12 @@ class _VisitorMapSectionState extends State<VisitorMapSection>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    _VisitorStatsRow(
+                      totalViews: controller.stats.value.totalViews,
+                      uniqueSessions: controller.stats.value.uniqueSessions,
+                      locations: controller.locations,
+                    ),
+                    const SizedBox(height: 32),
                     // Glassmorphic Map Container with locked aspect ratio
                     Center(
                       child: ConstrainedBox(
@@ -234,3 +241,167 @@ class _MapPlaceholder extends StatelessWidget {
     );
   }
 }
+
+class _VisitorStatsRow extends StatelessWidget {
+  const _VisitorStatsRow({
+    required this.totalViews,
+    required this.uniqueSessions,
+    required this.locations,
+  });
+
+  final int totalViews;
+  final int uniqueSessions;
+  final List<VisitorLocation> locations;
+
+  @override
+  Widget build(BuildContext context) {
+    final uniqueCities = locations.map((l) => '${l.city}, ${l.country}').toSet().length;
+    final uniqueCountries = locations.map((l) => l.country).toSet().length;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < Breakpoints.mobile;
+
+        if (isMobile) {
+          return Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: _VisitorStatItem(
+                      value: totalViews.toString(),
+                      label: 'Total Views',
+                      icon: Icons.remove_red_eye_outlined,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _VisitorStatItem(
+                      value: uniqueSessions.toString(),
+                      label: 'Unique Visitors',
+                      icon: Icons.people_outline_rounded,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _VisitorStatItem(
+                      value: uniqueCities.toString(),
+                      label: 'Cities',
+                      icon: Icons.location_city_rounded,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _VisitorStatItem(
+                      value: uniqueCountries.toString(),
+                      label: 'Countries',
+                      icon: Icons.public_rounded,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+        }
+
+        return Row(
+          children: [
+            Expanded(
+              child: _VisitorStatItem(
+                value: totalViews.toString(),
+                label: 'Total Views',
+                icon: Icons.remove_red_eye_outlined,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _VisitorStatItem(
+                value: uniqueSessions.toString(),
+                label: 'Unique Visitors',
+                icon: Icons.people_outline_rounded,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _VisitorStatItem(
+                value: uniqueCities.toString(),
+                label: 'Cities Represented',
+                icon: Icons.location_city_rounded,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _VisitorStatItem(
+                value: uniqueCountries.toString(),
+                label: 'Countries Connected',
+                icon: Icons.public_rounded,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _VisitorStatItem extends StatelessWidget {
+  const _VisitorStatItem({
+    required this.value,
+    required this.label,
+    required this.icon,
+  });
+
+  final String value;
+  final String label;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        color: cs.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: cs.outline),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 24,
+            color: AppColors.accent,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  value,
+                  style: AppTextStyles.h3.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: cs.onSurface.withValues(alpha: 0.55),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

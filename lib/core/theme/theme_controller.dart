@@ -24,14 +24,18 @@ class ThemeController extends GetxController {
     final saved = web.window.localStorage.getItem(_storageKey);
     final prefersDark = saved == 'dark';
     _isDark.value = prefersDark;
-    // Apply immediately — GetMaterialApp is already built with the initial theme;
-    // this ensures the controller state stays in sync.
+    // Apply both theme data AND theme mode — Get.changeTheme alone does NOT
+    // update the themeMode on GetMaterialApp, causing the switch to silently
+    // fail on Flutter Web.
+    Get.changeThemeMode(prefersDark ? ThemeMode.dark : ThemeMode.light);
     Get.changeTheme(prefersDark ? AppTheme.dark : AppTheme.light);
   }
 
   void toggle() {
     _isDark.value = !_isDark.value;
+    final nextMode = _isDark.value ? ThemeMode.dark : ThemeMode.light;
     final nextTheme = _isDark.value ? AppTheme.dark : AppTheme.light;
+    Get.changeThemeMode(nextMode);
     Get.changeTheme(nextTheme);
     web.window.localStorage.setItem(
       _storageKey,

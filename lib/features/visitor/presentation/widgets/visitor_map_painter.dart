@@ -19,10 +19,6 @@ class VisitorMapPainter extends CustomPainter {
       ..style = PaintingStyle.fill
       ..color = AppColors.accent;
 
-    final pulsePaint = Paint()
-      ..style = PaintingStyle.fill
-      ..color = AppColors.accent.withValues(alpha: 0.25 * (1.0 - pulseValue));
-
     for (int i = 0; i < locations.length; i++) {
       final loc = locations[i];
 
@@ -30,21 +26,29 @@ class VisitorMapPainter extends CustomPainter {
       final normX = (loc.longitude - 68.184010) / 29.234136;
       final normY = (37.084109 - loc.latitude) / 30.33045;
 
-      // Project onto the current canvas size (which is aspect-ratio locked by its parent)
+      // Project onto the current canvas size
       final x = normX * size.width;
       final y = normY * size.height;
 
+      double markerRadius = 4.5;
+
       // Pulse animation for the latest (most recent) visitor
       if (i == 0) {
-        canvas.drawCircle(Offset(x, y), 14.0 * pulseValue, pulsePaint);
-        canvas.drawCircle(Offset(x, y), 8.0 * pulseValue, pulsePaint);
-        baseLocationPaint.color = AppColors.accent;
+        // True ON/OFF blink (3 blinks per 2-second cycle)
+        // Completely disappears when OFF to be highly noticeable.
+        final bool isOn = (pulseValue * 6).toInt() % 2 == 0;
+        if (isOn) {
+          baseLocationPaint.color = AppColors.accent;
+          markerRadius = 6.0; // Slightly larger when ON to attract attention
+        } else {
+          baseLocationPaint.color = Colors.transparent;
+        }
       } else {
-        baseLocationPaint.color = AppColors.accent.withValues(alpha: 0.7);
+        baseLocationPaint.color = AppColors.accent.withValues(alpha: 0.75);
       }
 
       // Plot actual marker dot
-      canvas.drawCircle(Offset(x, y), 4.5, baseLocationPaint);
+      canvas.drawCircle(Offset(x, y), markerRadius, baseLocationPaint);
     }
   }
 

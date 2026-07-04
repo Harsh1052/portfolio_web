@@ -13,6 +13,8 @@ import '../../../skills/presentation/widgets/skills_timeline_section.dart';
 import '../../../visitor/presentation/widgets/visitor_map_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
+import '../../../../core/widgets/welcome_toast.dart';
+import '../widgets/bug_game_overlay.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -22,25 +24,34 @@ class HomePage extends StatelessWidget {
     final controller = Get.find<ContentController>();
 
     return Scaffold(
-      body: Obx(() {
-        if (controller.isLoading) {
-          return const Center(
-            child: SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 1.5,
-                color: AppColors.accent,
-              ),
-            ),
-          );
-        }
+      body: Stack(
+        children: [
+          Obx(() {
+            if (controller.isLoading) {
+              return const Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.5,
+                    color: AppColors.accent,
+                  ),
+                ),
+              );
+            }
 
-        final content = controller.content.value;
-        if (content == null) return const SizedBox.shrink();
+            final content = controller.content.value;
+            if (content == null) return const SizedBox.shrink();
 
-        return _HomeContent(content: content);
-      }),
+            return _HomeContent(content: content);
+          }),
+          // Geo-personalized welcome toast — slides in from bottom-right
+          // once the visitor's location resolves from Firestore.
+          const WelcomeToast(),
+          // 🐛 Bug Hunt mini-game — bugs crawl across the screen.
+          const BugGameOverlay(),
+        ],
+      ),
     );
   }
 }
