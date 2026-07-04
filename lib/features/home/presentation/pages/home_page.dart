@@ -14,8 +14,6 @@ import '../../../visitor/presentation/widgets/visitor_map_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
 import '../../../../core/widgets/welcome_toast.dart';
-import '../controllers/sass_controller.dart';
-import '../widgets/sass_bubble.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -23,8 +21,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ContentController>();
-    // Register early so SassBubble can find it while content is loading.
-    Get.put(SassController());
 
     return Scaffold(
       body: Stack(
@@ -51,58 +47,31 @@ class HomePage extends StatelessWidget {
           // Geo-personalized welcome toast — slides in from bottom-right
           // once the visitor's location resolves from Firestore.
           const WelcomeToast(),
-          // The roasting sass bot — drops funny messages based on time on site.
-          const SassBubble(),
         ],
       ),
     );
   }
 }
 
-class _HomeContent extends StatefulWidget {
+class _HomeContent extends StatelessWidget {
   const _HomeContent({required this.content});
 
   final PortfolioContent content;
 
   @override
-  State<_HomeContent> createState() => _HomeContentState();
-}
-
-class _HomeContentState extends State<_HomeContent> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    // Hook SassController to the scroll position so it can fire
-    // scroll-based roasts (contact, footer).
-    if (Get.isRegistered<SassController>()) {
-      Get.find<SassController>()
-          .registerScrollController(_scrollController);
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      controller: _scrollController,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          HeroSection(content: widget.content),
+          HeroSection(content: content),
           const NowSection(),
-          WorkSection(projects: widget.content.projects),
-          AboutSection(about: widget.content.about),
-          WritingSection(articles: widget.content.articles),
+          WorkSection(projects: content.projects),
+          AboutSection(about: content.about),
+          WritingSection(articles: content.articles),
           const SkillsTimelineSection(),
           const ContributionGraphSection(),
-          ContactSection(contact: widget.content.contact),
+          ContactSection(contact: content.contact),
           const VisitorMapSection(),
           const FooterSection(),
         ],
