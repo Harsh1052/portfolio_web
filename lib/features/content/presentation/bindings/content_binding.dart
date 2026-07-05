@@ -16,6 +16,9 @@ import 'package:portfolio_web/features/now/domain/repositories/now_repository.da
 import 'package:portfolio_web/features/skills/data/repositories/skills_repository_impl.dart';
 import 'package:portfolio_web/features/skills/data/sources/skills_mock_source.dart';
 import 'package:portfolio_web/features/skills/domain/repositories/skills_repository.dart';
+import 'package:portfolio_web/features/experience/data/repositories/experience_repository_impl.dart';
+import 'package:portfolio_web/features/experience/data/sources/experience_mock_source.dart';
+import 'package:portfolio_web/features/experience/domain/repositories/experience_repository.dart';
 
 /// Registered as [initialBinding] in GetMaterialApp — runs once at app start.
 class ContentBinding extends Bindings {
@@ -67,6 +70,11 @@ class ContentBinding extends Bindings {
     Get.lazyPut<SkillsMockSource>(() => const SkillsMockSource());
     Get.lazyPut<SkillsRepository>(
       () => SkillsRepositoryImpl(source: Get.find<SkillsMockSource>()),
+    );
+
+    Get.lazyPut<ExperienceMockSource>(() => const ExperienceMockSource());
+    Get.lazyPut<ExperienceRepository>(
+      () => ExperienceRepositoryImpl(source: Get.find<ExperienceMockSource>()),
     );
 
     // Visitor tracking — registered immediately on startup.

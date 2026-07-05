@@ -6,6 +6,8 @@ import '../../../visitor/presentation/widgets/visitor_count_badge.dart';
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
 
+  static final int _currentYear = DateTime.now().year;
+
   @override
   Widget build(BuildContext context) {
     return ContentWrapper(
@@ -24,7 +26,7 @@ class FooterSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Harsh Sureja · ${DateTime.now().year} · Built in Flutter Web',
+                    'Harsh Sureja · $_currentYear · Built in Flutter Web',
                     style: AppTextStyles.caption,
                   ),
                 ),
