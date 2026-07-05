@@ -14,14 +14,25 @@ import 'now_status_card.dart';
 ///
 /// Data is fetched via dependency injection from [NowRepository].
 /// The section heading has a live pulsing green dot to signal recency.
-class NowSection extends StatelessWidget {
+class NowSection extends StatefulWidget {
   const NowSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Retrieve NowRepository via DI
-    final entries = Get.find<NowRepository>().getEntries();
+  State<NowSection> createState() => _NowSectionState();
+}
 
+class _NowSectionState extends State<NowSection> {
+  late final List<NowEntry> _entries;
+
+  @override
+  void initState() {
+    super.initState();
+    // Cache the entries once when the section is initialized in the tree.
+    _entries = Get.find<NowRepository>().getEntries();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < Breakpoints.mobile;
@@ -39,7 +50,7 @@ class NowSection extends StatelessWidget {
                 const SizedBox(height: 64),
                 const NowSectionHeadingRow(),
                 const SizedBox(height: 40),
-                _NowGrid(entries: entries, isMobile: isMobile),
+                _NowGrid(entries: _entries, isMobile: isMobile),
               ],
             ),
           ),

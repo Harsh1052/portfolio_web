@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/work_section.dart';
 import '../widgets/about_section.dart';
+import '../../../../features/experience/presentation/widgets/experience_section.dart';
 import '../widgets/writing_section.dart';
 import '../../../github/presentation/widgets/contribution_graph_section.dart';
 import '../../../now/presentation/widgets/now_section.dart';
@@ -71,6 +72,7 @@ class _HomeContent extends StatelessWidget {
           const NowSection(),
           WorkSection(projects: content.projects),
           AboutSection(about: content.about),
+          const ExperienceSection(),
           WritingSection(articles: content.articles),
           const SkillsTimelineSection(),
           const ContributionGraphSection(),
