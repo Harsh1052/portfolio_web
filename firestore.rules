@@ -15,6 +15,19 @@ service cloud.firestore {
       allow read, create: if true;
     }
 
+    // First-party analytics — sessions can be created and updated (rollup
+    // counters merge on every flush) but never deleted. Events are
+    // append-only. Reads are public: the /analytics dashboard is an
+    // unauthenticated client, and the data contains no PII beyond what
+    // visitor_locations already exposes.
+    match /analytics_sessions/{sessionId} {
+      allow read, create, update: if true;
+
+      match /events/{eventId} {
+        allow read, create: if true;
+      }
+    }
+
     // All other documents — deny by default.
     match /{document=**} {
       allow read, write: if false;

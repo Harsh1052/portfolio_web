@@ -11,8 +11,9 @@ class NowMockSource {
         NowEntry(
           emoji: '🏢',
           label: 'Currently at',
-          value: 'FarmSetu',
-          subValue: 'Sole Mobile & Web Engineer — serving 15K+ farmers',
+          value: 'Kotak Securities',
+          subValue:
+              'Flutter Developer — real-time trading apps for one of India\'s largest stock brokers',
         ),
         NowEntry(
           emoji: '🎯',

@@ -4,8 +4,8 @@
     "title": "Senior Flutter Developer",
     "email": "surejapatel@gmail.com",
     "phone": "+91 9879776369",
-    "location": "Surat, Gujarat, India",
-    "bio": "Results-driven Senior Flutter Developer with 4+ years of expertise in developing high-performance cross-platform mobile applications and Flutter web solutions. Specialized in Dart programming, Clean Architecture, Bloc/Cubit state management, and responsive UI/UX design. Successfully delivered 15+ production applications serving 75,000+ active users with 99.9% uptime.",
+    "location": "Mumbai, Maharashtra, India",
+    "bio": "Results-driven Senior Flutter Developer with 5+ years of expertise in developing high-performance cross-platform mobile applications and Flutter web solutions, currently building trading applications in the fintech domain at Kotak Securities. Specialized in Dart programming, Clean Architecture, Bloc/Cubit state management, WebSocket-based real-time systems, and responsive UI/UX design. Successfully delivered 15+ production applications serving 75,000+ active users with 99.9% uptime.",
     "avatarUrl": null,
     "socialLinks": {
       "github": "https://github.com/harshsureja",
@@ -20,11 +20,42 @@
   },
   "experience": [
     {
+      "position": "Flutter Developer",
+      "company": "Kotak Securities",
+      "location": "Mumbai, Maharashtra",
+      "startDate": "June 2026",
+      "endDate": "Present",
+      "employmentType": "Full-time",
+      "companyUrl": null,
+      "responsibilities": [
+        "Developing and maintaining high-performance cross-platform trading applications using Flutter for one of India's leading stock broking platforms",
+        "Building real-time market data experiences with WebSocket-based live streaming, ensuring low-latency updates for price feeds and order status",
+        "Implementing BLoC/Cubit state management with Clean Architecture principles for scalable, testable, and maintainable application modules",
+        "Managing dependencies and services using GetIt Service Locator with Dependency Injection across feature modules",
+        "Integrating REST APIs for trading, portfolio, and account workflows in collaboration with backend teams",
+        "Writing unit tests to safeguard application quality and stability in a regulated fintech environment",
+        "Applying performance optimization and secure coding practices appropriate for financial applications handling sensitive user data",
+        "Participating in code reviews, debugging sessions, and sprint ceremonies with backend developers, QA teams, and business stakeholders"
+      ],
+      "technologies": [
+        "Flutter",
+        "Dart",
+        "BLoC / Cubit",
+        "Clean Architecture",
+        "GetIt",
+        "Dependency Injection",
+        "WebSockets",
+        "REST APIs",
+        "Unit Testing",
+        "Git"
+      ]
+    },
+    {
       "position": "Senior Flutter Developer",
       "company": "FarmSetu Pvt. Limited",
       "location": "Surat, Gujarat",
       "startDate": "June 2024",
-      "endDate": "Present",
+      "endDate": "June 2026",
       "employmentType": "Full-time",
       "companyUrl": null,
       "responsibilities": [
@@ -241,6 +272,13 @@
           "proficiency": 85,
           "icon": null,
           "subSkills": null
+        },
+        {
+          "name": "GetIt / Dependency Injection",
+          "category": "Architecture & State",
+          "proficiency": 90,
+          "icon": null,
+          "subSkills": null
         }
       ]
     },
@@ -259,6 +297,13 @@
           "name": "RESTful APIs",
           "category": "Backend & Cloud",
           "proficiency": 90,
+          "icon": null,
+          "subSkills": null
+        },
+        {
+          "name": "WebSockets",
+          "category": "Backend & Cloud",
+          "proficiency": 85,
           "icon": null,
           "subSkills": null
         },

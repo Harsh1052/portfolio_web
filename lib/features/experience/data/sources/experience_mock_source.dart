@@ -9,11 +9,34 @@ class ExperienceMockSource {
 
   List<ExperienceEntry> getExperience() => const [
         ExperienceEntry(
+          position: 'Flutter Developer',
+          company: 'Kotak Securities',
+          location: 'Mumbai, Maharashtra',
+          startDate: 'June 2026',
+          endDate: 'Present',
+          employmentType: 'Full-time',
+          responsibilities: [
+            'Building high-performance cross-platform trading applications for one of India\'s leading stock brokers',
+            'Developing real-time market data experiences with WebSocket-based live streaming',
+            'Implementing BLoC/Cubit with Clean Architecture for scalable, testable feature modules',
+            'Managing dependencies via GetIt Service Locator and Dependency Injection',
+            'Applying unit testing, performance optimization, and secure coding practices for a regulated fintech environment',
+          ],
+          technologies: [
+            'Flutter',
+            'BLoC / Cubit',
+            'Clean Architecture',
+            'GetIt',
+            'WebSockets',
+            'REST APIs',
+          ],
+        ),
+        ExperienceEntry(
           position: 'Senior Flutter Developer',
           company: 'FarmSetu Pvt. Limited',
           location: 'Surat, Gujarat',
           startDate: 'June 2024',
-          endDate: 'Present',
+          endDate: 'June 2026',
           employmentType: 'Full-time',
           responsibilities: [
             'Architected mobile & Flutter web apps for the Agri-Food Supply Chain, serving 10,000+ users',

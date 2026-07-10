@@ -14,6 +14,7 @@ import '../../../skills/presentation/widgets/skills_timeline_section.dart';
 import '../../../visitor/presentation/widgets/visitor_map_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
+import '../../../../core/analytics/tracked_section.dart';
 import '../../../../core/widgets/welcome_toast.dart';
 import '../widgets/bug_game_overlay.dart';
 
@@ -64,22 +65,53 @@ class _HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          HeroSection(content: content),
-          const NowSection(),
-          WorkSection(projects: content.projects),
-          AboutSection(about: content.about),
-          const ExperienceSection(),
-          WritingSection(articles: content.articles),
-          const SkillsTimelineSection(),
-          const ContributionGraphSection(),
-          ContactSection(contact: content.contact),
-          const VisitorMapSection(),
-          const FooterSection(),
-        ],
+    // Every section reports enter/exit → dwell time; the scroll listener
+    // records how deep each visitor gets (25/50/75/100%).
+    return ScrollDepthTracker(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TrackedSection(
+              name: 'hero',
+              child: HeroSection(content: content),
+            ),
+            const TrackedSection(name: 'now', child: NowSection()),
+            TrackedSection(
+              name: 'work',
+              child: WorkSection(projects: content.projects),
+            ),
+            TrackedSection(
+              name: 'about',
+              child: AboutSection(about: content.about),
+            ),
+            const TrackedSection(
+              name: 'experience',
+              child: ExperienceSection(),
+            ),
+            TrackedSection(
+              name: 'writing',
+              child: WritingSection(articles: content.articles),
+            ),
+            const TrackedSection(
+              name: 'skills',
+              child: SkillsTimelineSection(),
+            ),
+            const TrackedSection(
+              name: 'github',
+              child: ContributionGraphSection(),
+            ),
+            TrackedSection(
+              name: 'contact',
+              child: ContactSection(contact: content.contact),
+            ),
+            const TrackedSection(
+              name: 'visitors',
+              child: VisitorMapSection(),
+            ),
+            const TrackedSection(name: 'footer', child: FooterSection()),
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/responsive_layout.dart';
@@ -69,6 +70,7 @@ class _CopyEmailState extends State<_CopyEmail> {
   bool _copied = false;
 
   Future<void> _copy() async {
+    AnalyticsService.click('email_copy');
     await Clipboard.setData(ClipboardData(text: widget.email));
     if (!mounted) return;
     setState(() => _copied = true);
@@ -136,10 +138,13 @@ class _ContactLinkState extends State<_ContactLink> {
       link: true,
       label: '${widget.label} — opens in new tab',
       child: InkWell(
-        onTap: () => launchUrl(
-          Uri.parse(widget.url),
-          mode: LaunchMode.externalApplication,
-        ),
+        onTap: () {
+          AnalyticsService.externalLink(widget.label, widget.url);
+          launchUrl(
+            Uri.parse(widget.url),
+            mode: LaunchMode.externalApplication,
+          );
+        },
         onHover: (v) => setState(() => _hovered = v),
         mouseCursor: SystemMouseCursors.click,
         splashFactory: NoSplash.splashFactory,

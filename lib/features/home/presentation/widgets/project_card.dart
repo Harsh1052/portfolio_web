@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../../../core/routing/app_pages.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../content/data/models/portfolio_content.dart';
@@ -17,6 +18,10 @@ class _ProjectCardState extends State<ProjectCard> {
   bool _hovered = false;
 
   void _navigate() {
+    AnalyticsService.click(
+      'project_${widget.project.slug}',
+      {'name': widget.project.name},
+    );
     Get.toNamed(
       AppRoutes.caseStudy.replaceFirst(':slug', widget.project.slug),
     );
