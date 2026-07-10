@@ -8,8 +8,8 @@ class ContentMockSource {
     await Future<void>.delayed(const Duration(milliseconds: 80));
     return const PortfolioContent(
       tagline:
-          "I build mobile and web apps for people who don't have flagship phones. "
-          '15,000 farmers across rural India use what I ship daily.',
+          'I build Flutter apps for the real world — 15,000 farmers on budget '
+          'phones in rural India, and now real-time trading at Kotak Securities.',
       contact: ContactInfo(
         email: 'surejapatel@gmail.com',
         githubUrl: 'https://github.com/Harsh1052',
@@ -45,9 +45,14 @@ class ContentMockSource {
             'stranger would. You over-document the things you\'ll forget. '
             'Ownership doesn\'t just mean responsibility — it changes your '
             'relationship with the code itself.\n\n'
-            'Right now I\'m working toward full-stack. After four years of '
-            'shipping mobile apps, I want to understand what\'s on the other '
-            'side of the API — not just consume it, but design it. '
+            'In June 2026, that chapter led somewhere new: I joined Kotak '
+            'Securities to build trading applications. The performance obsession '
+            'I learned on farmers\' phones now applies to real-time market data — '
+            'different domain, same rule: the user\'s device is the only '
+            'benchmark that matters.\n\n'
+            'Alongside that, I\'m still working toward full-stack. After five '
+            'years of shipping mobile apps, I want to understand what\'s on the '
+            'other side of the API — not just consume it, but design it. '
             'Currently learning: Python.',
       ),
       projects: [

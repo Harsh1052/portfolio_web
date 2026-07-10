@@ -8,7 +8,8 @@ import '../../domain/entities/timeline_year.dart';
 ///   2022 — first professional delivery at Elision Infotech
 ///   2023 — NUG e-commerce (Elision Infotech)
 ///   2024 — FarmSetu (sole mobile & web engineer)
-///   2025+ — full-stack pivot
+///   2025 — full-stack pivot
+///   2026 — Kotak Securities (fintech / trading)
 ///
 /// Each skill tooltip gives recruiter-readable context tying
 /// the skill to a real project outcome.
@@ -162,6 +163,26 @@ class SkillsMockSource {
             SkillEntry(
               label: 'GitHub Actions',
               tooltip: 'Portfolio — automated Flutter web build + Firebase deploy pipeline',
+            ),
+          ],
+        ),
+        TimelineYear(
+          year: 2026,
+          skills: [
+            SkillEntry(
+              label: 'WebSockets',
+              tooltip:
+                  'Kotak Securities — real-time market data streaming for trading applications',
+            ),
+            SkillEntry(
+              label: 'GetIt / DI',
+              tooltip:
+                  'Kotak Securities — service locator and dependency injection across feature modules',
+            ),
+            SkillEntry(
+              label: 'Fintech Engineering',
+              tooltip:
+                  'Kotak Securities — secure coding and performance practices for a regulated trading platform',
             ),
           ],
         ),
