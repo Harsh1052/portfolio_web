@@ -25,6 +25,9 @@ dependencies:
   flutter_svg: ^2.0.10+1
   web: 1.0.0
 
+  # Analytics — section dwell-time tracking
+  visibility_detector: ^0.4.0+2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/fade_slide_in.dart';
@@ -90,10 +91,16 @@ class _ArticleRowState extends State<_ArticleRow> {
           link: true,
           label: 'Read "${a.title}" on Medium — opens in new tab',
           child: InkWell(
-            onTap: () => launchUrl(
-              Uri.parse(a.url),
-              mode: LaunchMode.externalApplication,
-            ),
+            onTap: () {
+              AnalyticsService.click(
+                'article_read',
+                {'title': a.title, 'url': a.url},
+              );
+              launchUrl(
+                Uri.parse(a.url),
+                mode: LaunchMode.externalApplication,
+              );
+            },
             onHover: (v) => setState(() => _hovered = v),
             mouseCursor: SystemMouseCursors.click,
             splashFactory: NoSplash.splashFactory,

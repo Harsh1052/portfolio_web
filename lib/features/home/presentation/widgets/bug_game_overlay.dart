@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../core/analytics/analytics_event.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../content/presentation/controllers/content_controller.dart';
@@ -173,8 +175,14 @@ class _BugGameOverlayState extends State<BugGameOverlay>
     if (!bug.isAlive) return;
     bug.isAlive = false;
     _squashCount++;
+    AnalyticsService.log(
+      AnalyticsEventType.game,
+      'bug_squashed',
+      {'count': _squashCount},
+    );
     if (_squashCount >= 5 && !_achievementDismissed) {
       _showAchievement = true;
+      AnalyticsService.log(AnalyticsEventType.game, 'bug_hunt_achievement');
     }
   }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../analytics/analytics_event.dart';
+import '../analytics/analytics_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/theme_controller.dart';
 
@@ -42,6 +44,10 @@ class _HoverButtonState extends State<_HoverButton> {
   bool _hovered = false;
 
   void _handleTap() {
+    AnalyticsService.log(
+      AnalyticsEventType.theme,
+      widget.isDark ? 'switch_to_light' : 'switch_to_dark',
+    );
     widget.onTap();
   }
 

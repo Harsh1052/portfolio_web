@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../../../core/services/firebase_service.dart';
 import '../../../../features/github/data/repositories/github_repository_impl.dart';
 import '../../../../features/github/data/sources/github_remote_source.dart';
@@ -25,6 +26,13 @@ class ContentBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<FirebaseService>(FirebaseService(), permanent: true);
+
+    // First-party event analytics — starts the session immediately so the
+    // very first interactions (hero clicks, quick bounces) are captured.
+    Get.put<AnalyticsService>(
+      AnalyticsService(Get.find<FirebaseService>()),
+      permanent: true,
+    );
 
     Get.lazyPut<ContentMockSource>(() => ContentMockSource());
 

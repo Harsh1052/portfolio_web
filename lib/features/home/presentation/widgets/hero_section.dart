@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/ambience/ambient_greeting.dart';
 import '../../../../core/ambience/weather_overlay.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/responsive_layout.dart';
@@ -118,10 +119,13 @@ class _HeroActions extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         ElevatedButton(
-          onPressed: () => launchUrl(
-            Uri.parse(contact.resumeUrl),
-            mode: LaunchMode.externalApplication,
-          ),
+          onPressed: () {
+            AnalyticsService.click('resume_download');
+            launchUrl(
+              Uri.parse(contact.resumeUrl),
+              mode: LaunchMode.externalApplication,
+            );
+          },
           child: const Text('Download Resume'),
         ),
         const SizedBox(width: 4),
@@ -155,7 +159,10 @@ class _IconLinkState extends State<_IconLink> {
       label: widget.semanticsLabel,
       button: true,
       child: InkWell(
-        onTap: () => launchUrl(Uri.parse(widget.url)),
+        onTap: () {
+          AnalyticsService.externalLink(widget.semanticsLabel, widget.url);
+          launchUrl(Uri.parse(widget.url));
+        },
         onHover: (v) => setState(() => _hovered = v),
         mouseCursor: SystemMouseCursors.click,
         splashFactory: NoSplash.splashFactory,
