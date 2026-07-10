@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../ambience/ambience_controller.dart';
 import '../theme/app_colors.dart';
 import 'responsive_layout.dart';
 
@@ -54,6 +56,17 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
 
   _ParticlePhase _phase = _ParticlePhase.converging;
   Timer? _phaseTimer;
+
+  // Adaptive Ambience: particles tint toward the time-of-day palette.
+  // Lerped per frame for a seamless shift when the phase changes.
+  Color _ambientColor = AppColors.accent;
+
+  Color _targetAmbientColor() {
+    if (Get.isRegistered<AmbienceController>()) {
+      return Get.find<AmbienceController>().particleColor;
+    }
+    return AppColors.accent;
+  }
 
   @override
   void initState() {
@@ -214,12 +227,19 @@ class _ParticleBackdropState extends State<ParticleBackdrop>
                   );
                 }
 
+                _ambientColor = Color.lerp(
+                  _ambientColor,
+                  _targetAmbientColor(),
+                  0.02,
+                )!;
+
                 return CustomPaint(
                   size: size,
                   painter: _ParticlePainter(
                     particles: _particles,
                     mousePos: _isHovered ? _mousePosition : null,
                     phase: _phase,
+                    color: _ambientColor,
                   ),
                 );
               },
@@ -336,11 +356,15 @@ class _ParticlePainter extends CustomPainter {
     required this.particles,
     required this.mousePos,
     required this.phase,
+    required this.color,
   });
 
   final List<_Particle> particles;
   final Offset? mousePos;
   final _ParticlePhase phase;
+
+  /// Ambient tint — shifts with the visitor's time of day.
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -368,7 +392,7 @@ class _ParticlePainter extends CustomPainter {
           final alpha = isConverging
               ? (1.0 - (dist / limit)) * 0.70   // Highly visible connecting lines
               : (1.0 - (dist / limit)) * 0.12 * avgZ;
-          linePaint.color = AppColors.accent.withValues(alpha: alpha);
+          linePaint.color = color.withValues(alpha: alpha);
           canvas.drawLine(Offset(p1.x, p1.y), Offset(p2.x, p2.y), linePaint);
         }
       }
@@ -381,7 +405,7 @@ class _ParticlePainter extends CustomPainter {
         const mouseLimit = 150.0;
         if (dist < mouseLimit) {
           final alpha = (1.0 - (dist / mouseLimit)) * 0.22 * p1.z;
-          linePaint.color = AppColors.accent.withValues(alpha: alpha);
+          linePaint.color = color.withValues(alpha: alpha);
           canvas.drawLine(Offset(p1.x, p1.y), mousePos!, linePaint);
         }
       }
@@ -392,10 +416,10 @@ class _ParticlePainter extends CustomPainter {
       if (isConverging) {
         // During HELLO convergence: bright, solid dots at fixed size
         final glowPaint = Paint()
-          ..color = AppColors.accent.withValues(alpha: 0.30)
+          ..color = color.withValues(alpha: 0.30)
           ..style = PaintingStyle.fill;
         canvas.drawCircle(Offset(p.x, p.y), 8.0, glowPaint);
-        paint.color = AppColors.accent.withValues(alpha: 0.95);
+        paint.color = color.withValues(alpha: 0.95);
         canvas.drawCircle(Offset(p.x, p.y), 4.0, paint);
       } else {
         // Free phase: depth-scaled size and opacity
@@ -404,12 +428,12 @@ class _ParticlePainter extends CustomPainter {
 
         if (p.z > 0.6) {
           final glowPaint = Paint()
-            ..color = AppColors.accent.withValues(alpha: opacity * 0.3)
+            ..color = color.withValues(alpha: opacity * 0.3)
             ..style = PaintingStyle.fill;
           canvas.drawCircle(Offset(p.x, p.y), radius * 2.2, glowPaint);
         }
 
-        paint.color = AppColors.accent.withValues(alpha: opacity);
+        paint.color = color.withValues(alpha: opacity);
         canvas.drawCircle(Offset(p.x, p.y), radius, paint);
       }
     }

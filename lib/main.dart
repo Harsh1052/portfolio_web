@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'core/ambience/ambience_controller.dart';
 import 'core/routing/app_pages.dart';
 import 'features/content/presentation/bindings/content_binding.dart';
 
@@ -9,6 +10,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // Firebase is NOT initialized here — ContentBinding defers it until needed.
   Get.put(ThemeController());
+  Get.put(AmbienceController());
   runApp(const PortfolioApp());
 }
 

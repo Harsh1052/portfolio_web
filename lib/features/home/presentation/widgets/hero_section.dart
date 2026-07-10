@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../core/ambience/ambient_greeting.dart';
+import '../../../../core/ambience/weather_overlay.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/responsive_layout.dart';
@@ -24,6 +26,11 @@ class HeroSection extends StatelessWidget {
             const Positioned.fill(
               child: ParticleBackdrop(),
             ),
+            // Adaptive Ambience: subtle rain/snow matching the visitor's
+            // local weather (renders nothing when the sky is clear).
+            const Positioned.fill(
+              child: WeatherOverlay(),
+            ),
             ContentWrapper(
               child: Padding(
                 padding: EdgeInsets.only(
@@ -33,6 +40,8 @@ class HeroSection extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const AmbientGreeting(),
+                    const SizedBox(height: 12),
                     _GradientName(isMobile: isMobile),
                     const SizedBox(height: 20),
                     const TypewriterTagline(),
