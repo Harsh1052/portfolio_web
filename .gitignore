@@ -61,3 +61,4 @@ dist/
 # Deployment secrets (DO NOT COMMIT)
 firebase-service-account*.json
 .firebaserc.local
+.claude/
