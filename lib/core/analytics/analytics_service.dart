@@ -73,6 +73,10 @@ class AnalyticsService extends GetxService {
   static void click(String name, [Map<String, Object?> props = const {}]) =>
       _instance?._click(name, props);
 
+  /// Route-level page view (deduped against the last one, since GetX can
+  /// report the same route multiple times during a transition).
+  static void page(String route) => _instance?._page(route);
+
   static void externalLink(String name, String url) =>
       _instance?._log(AnalyticsEventType.externalLink, name, {'url': url});
 
@@ -95,9 +99,17 @@ class AnalyticsService extends GetxService {
       return; // no initial events, no flush timer, no listeners
     }
     _log(AnalyticsEventType.sessionStart, 'session_start');
-    _log(AnalyticsEventType.pageView, 'home');
+    _page('/');
     _flushTimer = Timer.periodic(_flushInterval, (_) => _flush());
     _installLifecycleFlush();
+  }
+
+  String? _lastPageRoute;
+
+  void _page(String route) {
+    if (route.isEmpty || route == _lastPageRoute) return;
+    _lastPageRoute = route;
+    _log(AnalyticsEventType.pageView, route);
   }
 
   @override

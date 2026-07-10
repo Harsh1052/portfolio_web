@@ -31,19 +31,19 @@ class AnalyticsDashboardController extends GetxController {
   int get totalSessions => sessions.length;
 
   int get totalEvents =>
-      sessions.fold(0, (sum, s) => sum + s.eventCount);
+      sessions.fold(0, (total, s) => total + s.eventCount);
 
   Duration get avgDuration => sessions.isEmpty
       ? Duration.zero
       : Duration(
           milliseconds:
-              sessions.fold(0, (sum, s) => sum + s.durationMs) ~/
+              sessions.fold(0, (total, s) => total + s.durationMs) ~/
                   sessions.length,
         );
 
   int get avgScrollPct => sessions.isEmpty
       ? 0
-      : sessions.fold(0, (sum, s) => sum + s.maxScrollPct) ~/ sessions.length;
+      : sessions.fold(0, (total, s) => total + s.maxScrollPct) ~/ sessions.length;
 
   /// Section → summed dwell ms across all loaded sessions, sorted desc.
   List<MapEntry<String, int>> get dwellBySection {
