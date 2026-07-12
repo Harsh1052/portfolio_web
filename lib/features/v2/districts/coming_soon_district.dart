@@ -29,7 +29,6 @@ class ComingSoonDistrict extends District {
   Widget build(BuildContext context, ValueListenable<double> progress) {
     return const UnderConstruction(
       upcoming: [
-        'Foundation Square',
         "Craftsman's Lane",
         'Enterprise Heights',
         "Tinkerers' Park",

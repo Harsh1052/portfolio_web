@@ -9,6 +9,7 @@ import '../core/motion_tokens.dart';
 import '../core/sky_gradient.dart';
 import '../districts/coming_soon_district.dart';
 import '../districts/exchange/exchange_district.dart';
+import '../districts/foundation/foundation_district.dart';
 import '../districts/gate/gate_district.dart';
 import '../districts/valley/valley_district.dart';
 import '../widgets/city_map_rail.dart';
@@ -30,6 +31,7 @@ class CityPage extends StatefulWidget {
 class _CityPageState extends State<CityPage> {
   static const _districts = <District>[
     GateDistrict(),
+    FoundationDistrict(), // chronological: the origin comes first
     ValleyDistrict(),
     ExchangeDistrict(),
     ComingSoonDistrict(),
