@@ -15,6 +15,7 @@ import '../../../visitor/presentation/widgets/visitor_map_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
 import '../../../../core/analytics/tracked_section.dart';
+import '../../../../core/widgets/beta_banner.dart';
 import '../../../../core/widgets/welcome_toast.dart';
 import '../widgets/bug_game_overlay.dart';
 
@@ -52,6 +53,8 @@ class HomePage extends StatelessWidget {
           const WelcomeToast(),
           // 🐛 Bug Hunt mini-game — bugs crawl across the screen.
           const BugGameOverlay(),
+          // 🏙️ v1 → v2 bridge — invitation to the City of Code beta.
+          const BetaBanner(),
         ],
       ),
     );
