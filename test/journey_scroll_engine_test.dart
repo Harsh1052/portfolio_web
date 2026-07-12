@@ -117,6 +117,31 @@ void main() {
     });
   });
 
+  group('districtCoord (sky stitching)', () {
+    test('holds the district sky through most of its span', () {
+      final e = makeEngine();
+      // Center at 25% of district a (span 0..2000): 2000*.25 - 500 = 0 px? →
+      // scroll so center lands at 500 (25% of a).
+      e.onScroll(0); // center 500 → local 0.25
+      expect(e.districtCoord.value, 0);
+      e.onScroll(900); // center 1400 → local 0.70 < blendStart
+      expect(e.districtCoord.value, 0);
+    });
+
+    test('blends toward the next district near the boundary', () {
+      final e = makeEngine();
+      e.onScroll(1400); // center 1900 → local 0.95 within blend zone
+      expect(e.districtCoord.value, greaterThan(0.5));
+      expect(e.districtCoord.value, lessThanOrEqualTo(1.0));
+    });
+
+    test('never exceeds the last district index', () {
+      final e = makeEngine();
+      e.onScroll(99999);
+      expect(e.districtCoord.value, lessThanOrEqualTo(2.0));
+    });
+  });
+
   test('progressOf is safe before layout', () {
     final e = JourneyScrollEngine(districts: const [_FakeDistrict('x', 2)]);
     expect(e.progressOf('x').value, 0);

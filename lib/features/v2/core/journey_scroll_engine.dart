@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:math' as math;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'district.dart';
 
@@ -23,6 +25,16 @@ class JourneyScrollEngine {
 
   /// Index of the district currently under the viewport center.
   final ValueNotifier<int> activeIndex = ValueNotifier(0);
+
+  /// Continuous district coordinate for sky stitching: pinned at `i`
+  /// through most of district i, easing to `i + 1` only across the last
+  /// [skyBlendStart]→1.0 stretch — so each district owns its sky and
+  /// transitions happen at the boundary, regardless of district lengths.
+  final ValueNotifier<double> districtCoord = ValueNotifier(0);
+
+  /// Fraction of a district's span after which its sky starts blending
+  /// into the next district's.
+  static const double skyBlendStart = 0.75;
 
   final Map<String, ValueNotifier<double>> _progress = {};
 
@@ -88,6 +100,17 @@ class JourneyScrollEngine {
 
       if (center >= _starts[i] && center < _starts[i] + _heights[i]) {
         if (activeIndex.value != i) activeIndex.value = i;
+
+        // Sky coordinate: hold this district's sky, blend near its end.
+        final localCenter =
+            ((center - _starts[i]) / _heights[i]).clamp(0.0, 1.0);
+        final blend = ((localCenter - skyBlendStart) / (1 - skyBlendStart))
+            .clamp(0.0, 1.0);
+        final coord = math.min(
+          i + Curves.easeInOut.transform(blend),
+          (districts.length - 1).toDouble(),
+        );
+        if (districtCoord.value != coord) districtCoord.value = coord;
       }
     }
   }
@@ -96,6 +119,7 @@ class JourneyScrollEngine {
     scrollPos.dispose();
     journeyProgress.dispose();
     activeIndex.dispose();
+    districtCoord.dispose();
     for (final n in _progress.values) {
       n.dispose();
     }
