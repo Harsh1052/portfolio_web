@@ -194,7 +194,7 @@ class HarborPainter extends CustomPainter {
         : -0.4; // gentle sweep back and forth
     final lantern = Offset(base.dx, top - 8);
     final beamLen = h * .7;
-    final beamHalf = .10;
+    const beamHalf = .10;
     final beam = Path()
       ..moveTo(lantern.dx, lantern.dy)
       ..lineTo(

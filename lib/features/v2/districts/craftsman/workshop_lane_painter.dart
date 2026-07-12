@@ -98,7 +98,7 @@ class WorkshopLanePainter extends CustomPainter {
       Paint()..color = _street,
     );
     final stonePaint = Paint()..color = _stone;
-    final rows = 3;
+    const rows = 3;
     for (var r = 0; r < rows; r++) {
       final y = streetY + 8 + r * 16.0;
       final offset = r.isOdd ? 14.0 : 0.0;

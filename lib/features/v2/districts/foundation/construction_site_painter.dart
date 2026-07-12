@@ -129,7 +129,7 @@ class ConstructionSitePainter extends CustomPainter {
       ..color = _steelDark
       ..strokeWidth = 4;
 
-    final cols = 3;
+    const cols = 3;
     final colStep = r.width / (cols - 1);
     final floorH = r.height / floors;
 
