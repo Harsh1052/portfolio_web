@@ -7,12 +7,12 @@ import '../core/district.dart';
 import '../core/journey_scroll_engine.dart';
 import '../core/motion_tokens.dart';
 import '../core/sky_gradient.dart';
-import '../districts/coming_soon_district.dart';
 import '../districts/craftsman/craftsman_district.dart';
 import '../districts/enterprise/enterprise_district.dart';
 import '../districts/exchange/exchange_district.dart';
 import '../districts/foundation/foundation_district.dart';
 import '../districts/gate/gate_district.dart';
+import '../districts/harbor/harbor_district.dart';
 import '../districts/tinkerer/tinkerer_district.dart';
 import '../districts/valley/valley_district.dart';
 import '../widgets/city_map_rail.dart';
@@ -40,7 +40,7 @@ class _CityPageState extends State<CityPage> {
     ValleyDistrict(), //      2024–2026 · FarmSetu
     ExchangeDistrict(), //    2026–now  · Kotak
     TinkererDistrict(), //    nights & weekends
-    ComingSoonDistrict(),
+    HarborDistrict(), //      journey's end
   ];
 
   late final JourneyScrollEngine _engine =
