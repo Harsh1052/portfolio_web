@@ -1,5 +1,16 @@
 # Portfolio v2 (Beta) — "The City of Code"
 
+> **Status: BETA READY** — Phases 0–4 shipped.
+> Built: journey engine + primitives · The City Gate · Harvest Valley ·
+> The Exchange · sky stitching · QA (reduced motion, keyboard, semantics).
+> Next: Phase 5+ districts (Foundation Square → The Harbor) + passport finale.
+>
+> **Launch checklist:** `flutter test` (5 suites) → `flutter analyze` →
+> `flutter run -d chrome` manual pass (scroll both directions, motion toggle,
+> keyboard nav, mobile size, stamps) → merge to master (CI deploys rules +
+> hosting) → verify `/#/beta` live → watch `v2_*` dwell + stamp events in
+> `/#/analytics`.
+
 A scroll-driven, story-based portfolio inspired by [Wonderous](https://wonderous.app/web/)
 (gskinner's Flutter showcase). The visitor doesn't read a resume — they **visit a city**,
 and every district is a chapter of Harsh's career. v1 stays live; v2 grows at `/beta`.
