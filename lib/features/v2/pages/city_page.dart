@@ -8,6 +8,7 @@ import '../core/journey_scroll_engine.dart';
 import '../core/motion_tokens.dart';
 import '../core/sky_gradient.dart';
 import '../districts/coming_soon_district.dart';
+import '../districts/craftsman/craftsman_district.dart';
 import '../districts/exchange/exchange_district.dart';
 import '../districts/foundation/foundation_district.dart';
 import '../districts/gate/gate_district.dart';
@@ -31,9 +32,10 @@ class CityPage extends StatefulWidget {
 class _CityPageState extends State<CityPage> {
   static const _districts = <District>[
     GateDistrict(),
-    FoundationDistrict(), // chronological: the origin comes first
-    ValleyDistrict(),
-    ExchangeDistrict(),
+    FoundationDistrict(), // 2017–2021 · origin
+    CraftsmanDistrict(), //  2021–2022 · Tagline
+    ValleyDistrict(), //      2024–2026 · FarmSetu
+    ExchangeDistrict(), //    2026–now  · Kotak
     ComingSoonDistrict(),
   ];
 
