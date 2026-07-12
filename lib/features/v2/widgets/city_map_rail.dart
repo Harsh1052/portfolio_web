@@ -91,10 +91,14 @@ class _RailDotState extends State<_RailDot> {
     final active = widget.isActive;
     final size = active ? 22.0 : 10.0;
 
-    return Tooltip(
-      message: widget.label,
-      textStyle: GoogleFonts.jetBrainsMono(fontSize: 11, color: Colors.white),
-      child: MouseRegion(
+    return Semantics(
+      button: true,
+      selected: active,
+      label: 'Go to ${widget.label}',
+      child: Tooltip(
+        message: widget.label,
+        textStyle: GoogleFonts.jetBrainsMono(fontSize: 11, color: Colors.white),
+        child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _hovered = true),
         onExit: (_) => setState(() => _hovered = false),
@@ -119,6 +123,7 @@ class _RailDotState extends State<_RailDot> {
               ),
             ),
           ),
+        ),
         ),
       ),
     );

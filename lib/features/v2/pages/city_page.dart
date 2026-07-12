@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/analytics/analytics_service.dart';
@@ -40,11 +41,21 @@ class _CityPageState extends State<CityPage> {
     ..addListener(() => _engine.onScroll(_scroller.position.pixels));
 
   int _lastTracked = -1;
+  bool _journeyCompleted = false;
 
   @override
   void initState() {
     super.initState();
     _engine.activeIndex.addListener(_trackDistrict);
+    _engine.journeyProgress.addListener(_trackJourneyComplete);
+  }
+
+  void _trackJourneyComplete() {
+    if (_journeyCompleted) return;
+    if (_engine.journeyProgress.value >= 0.999) {
+      _journeyCompleted = true;
+      AnalyticsService.click('v2_journey_complete');
+    }
   }
 
   /// District dwell flows into the existing analytics dashboard as
@@ -75,9 +86,47 @@ class _CityPageState extends State<CityPage> {
   @override
   void dispose() {
     _engine.activeIndex.removeListener(_trackDistrict);
+    _engine.journeyProgress.removeListener(_trackJourneyComplete);
     _scroller.dispose();
     _engine.dispose();
     super.dispose();
+  }
+
+  /// Keyboard accessibility: arrows / page keys / space / home / end.
+  KeyEventResult _handleKey(FocusNode node, KeyEvent event) {
+    if (event is! KeyDownEvent && event is! KeyRepeatEvent) {
+      return KeyEventResult.ignored;
+    }
+    final vp = _engine.viewportHeight;
+    final max = _scroller.position.maxScrollExtent;
+    double? target;
+    final key = event.logicalKey;
+    if (key == LogicalKeyboardKey.arrowDown) {
+      target = _scroller.offset + 140;
+    } else if (key == LogicalKeyboardKey.arrowUp) {
+      target = _scroller.offset - 140;
+    } else if (key == LogicalKeyboardKey.pageDown ||
+        key == LogicalKeyboardKey.space) {
+      target = _scroller.offset + vp * .85;
+    } else if (key == LogicalKeyboardKey.pageUp) {
+      target = _scroller.offset - vp * .85;
+    } else if (key == LogicalKeyboardKey.home) {
+      target = 0;
+    } else if (key == LogicalKeyboardKey.end) {
+      target = max;
+    }
+    if (target == null) return KeyEventResult.ignored;
+    final clamped = target.clamp(0.0, max);
+    if (V2MotionSettings.instance.reduced.value) {
+      _scroller.jumpTo(clamped);
+    } else {
+      _scroller.animateTo(
+        clamped,
+        duration: V2Motion.fast,
+        curve: Curves.easeOut,
+      );
+    }
+    return KeyEventResult.handled;
   }
 
   @override
@@ -89,26 +138,37 @@ class _CityPageState extends State<CityPage> {
           final vp = constraints.maxHeight;
           _engine.layout(vp);
 
-          return Stack(
-            children: [
-              Positioned.fill(child: SkyGradient(engine: _engine)),
-              CustomScrollView(
-                controller: _scroller,
-                slivers: [
-                  for (var i = 0; i < _districts.length; i++)
-                    SliverToBoxAdapter(
-                      child: _PinnedDistrict(
-                        district: _districts[i],
-                        height: _engine.heightOf(i),
-                        viewport: vp,
-                        progress: _engine.progressOf(_districts[i].id),
-                      ),
-                    ),
+          // Rebuilds scenes when the motion preference flips (re-keying
+          // re-initializes their tickers) — the scroll view itself keeps
+          // its element, so the visitor's position is preserved.
+          return ValueListenableBuilder<bool>(
+            valueListenable: V2MotionSettings.instance.reduced,
+            builder: (context, reduced, _) => Focus(
+              autofocus: true,
+              onKeyEvent: _handleKey,
+              child: Stack(
+                children: [
+                  Positioned.fill(child: SkyGradient(engine: _engine)),
+                  CustomScrollView(
+                    controller: _scroller,
+                    slivers: [
+                      for (var i = 0; i < _districts.length; i++)
+                        SliverToBoxAdapter(
+                          child: _PinnedDistrict(
+                            key: ValueKey('${_districts[i].id}-$reduced'),
+                            district: _districts[i],
+                            height: _engine.heightOf(i),
+                            viewport: vp,
+                            progress: _engine.progressOf(_districts[i].id),
+                          ),
+                        ),
+                    ],
+                  ),
+                  CityMapRail(engine: _engine, onSelect: _jumpToDistrict),
+                  const _TopBar(),
                 ],
               ),
-              CityMapRail(engine: _engine, onSelect: _jumpToDistrict),
-              const _TopBar(),
-            ],
+            ),
           );
         },
       ),
@@ -120,6 +180,7 @@ class _CityPageState extends State<CityPage> {
 /// district by translating it down through its (taller) sliver.
 class _PinnedDistrict extends StatelessWidget {
   const _PinnedDistrict({
+    super.key,
     required this.district,
     required this.height,
     required this.viewport,
@@ -150,7 +211,11 @@ class _PinnedDistrict extends StatelessWidget {
               height: viewport,
               width: double.infinity,
               child: RepaintBoundary(
-                child: district.build(context, progress),
+                child: Semantics(
+                  container: true,
+                  label: '${district.title} — ${district.subtitle}',
+                  child: district.build(context, progress),
+                ),
               ),
             ),
           ),
@@ -207,30 +272,34 @@ class _GlassButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: 0.30),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 15, color: Colors.white),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: GoogleFonts.jetBrainsMono(
-                  fontSize: 12,
-                  color: Colors.white,
+    return Semantics(
+      button: true,
+      label: label,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.30),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 15, color: Colors.white),
+                const SizedBox(width: 6),
+                Text(
+                  label,
+                  style: GoogleFonts.jetBrainsMono(
+                    fontSize: 12,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

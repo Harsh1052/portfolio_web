@@ -121,7 +121,10 @@ class _ExchangeSceneState extends State<ExchangeScene>
                 child: Opacity(
                   opacity: (arrive * (1 - dimOut)).clamp(0.0, 1.0),
                   child: RepaintBoundary(
-                    child: TickerTape(quotes: _market.quotes, loop: _ticker),
+                    // Decorative churn — meaningless to screen readers.
+                    child: ExcludeSemantics(
+                      child: TickerTape(quotes: _market.quotes, loop: _ticker),
+                    ),
                   ),
                 ),
               ),
