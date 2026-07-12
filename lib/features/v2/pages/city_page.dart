@@ -56,12 +56,44 @@ class _CityPageState extends State<CityPage> {
   bool _celebrate = false;
   bool _celebrationShown = false;
 
+  // Journey analytics state (all fire once per session).
+  final Set<int> _milestonesFired = {};
+  final Set<String> _districtsCompleted = {};
+  bool _keyboardTracked = false;
+
   @override
   void initState() {
     super.initState();
     _engine.activeIndex.addListener(_trackDistrict);
     _engine.journeyProgress.addListener(_trackJourneyComplete);
+    _engine.journeyProgress.addListener(_trackMilestones);
+    _engine.scrollPos.addListener(_trackDistrictCompletion);
     StampsController.instance.found.addListener(_onStampsChanged);
+  }
+
+  /// Journey depth milestones — rolled up via the clicks map, so the
+  /// dashboard can read drop-off ("how far into the city do people get?")
+  /// straight off the session docs.
+  void _trackMilestones() {
+    final pct = (_engine.journeyProgress.value * 100).floor();
+    for (final milestone in const [25, 50, 75]) {
+      if (pct >= milestone && !_milestonesFired.contains(milestone)) {
+        _milestonesFired.add(milestone);
+        AnalyticsService.click('v2_journey_$milestone');
+      }
+    }
+  }
+
+  /// Per-district completion — fires when a district has been fully
+  /// scrolled through (its whole choreography seen).
+  void _trackDistrictCompletion() {
+    for (final d in _districts) {
+      if (_districtsCompleted.contains(d.id)) continue;
+      if (_engine.progressOf(d.id).value >= 0.98) {
+        _districtsCompleted.add(d.id);
+        AnalyticsService.click('v2_completed_${d.id}');
+      }
+    }
   }
 
   /// The moment the eighth stamp lands, the passport opens itself with
@@ -106,6 +138,7 @@ class _CityPageState extends State<CityPage> {
   }
 
   void _jumpToDistrict(int i) {
+    AnalyticsService.click('v2_rail_${_districts[i].id}');
     final target = _engine.startOf(i);
     if (V2MotionSettings.instance.reduced.value) {
       _scroller.jumpTo(target);
@@ -122,6 +155,8 @@ class _CityPageState extends State<CityPage> {
   void dispose() {
     _engine.activeIndex.removeListener(_trackDistrict);
     _engine.journeyProgress.removeListener(_trackJourneyComplete);
+    _engine.journeyProgress.removeListener(_trackMilestones);
+    _engine.scrollPos.removeListener(_trackDistrictCompletion);
     StampsController.instance.found.removeListener(_onStampsChanged);
     _scroller.dispose();
     _engine.dispose();
@@ -152,6 +187,10 @@ class _CityPageState extends State<CityPage> {
       target = max;
     }
     if (target == null) return KeyEventResult.ignored;
+    if (!_keyboardTracked) {
+      _keyboardTracked = true;
+      AnalyticsService.click('v2_keyboard_nav');
+    }
     final clamped = target.clamp(0.0, max);
     if (V2MotionSettings.instance.reduced.value) {
       _scroller.jumpTo(clamped);
