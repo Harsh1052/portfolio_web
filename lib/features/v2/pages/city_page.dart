@@ -9,6 +9,7 @@ import '../core/motion_tokens.dart';
 import '../core/sky_gradient.dart';
 import '../districts/coming_soon_district.dart';
 import '../districts/craftsman/craftsman_district.dart';
+import '../districts/enterprise/enterprise_district.dart';
 import '../districts/exchange/exchange_district.dart';
 import '../districts/foundation/foundation_district.dart';
 import '../districts/gate/gate_district.dart';
@@ -32,8 +33,9 @@ class CityPage extends StatefulWidget {
 class _CityPageState extends State<CityPage> {
   static const _districts = <District>[
     GateDistrict(),
-    FoundationDistrict(), // 2017–2021 · origin
-    CraftsmanDistrict(), //  2021–2022 · Tagline
+    FoundationDistrict(), //  2017–2021 · origin
+    CraftsmanDistrict(), //   2021–2022 · Tagline
+    EnterpriseDistrict(), //  2023–2024 · Elision
     ValleyDistrict(), //      2024–2026 · FarmSetu
     ExchangeDistrict(), //    2026–now  · Kotak
     ComingSoonDistrict(),
