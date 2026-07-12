@@ -41,3 +41,5 @@ flutter:
     - assets/data/
     - assets/images/
     - assets/icons/
+    - assets/v2/_common/
+    - assets/v2/valley/
