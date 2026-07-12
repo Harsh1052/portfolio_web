@@ -7,6 +7,7 @@ import '../core/district.dart';
 import '../core/journey_scroll_engine.dart';
 import '../core/motion_tokens.dart';
 import '../core/sky_gradient.dart';
+import '../core/stamps_controller.dart';
 import '../districts/craftsman/craftsman_district.dart';
 import '../districts/enterprise/enterprise_district.dart';
 import '../districts/exchange/exchange_district.dart';
@@ -16,6 +17,7 @@ import '../districts/harbor/harbor_district.dart';
 import '../districts/tinkerer/tinkerer_district.dart';
 import '../districts/valley/valley_district.dart';
 import '../widgets/city_map_rail.dart';
+import '../widgets/passport.dart';
 
 /// `/beta` — the City of Code. One continuous scroll journey where every
 /// district is a chapter of the career.
@@ -50,12 +52,37 @@ class _CityPageState extends State<CityPage> {
 
   int _lastTracked = -1;
   bool _journeyCompleted = false;
+  bool _passportOpen = false;
+  bool _celebrate = false;
+  bool _celebrationShown = false;
 
   @override
   void initState() {
     super.initState();
     _engine.activeIndex.addListener(_trackDistrict);
     _engine.journeyProgress.addListener(_trackJourneyComplete);
+    StampsController.instance.found.addListener(_onStampsChanged);
+  }
+
+  /// The moment the eighth stamp lands, the passport opens itself with
+  /// the citizen celebration — once per completion, live.
+  void _onStampsChanged() {
+    if (_celebrationShown) return;
+    if (StampsController.instance.count >= StampsController.total) {
+      _celebrationShown = true;
+      setState(() {
+        _passportOpen = true;
+        _celebrate = true;
+      });
+    }
+  }
+
+  void _openPassport() {
+    AnalyticsService.click('v2_passport_open');
+    setState(() {
+      _passportOpen = true;
+      _celebrate = false;
+    });
   }
 
   void _trackJourneyComplete() {
@@ -95,6 +122,7 @@ class _CityPageState extends State<CityPage> {
   void dispose() {
     _engine.activeIndex.removeListener(_trackDistrict);
     _engine.journeyProgress.removeListener(_trackJourneyComplete);
+    StampsController.instance.found.removeListener(_onStampsChanged);
     _scroller.dispose();
     _engine.dispose();
     super.dispose();
@@ -173,7 +201,12 @@ class _CityPageState extends State<CityPage> {
                     ],
                   ),
                   CityMapRail(engine: _engine, onSelect: _jumpToDistrict),
-                  const _TopBar(),
+                  _TopBar(onPassport: _openPassport),
+                  if (_passportOpen)
+                    PassportOverlay(
+                      celebrate: _celebrate,
+                      onClose: () => setState(() => _passportOpen = false),
+                    ),
                 ],
               ),
             ),
@@ -234,7 +267,9 @@ class _PinnedDistrict extends StatelessWidget {
 }
 
 class _TopBar extends StatelessWidget {
-  const _TopBar();
+  const _TopBar({required this.onPassport});
+
+  final VoidCallback onPassport;
 
   @override
   Widget build(BuildContext context) {
@@ -253,6 +288,8 @@ class _TopBar extends StatelessWidget {
             },
           ),
           const Spacer(),
+          PassportChip(onTap: onPassport),
+          const SizedBox(width: 8),
           _GlassButton(
             icon: Icons.animation_rounded,
             label: 'motion',

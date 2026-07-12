@@ -1,9 +1,10 @@
 # Portfolio v2 (Beta) — "The City of Code"
 
-> **Status: BETA READY** — Phases 0–4 shipped.
-> Built: journey engine + primitives · The City Gate · Harvest Valley ·
-> The Exchange · sky stitching · QA (reduced motion, keyboard, semantics).
-> Next: Phase 5+ districts (Foundation Square → The Harbor) + passport finale.
+> **Status: CITY COMPLETE 🏙️** — all 10 phases shipped.
+> Eight districts live (Gate → Foundation Square → Craftsman's Lane →
+> Enterprise Heights → Harvest Valley → The Exchange → Tinkerers' Park →
+> The Harbor), eight hidden stamps, passport with citizen celebration,
+> boarding-pass resume, full QA (reduced motion, keyboard, semantics).
 >
 > **Launch checklist:** `flutter test` (5 suites) → `flutter analyze` →
 > `flutter run -d chrome` manual pass (scroll both directions, motion toggle,

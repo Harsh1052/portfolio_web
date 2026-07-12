@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/ambience/ambience_controller.dart';
 import '../../core/motion_tokens.dart';
 import '../../core/progress_utils.dart';
+import '../../widgets/stamp.dart';
 import 'city_skyline_painter.dart';
 import 'gate_painter.dart';
 import 'gate_particles.dart';
@@ -66,6 +67,7 @@ class _GateSceneState extends State<GateScene>
         final hintFade = 1 - t.band(0.06, 0.18);
         final statsIn = t.band(0.45, 0.62, curve: V2Motion.reveal);
         final statsOut = 1 - t.band(0.68, 0.82);
+        final stampShow = t.band(0.10, 0.16) * (1 - t.band(0.60, 0.68));
 
         return Stack(
           fit: StackFit.expand,
@@ -156,6 +158,22 @@ class _GateSceneState extends State<GateScene>
                 child: _ScrollHint(ticker: _ticker),
               ),
             ),
+            // ── Stamp #8, tucked by the city wall ──
+            if (stampShow > 0)
+              Align(
+                alignment: isMobile
+                    ? const Alignment(-0.8, 0.55)
+                    : const Alignment(-0.86, 0.5),
+                child: Opacity(
+                  opacity: stampShow.clamp(0.0, 1.0),
+                  child: const CollectibleStamp(
+                    id: 'gate',
+                    label: 'Gate stamp',
+                    color: Color(0xFFFFD98A),
+                    icon: Icons.location_city_rounded,
+                  ),
+                ),
+              ),
           ],
         );
       },
