@@ -7,6 +7,7 @@ import '../core/journey_scroll_engine.dart';
 import '../core/motion_tokens.dart';
 import '../core/sky_gradient.dart';
 import '../districts/coming_soon_district.dart';
+import '../districts/exchange/exchange_district.dart';
 import '../districts/gate/gate_district.dart';
 import '../districts/valley/valley_district.dart';
 import '../widgets/city_map_rail.dart';
@@ -29,6 +30,7 @@ class _CityPageState extends State<CityPage> {
   static const _districts = <District>[
     GateDistrict(),
     ValleyDistrict(),
+    ExchangeDistrict(),
     ComingSoonDistrict(),
   ];
 
