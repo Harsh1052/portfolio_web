@@ -13,6 +13,7 @@ import '../districts/enterprise/enterprise_district.dart';
 import '../districts/exchange/exchange_district.dart';
 import '../districts/foundation/foundation_district.dart';
 import '../districts/gate/gate_district.dart';
+import '../districts/tinkerer/tinkerer_district.dart';
 import '../districts/valley/valley_district.dart';
 import '../widgets/city_map_rail.dart';
 
@@ -38,6 +39,7 @@ class _CityPageState extends State<CityPage> {
     EnterpriseDistrict(), //  2023–2024 · Elision
     ValleyDistrict(), //      2024–2026 · FarmSetu
     ExchangeDistrict(), //    2026–now  · Kotak
+    TinkererDistrict(), //    nights & weekends
     ComingSoonDistrict(),
   ];
 
