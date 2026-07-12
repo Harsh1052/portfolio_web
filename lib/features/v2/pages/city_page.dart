@@ -8,7 +8,7 @@ import '../core/motion_tokens.dart';
 import '../core/sky_gradient.dart';
 import '../districts/coming_soon_district.dart';
 import '../districts/gate/gate_district.dart';
-import '../districts/valley_district.dart';
+import '../districts/valley/valley_district.dart';
 import '../widgets/city_map_rail.dart';
 
 /// `/beta` — the City of Code. One continuous scroll journey where every
