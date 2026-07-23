@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'core/theme/app_theme.dart';
-import 'core/theme/theme_controller.dart';
-import 'core/ambience/ambience_controller.dart';
-import 'core/analytics/analytics_service.dart';
-import 'core/routing/app_pages.dart';
-import 'features/content/presentation/bindings/content_binding.dart';
+import 'package:portfolio_web/core/theme/app_theme.dart';
+import 'package:portfolio_web/core/theme/theme_controller.dart';
+import 'package:portfolio_web/core/ambience/ambience_controller.dart';
+import 'package:portfolio_web/core/analytics/analytics_service.dart';
+import 'package:portfolio_web/core/routing/app_pages.dart';
+import 'package:portfolio_web/features/content/presentation/bindings/content_binding.dart';
+import 'package:portfolio_web/features/home/presentation/pages/not_found_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,23 +40,7 @@ class PortfolioApp extends StatelessWidget {
       },
       unknownRoute: GetPage(
         name: '/404',
-        page: () => const _NotFoundPage(),
-      ),
-    );
-  }
-}
-
-class _NotFoundPage extends StatelessWidget {
-  const _NotFoundPage();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          '404',
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
+        page: () => const NotFoundPage(),
       ),
     );
   }
