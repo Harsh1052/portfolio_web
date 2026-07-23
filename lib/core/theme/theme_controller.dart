@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:web/web.dart' as web;
-import 'app_theme.dart';
+import 'package:portfolio_web/core/theme/app_theme.dart';
 
 /// Persists and applies the user's dark/light preference via GetX + localStorage.
+///
+/// **System theme detection:** On first visit (no saved preference), the
+/// controller reads `prefers-color-scheme: dark` from the browser / OS.
+/// Once the user explicitly toggles, their choice is persisted and takes
+/// priority over the system preference on future visits.
 class ThemeController extends GetxController {
   static const _storageKey = 'theme_mode';
 
@@ -22,7 +28,22 @@ class ThemeController extends GetxController {
 
   void _loadSavedPreference() {
     final saved = web.window.localStorage.getItem(_storageKey);
-    final prefersDark = saved == 'dark';
+
+    late final bool prefersDark;
+    if (saved != null) {
+      // User has explicitly toggled before — honour their choice.
+      prefersDark = saved == 'dark';
+    } else {
+      // First visit — detect OS / browser preference.
+      prefersDark = _detectSystemDarkMode();
+      if (kDebugMode) {
+        debugPrint(
+          '[ThemeController] No saved preference — '
+          'system prefers ${prefersDark ? "dark" : "light"} mode',
+        );
+      }
+    }
+
     _isDark.value = prefersDark;
     // Apply both theme data AND theme mode — Get.changeTheme alone does NOT
     // update the themeMode on GetMaterialApp, causing the switch to silently
@@ -42,4 +63,18 @@ class ThemeController extends GetxController {
       _isDark.value ? 'dark' : 'light',
     );
   }
+
+  /// Reads the browser's `prefers-color-scheme` media query.
+  /// Returns `true` if the OS / browser is in dark mode.
+  bool _detectSystemDarkMode() {
+    try {
+      return web.window
+          .matchMedia('(prefers-color-scheme: dark)')
+          .matches;
+    } catch (_) {
+      // Fallback for environments where matchMedia is unavailable.
+      return false;
+    }
+  }
 }
+
