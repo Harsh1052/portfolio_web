@@ -63,3 +63,11 @@ jobs:
           du -sh build/web
           echo ""
           du -h build/web/* | sort -rh | head -15
+
+      - name: lighthouse audit
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          configPath: '.github/lighthouse/lighthouserc.json'
+

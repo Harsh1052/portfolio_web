@@ -179,7 +179,7 @@
         "Cross-platform compatibility (99.9%)"
       ],
       "startDate": "June 2024",
-      "endDate": "Present",
+      "endDate": "June 2026",
       "isFeatured": true
     },
     {
@@ -203,6 +203,30 @@
       ],
       "startDate": "January 2023",
       "endDate": "June 2024",
+      "isFeatured": true
+    },
+    {
+      "name": "City of Code — Interactive Portfolio",
+      "description": "A scroll-driven, story-based Flutter Web portfolio where each career chapter is a district in a procedurally-drawn city. 8 districts, hidden collectible stamps, first-party analytics, and ambient intelligence.",
+      "technologies": [
+        "Flutter Web",
+        "CustomPainter",
+        "Scroll Choreography",
+        "Firebase Hosting",
+        "GitHub Actions CI/CD"
+      ],
+      "githubUrl": "https://github.com/harshsureja/portfolio_web",
+      "liveUrl": "https://harsh-portfolio-web.web.app/#/beta",
+      "imageUrl": null,
+      "features": [
+        "8 scroll-driven districts with procedural CustomPainter artwork",
+        "Collectible stamp system with passport completion",
+        "Ambient intelligence — time-of-day sky, geo greeting, weather effects",
+        "First-party analytics dashboard with dwell-time tracking",
+        "Deferred loading — v1 visitors download zero v2 code"
+      ],
+      "startDate": "November 2025",
+      "endDate": "Present",
       "isFeatured": true
     }
   ],

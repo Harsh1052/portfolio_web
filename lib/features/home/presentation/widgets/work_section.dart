@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/widgets/fade_slide_in.dart';
-import '../../../../core/widgets/responsive_layout.dart';
-import '../../../content/data/models/portfolio_content.dart';
-import 'project_card.dart';
+import 'package:portfolio_web/core/theme/app_text_styles.dart';
+import 'package:portfolio_web/core/widgets/fade_slide_in.dart';
+import 'package:portfolio_web/core/widgets/responsive_layout.dart';
+import 'package:portfolio_web/features/content/data/models/portfolio_content.dart';
+import 'package:portfolio_web/features/home/presentation/widgets/project_card.dart';
 
 class WorkSection extends StatelessWidget {
   const WorkSection({super.key, required this.projects});
@@ -15,7 +15,9 @@ class WorkSection extends StatelessWidget {
     // LayoutBuilder OUTSIDE ContentWrapper so we read actual screen width.
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isDesktop = constraints.maxWidth >= Breakpoints.tablet;
+        final width = constraints.maxWidth;
+        // Tablet (≥600px) gets 2 columns; mobile (<600px) gets 1 column.
+        final columns = width >= Breakpoints.mobile ? 2 : 1;
         return ContentWrapper(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 80),
@@ -33,7 +35,7 @@ class WorkSection extends StatelessWidget {
                   child: Text('Selected work', style: AppTextStyles.h2),
                 ),
                 const SizedBox(height: 40),
-                _ProjectGrid(projects: projects, isDesktop: isDesktop),
+                _ProjectGrid(projects: projects, columns: columns),
               ],
             ),
           ),
@@ -46,15 +48,15 @@ class WorkSection extends StatelessWidget {
 class _ProjectGrid extends StatelessWidget {
   const _ProjectGrid({
     required this.projects,
-    required this.isDesktop,
+    required this.columns,
   });
 
   final List<ProjectContent> projects;
-  final bool isDesktop;
+  final int columns;
 
   @override
   Widget build(BuildContext context) {
-    if (!isDesktop) {
+    if (columns == 1) {
       return Column(
         children: [
           for (int i = 0; i < projects.length; i++) ...[
@@ -92,3 +94,4 @@ class _ProjectGrid extends StatelessWidget {
     return Column(children: rows);
   }
 }
+
